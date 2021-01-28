@@ -1,0 +1,110 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+@{
+    Layout = null;
+}
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="153531049143-mfvdf3t4svse4m5t4tr4b8iup3dheeb9.apps.googleusercontent.com">
+    <title>@ViewData["Title"] - FlightDatabaseAndComputer</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <script src="https://kit.fontawesome.com/ac3a2e59dc.js" crossorigin="anonymous"></script>
+</head>
+<style>
+    body {
+        background-image: url('https://aeroklubliberec.cz/_files/200000657-266a7266aa/PMCRj_2020_MG_9274.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+    }
+</style>
+
+
+<div class="col-md-6 .offset-md-3  mx-auto d-flex justify-content-center h-100">
+    <div class="card my-auto">
+        <!-- Default form register -->
+        <form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="text-center border border-light p-5">
+            <p class="h4 mb-4">Registrovat se</p>
+            <!-- User Name -->
+            <div class="form-group">
+                <input type="text" asp-for="Input.UserName" id="defaultRegisterFormUserName" class="form-control mb-4" placeholder="Přihlašovací jméno">
+                <span asp-validation-for="Input.UserName" class="text-danger"></span>
+            </div>
+            <div class="form-row mb-4 form-group">
+                <div class="col">
+                    <!-- First name -->
+                    <input asp-for="Input.FirstName" type="text" id="defaultRegisterFormFirstName" class="form-control" placeholder="Jméno">
+                    <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <!-- Last name -->
+                    <input asp-for="Input.LastName" type="text" id="defaultRegisterFormLastName" class="form-control" placeholder="Přijímení">
+                    <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                </div>
+            </div>
+            <!-- E-mail -->
+            <div class="form-group">
+                <input type="email" asp-for="Input.Email" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="E-mail">
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <!-- Gender -->
+            <div class="form-group">
+                <select asp-for="Input.Gender" class="form-control">
+                    <option value="null">-- Vyber pohlaví --</option>
+                    <option value="0">Muž</option>
+                    <option value="1">Žena</option>
+                </select>
+                <span asp-validation-for="Input.Gender" class="text-danger"></span>
+            </div>
+            <!-- Password -->
+            <div class="form-row mb-4 form-group">
+                <div class="col">
+                    <input type="password" asp-for="Input.Password" id="defaultRegisterFormPassword" class="form-control" placeholder="Heslo" aria-describedby="defaultRegisterFormPasswordHelpBlock">
+                    <small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
+                        Minimální délka hesla je 8 znaků,  1 velké písmeno, 1 číslo a 1 symbol.
+                    </small>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <input type="password" asp-for="Input.ConfirmPassword" id="defaultRegisterFormPassword" class="form-control" placeholder=" Potvrdit heslo" aria-describedby="defaultRegisterFormPasswordHelpBlock">
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                </div>
+            </div>
+            <!-- Sign up button -->
+            <button class="btn btn-info my-4 btn-block" type="submit">Zaregistrovat se</button>
+            <!-- Social register -->
+            <p>nebo se zaregistruj přes:</p>
+            <a class="g-signin2 mx-2" data-onsuccess="onSignIn"></a>
+        </form>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script>
+    function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+    }
+    function signOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+            console.log('User signed out.');
+        });
+    }
+
+</script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

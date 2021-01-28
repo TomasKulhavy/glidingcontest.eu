@@ -1,0 +1,15 @@
+.Flight {
+    text-align: center;
+    background-image: url(../../backgroundImage.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: -5;
+}
+
+.Output {
+    display: none;
+}
