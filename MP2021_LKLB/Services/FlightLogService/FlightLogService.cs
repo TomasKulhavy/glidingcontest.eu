@@ -32,29 +32,12 @@ namespace MP2021_LKLB.Services.FlightLogService
             return await _db.FlightLogs.ToListAsync();
         }
         // GET ID
-        //public async Task<ICollection<FlightLog>> GetFlightLog(int id)
-        //{
-        //    ICollection<FlightLog> flightLog = await _db.FlightLogs
-        //        //.Include(ff => ff.Fixes)
-        //        .Where(x => x.Date.Year == id)
-        //        .OrderByDescending(f => f.Date)
-        //        .ToListAsync();
-
-        //    if (flightLog != null)
-        //    {
-        //        return flightLog;
-        //    }
-        //    else
-        //    {
-        //        return null;
-        //    }
-        //}
-
-        public async Task<ICollection<Fixes>> GetFlightLog(int id)
+        public async Task<ICollection<FlightLog>> GetFlightLog(int id)
         {
-            ICollection<Fixes> flightLog = await _db.Fixes
+            ICollection<FlightLog> flightLog = await _db.FlightLogs
                 //.Include(ff => ff.Fixes)
-                .Where(x => x.FlightLogId == id)
+                .Where(x => x.Date.Year == id)
+                .OrderByDescending(f => f.Date)
                 .ToListAsync();
 
             if (flightLog != null)

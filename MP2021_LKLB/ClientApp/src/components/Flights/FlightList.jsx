@@ -14,12 +14,12 @@ const FlightList = () => {
 
     useEffect(() => {
         axios
-            .get(`https://localhost:44346/api/FlightLog`)
+            .get(`https://localhost:44346/api/FlightLog/${year}`)
             .then((response) => {
                 setFlights(response.data)
                 console.log(response.data);
             })
-    }, []);
+    }, [year]);
 
     function renderFlights() {
         const array = flights.map((item) => {

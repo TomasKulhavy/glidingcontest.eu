@@ -15,6 +15,7 @@ using MP2021_LKLB.Models;
 using MP2021_LKLB.Services;
 using MP2021_LKLB.Services.FlightLogService;
 using MP2021_LKLB.Services.UserService;
+using MP2021_LKLB.Services.ViewService;
 
 namespace MP2021_LKLB
 {
@@ -45,6 +46,7 @@ namespace MP2021_LKLB
             services.AddTransient<IFlight, FlightService>();
             services.AddTransient<IFlightLogService, FlightLogService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IViewService, ViewService>();
 
             services.AddAuthorization();
 
