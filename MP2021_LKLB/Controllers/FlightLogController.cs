@@ -42,7 +42,7 @@ namespace MP2021_LKLB.Controllers
 
         // GET api/<FlightLogController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<FlightLog>> Get(int id)
+        public async Task<ICollection<Fixes>> Get(int id)
         {
             var flight = await _flightLog.GetFlightLog(id);
             return flight;

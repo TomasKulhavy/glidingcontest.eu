@@ -1,43 +1,58 @@
-import React, { Component, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from "axios";
-import {Map, Polyline, Marker, GoogleApiWrapper} from 'google-maps-react';
-import {Button, Row} from "reactstrap";
+import { Container, Table, Button, Row, Card, CardBody } from "reactstrap";
+import { useHistory, Link } from "react-router-dom";
+import NavMenu from "../Layout/NavMenu";
+import { fixes, fixId, setFixes } from "../../providers/FlightDataContext";
+import { MapContainer, TileLayer, Polyline } from "react-leaflet"
 
-export class MapContainer extends Component {
-  getData() {
-    axios.get('https://localhost:44346/api/Flights/1').then(resp => {
-      console.log(resp.data);
-    this.getPosition(resp.data);
-  })};
+import './Flight.css'
 
-  getPosition(data) {
-    data.map((item, index) => ({lat: item[index].lat, lgn: item[index].lng}))
-  }
+const FlightView = () => {
   
+  const [fixes, setFixes] = useState([]);
+  const [fixId, setFixId] = useState();
 
-  render = () => {
-    
-    const triangleCoords = [
-      { 
-        "lat": 52.5200066,
-        "lng": 13.404954,
-      },
-      { 
-        "lat": 50.1109221,
-        "lng": 8.6821267,
-      },
-    ]
-  
-    return(
-      <>
-          
-          <Button onClick={() => this.getData()}>GetFlight</Button>
+  useEffect(() => {
+    axios
+      .get(`https://localhost:44346/api/FlightLog/3`)
+      .then((response) => {
+        setFixes(response.data)
+        console.log(response.data)
+      })
+  }, [fixId]);
 
-      </>
-    )
+  function renderFlights() {
+    const array = ([]);
+    fixes.map((item) => {
+      array.push([item.latitude, item.longitude]);
+    });
+    console.log(array);
+    return array;
   }
+
+  const polyline = [
+      renderFlights()
+  ]
+
+  const center = [50.7, 15.0]
+
+  const limeOptions = { color: 'blue' }
+
+  return (
+    <>
+      <NavMenu />
+      <Container>
+        <MapContainer className="leaflet" center={center} zoom={8} scrollWheelZoom={true}>
+          <TileLayer
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          <Polyline pathOptions={limeOptions} positions={polyline} />
+        </MapContainer>
+      </Container>
+    </>
+  )
 }
 
-export default GoogleApiWrapper({
-  apiKey: ("AIzaSyDhiu-vFefDBsFMfjizWggjiLmf_2n5iMc")
-})(MapContainer)
+export default FlightView;

@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Container, Table, Button, Row } from "reactstrap";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import NavMenu from "../Layout/NavMenu";
+import FlightDataContext from "../../providers/FlightDataContext";
 import axios from "axios";
 
-const FlightList = (props) => {
+const FlightList = () => {
     const history = useHistory();
     const [flights, setFlights] = useState([]);
+    const [fixes, setFixes] = useState([]);
+    const [fixId, setFixId] = useState();
+    const [year, setYear] = useState(2020);
 
     useEffect(() => {
         axios
             .get(`https://localhost:44346/api/FlightLog`)
             .then((response) => {
-                setFlights(response.data);
+                setFlights(response.data)
                 console.log(response.data);
-            });
+            })
     }, []);
 
     function renderFlights() {
@@ -24,7 +28,7 @@ const FlightList = (props) => {
                 <td>{item.date}</td>
                 <td>{item.pilot}</td>
                 <td>{item.gliderType}</td>
-                <td><Button color="primary">Zobrazit let</Button></td>
+                <td><Button color="primary" onClick={e => {setFixId(item.id)}} tag={Link} to="/flight/viewer">Zobrazit let</Button></td>
             </tr> 
           );
         });
@@ -36,7 +40,7 @@ const FlightList = (props) => {
         const array = years.map((item) => {
             return (
               <td key={item}>
-                  <Button color="primary">{item}</Button>
+                  <Button color="primary" onClick={e => {setYear(item);}}>{item}</Button>
               </td> 
             );
           });
