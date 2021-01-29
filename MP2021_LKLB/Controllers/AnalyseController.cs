@@ -12,50 +12,43 @@ namespace MP2021_LKLB.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ViewController : ControllerBase
+    public class AnalyseController : ControllerBase
     {
         private IViewService _view;
 
-        public ViewController(IViewService view)
+        public AnalyseController(IViewService view)
         {
             _view = view;
         }
 
-        // GET: api/<ViewController>
+        // GET: api/<AnalyseController>
         [HttpGet]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/<ViewController>/5
+        // GET api/<AnalyseController>/5
         [HttpGet("{id}")]
-        public async Task<ICollection<Fixes>> Get(int id)
+        public async Task<ICollection<FlightLogAnalyse>> Get(int id)
         {
-            var fixes = await _view.GetFlightFixes(id);
-            return fixes;
+            var analyse = await _view.GetFlightLogAnalyse(id);
+            return analyse;
         }
 
-        [HttpGet("getTask/{id}")]
-        public async Task<ICollection<Points>> GetTask(int id)
-        {
-            var points = await _view.GetTask(id);
-            return points;
-        }
-
-        // POST api/<ViewController>
+        // POST api/<AnalyseController>
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT api/<ViewController>/5
+        // PUT api/<AnalyseController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<ViewController>/5
+        // DELETE api/<AnalyseController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

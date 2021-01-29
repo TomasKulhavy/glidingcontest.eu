@@ -10,7 +10,7 @@ const FlightList = () => {
     const [flights, setFlights] = useState([]);
     const [fixes, setFixes] = useState([]);
     const [fixId, setFixId] = useState();
-    const [year, setYear] = useState(2020);
+    const [year, setYear] = useState(2021);
 
     useEffect(() => {
         axios

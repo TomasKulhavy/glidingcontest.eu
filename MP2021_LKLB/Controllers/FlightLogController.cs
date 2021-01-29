@@ -48,6 +48,13 @@ namespace MP2021_LKLB.Controllers
             return flight;
         }
 
+        [HttpGet("getDetails/{id}")]
+        public async Task<FlightLog> GetDetails(int id)
+        {
+            var flight = await _flightLog.GetFlightLogDetails(id);
+            return flight;
+        }
+
         // POST api/<FlightLogController>
         [HttpPost]
         public async Task<ActionResult<FlightLog>> Post([FromBody] InputModel Data)

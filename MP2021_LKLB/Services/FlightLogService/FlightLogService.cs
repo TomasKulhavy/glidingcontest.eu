@@ -49,5 +49,21 @@ namespace MP2021_LKLB.Services.FlightLogService
                 return null;
             }
         }
+
+        public async Task<FlightLog> GetFlightLogDetails(int id)
+        {
+            FlightLog flightLog = await _db.FlightLogs
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
+
+            if (flightLog != null)
+            {
+                return flightLog;
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }
