@@ -35,9 +35,9 @@ namespace MP2021_LKLB.Controllers
 
         // GET: api/<FlightLogController>
         [HttpGet]
-        public async Task<IEnumerable<FlightLog>> Get()
+        public async Task<ICollection<ApplicationUser>> Get()
         {
-            return await _flightLog.GetAllFlightLogs();
+            return await _flightLog.GetTops();
         }
 
         // GET api/<FlightLogController>/5
@@ -54,6 +54,8 @@ namespace MP2021_LKLB.Controllers
             var flight = await _flightLog.GetFlightLogDetails(id);
             return flight;
         }
+
+
 
         // POST api/<FlightLogController>
         [HttpPost]

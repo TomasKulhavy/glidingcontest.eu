@@ -8,7 +8,6 @@ import axios from "axios";
 const FlightList = () => {
     const history = useHistory();
     const [flights, setFlights] = useState([]);
-    const [fixes, setFixes] = useState([]);
     const [fixId, setFixId] = useState();
     const [year, setYear] = useState(2021);
 

@@ -20,24 +20,24 @@ const FlightView = () => {
 
   useEffect(() => {
     axios
-      .get(`https://localhost:44346/api/View/4`)
+      .get(`https://localhost:44346/api/View/5`)
       .then((response) => {
         setFixes(response.data)
       });
     axios
-      .get(`https://localhost:44346/api/FlightLog/getDetails/4`)
+      .get(`https://localhost:44346/api/FlightLog/getDetails/5`)
       .then((response) => {
         setFlightLog(response.data)
         console.log(response.data)
       });
     axios
-      .get(`https://localhost:44346/api/View/getTask/4`)
+      .get(`https://localhost:44346/api/View/getTask/5`)
       .then((response) => {
         setTask(response.data)
         console.log(response.data)
       });
     axios
-      .get(`https://localhost:44346/api/Analyse/4`, {params: {analyse: analyse}})
+      .get(`https://localhost:44346/api/Analyse/5`, {params: {analyse: analyse}})
       .then((response) => {
         setAnalyse(response.data[0]);
         console.log(response.data[0]);

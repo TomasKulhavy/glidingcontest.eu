@@ -1,8 +1,33 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from "axios";
 import Layout from "./Layout/Layout";
 import { Container, Card, CardHeader, CardBody, Row, Table } from "reactstrap";
 
 const Home = () => {
+  const [top, setTop] = useState([]);
+
+  useEffect(() => {
+    axios
+        .get(`https://localhost:44346/api/FlightLog`)
+        .then((response) => {
+            setTop(response.data)
+            console.log(response.data);
+        })
+  }, []);
+
+  function renderTop() {
+    const array = top.map((item, index) => {
+      return (
+        <tr key={item.id}>
+            <td>{index + 1}</td>
+            <td>{item.topScore}</td>
+            <td>{item.fullName}</td>
+        </tr> 
+      );
+    });
+    return array;
+  }
+
   return (
     <>
       <Layout>
@@ -12,6 +37,13 @@ const Home = () => {
               <CardHeader>
                 Top piloti
               </CardHeader>
+              <CardBody>
+                <Table className="text-light">
+                  <tbody>
+                    {renderTop()}
+                  </tbody>
+                </Table>
+              </CardBody>
             </Card>
             <Card className="text-center m-2">
               <CardHeader className="bg-dark text-light">Kde se právě lítá?</CardHeader>
