@@ -30,6 +30,12 @@ namespace MP2021_LKLB.Controllers
             return await _user.GetAllUsers();
         }
 
+        [HttpGet("order")]
+        public async Task<IEnumerable<ApplicationUser>> GetOrder()
+        {
+            return await _user.GetPilotOrder();
+        }
+
         // GET api/<UserController>/5
         [HttpGet("{id}")]
         public async Task<ICollection<ApplicationUser>> Get(string id)

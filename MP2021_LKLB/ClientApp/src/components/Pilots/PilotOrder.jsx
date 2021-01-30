@@ -4,13 +4,13 @@ import { useHistory } from "react-router-dom";
 import NavMenu from "../Layout/NavMenu";
 import axios from "axios";
 
-const PilotsList = (props) => {
+const PilotOrder = (props) => {
     const history = useHistory();
     const [pilots, setPilots] = useState([]);
 
     useEffect(() => {
         axios
-            .get(`https://localhost:44346/api/User`)
+            .get(`https://localhost:44346/api/User/order`)
             .then((response) => {
                 setPilots(response.data);
                 console.log(response.data);
@@ -21,12 +21,13 @@ const PilotsList = (props) => {
         const array = pilots.map((item) => {
           return (
             <tr key={item.id}>
+                <td>{item.topScore}</td>
                 <td>{item.fullName}</td>
-                <td>{item.userName}</td>
                 <td>{item.email}</td>
             </tr> 
           );
         });
+        array.sort(array.topScore);
         return array;
     }
 
@@ -37,8 +38,8 @@ const PilotsList = (props) => {
                 <Table striped>
                     <thead>
                         <tr>
+                            <th>Body</th>
                             <th>Jméno</th>
-                            <th>Uživatelské jméno</th>
                             <th>Email</th>
                         </tr>
                     </thead>
@@ -51,4 +52,4 @@ const PilotsList = (props) => {
     )
 }
 
-export default PilotsList;
+export default PilotOrder;

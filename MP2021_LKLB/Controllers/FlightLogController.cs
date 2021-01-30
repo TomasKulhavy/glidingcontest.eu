@@ -20,6 +20,7 @@ namespace MP2021_LKLB.Controllers
         private ApplicationDbContext _db;
         private IFlightLogService _flightLog;
         private IFlight _flight;
+        private string UserId { get; set; }
 
         public FlightLogController(ApplicationDbContext db, IFlightLogService flightLog, IFlight flight)
         {
@@ -48,8 +49,6 @@ namespace MP2021_LKLB.Controllers
             return flight;
         }
 
-
-
         // POST api/<FlightLogController>
         [HttpPost]
         public async Task<ActionResult<FlightLog>> Post([FromBody] InputModel Data)
@@ -60,7 +59,7 @@ namespace MP2021_LKLB.Controllers
             if (data != null)
             {
                 var returnDataObj = JsonConvert.DeserializeObject<FlightLog>(data);
-                returnDataObj.UserId = "TOMAS123";
+                returnDataObj.UserId = "WOLF";
                 _flight.GiveTopBool(returnDataObj);
                 _db.FlightLogs.Add(returnDataObj);
                 await _db.SaveChangesAsync();

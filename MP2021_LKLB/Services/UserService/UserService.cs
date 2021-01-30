@@ -19,7 +19,12 @@ namespace MP2021_LKLB.Services.UserService
 
         public async Task<ICollection<ApplicationUser>> GetAllUsers()
         {
-            return await _db.Pilots.ToListAsync();
+            return await _db.Pilots.OrderBy(f => f.FirstName).ToListAsync();
+        }
+
+        public async Task<ICollection<ApplicationUser>> GetPilotOrder()
+        {
+            return await _db.Pilots.OrderByDescending(f => f.TopScore).ThenBy(f => f.FirstName).ToListAsync();
         }
 
         public async Task<ICollection<ApplicationUser>> GetUsers(string id)
