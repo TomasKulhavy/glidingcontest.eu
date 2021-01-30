@@ -52,9 +52,11 @@ class UploadFlight extends Component {
                 "flightTime": time,
                 "furthestPoints": flight.furthestPoints
             }
+            //const userId = ("TOMAS123")
             result.flightLogAnalyse = scoreFlight;
+            //result.userId = userId;
             
-            
+            console.log(result);
 
             let tisk = JSON.stringify(result);
 

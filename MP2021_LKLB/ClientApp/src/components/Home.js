@@ -8,7 +8,7 @@ const Home = () => {
 
   useEffect(() => {
     axios
-        .get(`https://localhost:44346/api/FlightLog`)
+        .post(`https://localhost:44346/api/User`)
         .then((response) => {
             setTop(response.data)
             console.log(response.data);

@@ -39,9 +39,9 @@ namespace MP2021_LKLB.Controllers
         }
 
         // POST api/<UserController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ICollection<ApplicationUser>> GetTop()
         {
+            return await _user.GetPilotTops();
         }
 
         // PUT api/<UserController>/5

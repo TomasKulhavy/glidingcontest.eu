@@ -37,5 +37,11 @@ namespace MP2021_LKLB.Services.UserService
             }
             return identityUsers;
         }
+
+        public async Task<ICollection<ApplicationUser>> GetPilotTops()
+        {
+            ICollection<ApplicationUser> pilots = await _db.Pilots.Where(f => f.TopScore != null).OrderByDescending(f => f.TopScore).ToListAsync();
+            return pilots;
+        }
     }
 }

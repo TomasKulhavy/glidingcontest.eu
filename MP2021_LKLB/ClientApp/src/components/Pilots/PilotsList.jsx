@@ -24,6 +24,7 @@ const PilotsList = (props) => {
                 <td>{item.fullName}</td>
                 <td>{item.userName}</td>
                 <td>{item.email}</td>
+                <td>{item.topScore}</td>
             </tr> 
           );
         });

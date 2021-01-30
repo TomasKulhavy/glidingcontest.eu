@@ -33,13 +33,6 @@ namespace MP2021_LKLB.Controllers
             public string Payload { get; set; }
         }
 
-        // GET: api/<FlightLogController>
-        [HttpGet]
-        public async Task<ICollection<ApplicationUser>> Get()
-        {
-            return await _flightLog.GetTops();
-        }
-
         // GET api/<FlightLogController>/5
         [HttpGet("{id}")]
         public async Task<ICollection<FlightLog>> Get(int id)
@@ -67,7 +60,7 @@ namespace MP2021_LKLB.Controllers
             if (data != null)
             {
                 var returnDataObj = JsonConvert.DeserializeObject<FlightLog>(data);
-                returnDataObj.UserId = userId;
+                returnDataObj.UserId = "TOMAS123";
                 _flight.GiveTopBool(returnDataObj);
                 _db.FlightLogs.Add(returnDataObj);
                 await _db.SaveChangesAsync();

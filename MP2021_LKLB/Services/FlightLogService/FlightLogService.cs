@@ -66,23 +66,6 @@ namespace MP2021_LKLB.Services.FlightLogService
             }
         }
 
-        public async Task<ICollection<ApplicationUser>> GetTops()
-        {
-            ICollection<FlightLog> top = await _db.FlightLogs.Include(s => s.FlightLogAnalyse).Where(s => s.FlightLogAnalyse.Topflight.Equals(true)).ToListAsync();
-            ICollection<ApplicationUser> pilots = await _db.Pilots.Where(f => f.TopScore != null).OrderByDescending(f => f.TopScore).ToListAsync();
-            foreach (var item in pilots)
-            {
-                float? topscoresum = 0;
-                foreach (var flight in top)
-                {
-                    if (flight.UserId == item.Id)
-                    {
-                        topscoresum = topscoresum + flight.FlightLogAnalyse.Score;
-                        item.TopScore = topscoresum;
-                    }
-                }
-            }
-            return pilots;
-        }
+        
     }
 }

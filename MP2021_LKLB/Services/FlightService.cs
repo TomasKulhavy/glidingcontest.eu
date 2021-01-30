@@ -59,19 +59,36 @@ namespace MP2021_LKLB.Services
         {
             string id = flightLog.UserId;
             int? year = flightLog.Date.Year;
+            string userScoreId = flightLog.UserId;
             List<FlightLog> flightsLog = GetPilotsFlights(id, year);
-            flightsLog.OrderByDescending(f => f.FlightLogAnalyse.Score).Take(2);
+            ApplicationUser Users = _db.Pilots.Where(f => f.Id == userScoreId).FirstOrDefault();
+            
+            flightsLog.OrderByDescending(f => f.FlightLogAnalyse.Score).Take(3);
             foreach (var item in flightsLog)
             {
                 if (flightLog.FlightLogAnalyse.Score > item.FlightLogAnalyse.Score)
                 {
                     flightLog.FlightLogAnalyse.Topflight = true;
+
+                    
                     item.FlightLogAnalyse.Topflight = false;
                 }
                 else
                 {
                     flightLog.FlightLogAnalyse.Topflight = false;
                     item.FlightLogAnalyse.Topflight = true;
+                }
+            }
+
+            if (flightLog.FlightLogAnalyse.Topflight == true)
+            {
+                if (Users.TopScore == null)
+                {
+                    Users.TopScore = flightLog.FlightLogAnalyse.Score;
+                }
+                else if (Users.TopScore != null)
+                {
+                    Users.TopScore = Users.TopScore + flightLog.FlightLogAnalyse.Score;
                 }
             }
         }
