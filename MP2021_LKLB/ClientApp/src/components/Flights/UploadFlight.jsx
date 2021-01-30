@@ -56,10 +56,10 @@ class UploadFlight extends Component {
             result.flightLogAnalyse = scoreFlight;
             //result.userId = userId;
             
-            console.log(result);
+            
 
             let tisk = JSON.stringify(result);
-
+            console.log(tisk);
             this.sendFile(tisk);
             this.calculateDistance(result, totalTimeInSec);
         };

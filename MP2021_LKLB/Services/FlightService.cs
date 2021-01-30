@@ -63,15 +63,20 @@ namespace MP2021_LKLB.Services
             List<FlightLog> flightsLog = GetPilotsFlights(id, year);
             ApplicationUser Users = _db.Pilots.Where(f => f.Id == userScoreId).FirstOrDefault();
             
-            flightsLog.OrderByDescending(f => f.FlightLogAnalyse.Score).Take(3);
-            foreach (var item in flightsLog)
+            List<FlightLog> flights = flightsLog.OrderByDescending(f => f.FlightLogAnalyse.Score).Take(3).ToList();
+            //FlightLog flight = flightsLog.OrderBy(f => f.FlightLogAnalyse.Score).First();
+
+
+            foreach (var item in flights)
             {
                 if (flightLog.FlightLogAnalyse.Score > item.FlightLogAnalyse.Score)
                 {
                     flightLog.FlightLogAnalyse.Topflight = true;
-
-                    
-                    item.FlightLogAnalyse.Topflight = false;
+                    //flight.FlightLogAnalyse.Topflight = false;
+                }
+                else if (item.FlightLogAnalyse.Score == null)
+                {
+                    flightLog.FlightLogAnalyse.Topflight = true;
                 }
                 else
                 {
