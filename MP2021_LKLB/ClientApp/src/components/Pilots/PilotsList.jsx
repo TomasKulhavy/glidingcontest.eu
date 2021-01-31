@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { Container, Table } from "reactstrap";
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { Container, Table, Button } from "reactstrap";
+import { useHistory, Link } from "react-router-dom";
 import NavMenu from "../Layout/NavMenu";
 import axios from "axios";
+import { FlightDataContext, ADD_PILOTID } from "../../providers/FlightDataContext";
 
-const PilotsList = (props) => {
+const PilotsList = () => {
     const history = useHistory();
     const [pilots, setPilots] = useState([]);
+    const [state, dispatch] = useContext(FlightDataContext);
 
     useEffect(() => {
         axios
@@ -24,6 +26,12 @@ const PilotsList = (props) => {
                 <td>{item.fullName}</td>
                 <td>{item.userName}</td>
                 <td>{item.email}</td>
+                <td><Button color="primary" onClick={() =>
+                    dispatch({
+                        type: ADD_PILOTID,
+                        pilotId: item.id
+                    })} tag={Link} to="/pilot/flights">
+                Lety pilota</Button></td>
             </tr> 
           );
         });

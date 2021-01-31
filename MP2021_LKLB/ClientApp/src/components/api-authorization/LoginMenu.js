@@ -45,7 +45,8 @@ export class LoginMenu extends Component {
     }
 
     authenticatedView(userName, profilePath, logoutPath) {
-        return (<Fragment>
+        return (
+        <Fragment>
             <NavItem>
                 <NavLink tag={Link} className="text-light" to={'flight/upload'}><Button className="text-light" outline color="secondary">Nahrát let</Button></NavLink>
             </NavItem>

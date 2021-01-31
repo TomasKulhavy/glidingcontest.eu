@@ -66,7 +66,7 @@ class UploadFlight extends Component {
     sendFile(data) {
         axios.post('https://localhost:44346/api/FlightLog', { payload: data });
     }
-
+    //TODO
     calculateDistance(result, totalTimeInSec) {
         var dis1 = getDistance(
             { latitude: result.task.points[1].latitude, longitude: result.task.points[1].longitude },

@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import NavMenu from "../Layout/NavMenu";
 import axios from "axios";
 
-const PilotOrder = (props) => {
+const PilotOrder = () => {
     const history = useHistory();
     const [pilots, setPilots] = useState([]);
 

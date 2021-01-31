@@ -18,7 +18,6 @@ const FlightView = () => {
   const [score, setScore] = useState();
   const [flightTime, setFlightTime] = useState();
   const [state, dispatch] = useContext(FlightDataContext);
-  console.log(state.currentFlightId);
 
   useEffect(() => {
     axios

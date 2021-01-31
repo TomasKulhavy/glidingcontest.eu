@@ -1,7 +1,16 @@
+import React, { useContext } from "react";
+import { FlightDataContext } from "../../providers/FlightDataContext"; 
 import { UserManager, WebStorageStateStore } from 'oidc-client';
 import { ApplicationPaths, ApplicationName } from './ApiAuthorizationConstants';
 
 export class AuthorizeService {
+    constructor() {
+        this.state = {
+            isAuthenticated: false,
+            userName: null
+        };
+    }
+
     _callbacks = [];
     _nextSubscriptionId = 0;
     _user = null;
@@ -19,7 +28,7 @@ export class AuthorizeService {
     async getUser() {
         if (this._user && this._user.profile) {
             return this._user.profile;
-        }
+    }
 
         await this.ensureUserManagerInitialized();
         const user = await this.userManager.getUser();
