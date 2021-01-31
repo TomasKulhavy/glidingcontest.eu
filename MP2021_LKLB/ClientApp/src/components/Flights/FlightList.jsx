@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Container, Table, Button, Row } from "reactstrap";
 import { useHistory, Link } from "react-router-dom";
 import NavMenu from "../Layout/NavMenu";
-import FlightDataContext from "../../providers/FlightDataContext";
+import { FlightDataContext, ADD_FLIGHTID } from "../../providers/FlightDataContext";
 import axios from "axios";
 
 const FlightList = () => {
     const history = useHistory();
     const [flights, setFlights] = useState([]);
-    const [fixId, setFixId] = useState();
     const [year, setYear] = useState(2021);
+    const [state, dispatch] = useContext(FlightDataContext);
 
     useEffect(() => {
         axios
@@ -27,7 +27,12 @@ const FlightList = () => {
                 <td>{item.date}</td>
                 <td>{item.pilot}</td>
                 <td>{item.gliderType}</td>
-                <td><Button color="primary" onClick={e => {setFixId(item.id)}} tag={Link} to="/flight/viewer">Zobrazit let</Button></td>
+                <td><Button color="primary" onClick={() =>
+                    dispatch({
+                        type: ADD_FLIGHTID,
+                        currentFlightId: item.id
+                    })} tag={Link} to="/flight/viewer">
+                Zobrazit let</Button></td>
             </tr> 
           );
         });

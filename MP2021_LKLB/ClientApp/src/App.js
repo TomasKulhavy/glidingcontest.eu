@@ -11,6 +11,7 @@ import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
 import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
 import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
 import FlightList from "./components/Flights/FlightList";
+import { FlightDataProvider } from "./providers/FlightDataContext";
 
 import './custom.css'
 
@@ -19,17 +20,19 @@ const history = createBrowserHistory();
 function App() {
   return (
     <div className="App">
-      <Router history={history}>
-        <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/flight/list" component={FlightList} />
-            <Route exact path="/flight/viewer" component={FlightView} />
-            <AuthorizeRoute exact path="/flight/upload" component={UploadFlight} />
-            <Route exact path="/pilot/list" component={PilotsList} />
-            <Route exact path="/pilot/order" component={PilotOrder} />
-            <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
-        </Switch>
-      </Router>
+      <FlightDataProvider>
+        <Router history={history}>
+          <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/flight/list" component={FlightList} />
+              <Route exact path="/flight/viewer" component={FlightView} />
+              <AuthorizeRoute exact path="/flight/upload" component={UploadFlight} />
+              <Route exact path="/pilot/list" component={PilotsList} />
+              <Route exact path="/pilot/order" component={PilotOrder} />
+              <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
+          </Switch>
+        </Router>
+      </FlightDataProvider>
     </div>
   );
 }

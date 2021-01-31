@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from "axios";
 import { Container, Table, Button, Row, Card, CardBody, CardHeader, CardFooter } from "reactstrap";
 import NavMenu from "../Layout/NavMenu";
-import { fixes, fixId, setFixes } from "../../providers/FlightDataContext";
+import { FlightDataContext } from "../../providers/FlightDataContext";
 import { MapContainer, TileLayer, Polyline, CircleMarker, Popup } from "react-leaflet";
 import CanvasJSReact from '../../assets/canvasjs.react';
 
@@ -17,27 +17,29 @@ const FlightView = () => {
   const [fixId, setFixId] = useState();
   const [score, setScore] = useState();
   const [flightTime, setFlightTime] = useState();
+  const [state, dispatch] = useContext(FlightDataContext);
+  console.log(state.currentFlightId);
 
   useEffect(() => {
     axios
-      .get(`https://localhost:44346/api/View/5`)
+      .get(`https://localhost:44346/api/View/${state.currentFlightId}`)
       .then((response) => {
         setFixes(response.data)
       });
     axios
-      .get(`https://localhost:44346/api/FlightLog/getDetails/5`)
+      .get(`https://localhost:44346/api/FlightLog/getDetails/${state.currentFlightId}`)
       .then((response) => {
         setFlightLog(response.data)
         console.log(response.data)
       });
     axios
-      .get(`https://localhost:44346/api/View/getTask/5`)
+      .get(`https://localhost:44346/api/View/getTask/${state.currentFlightId}`)
       .then((response) => {
         setTask(response.data)
         console.log(response.data)
       });
     axios
-      .get(`https://localhost:44346/api/Analyse/5`, {params: {analyse: analyse}})
+      .get(`https://localhost:44346/api/Analyse/${state.currentFlightId}`, {params: {analyse: analyse}})
       .then((response) => {
         setAnalyse(response.data[0]);
         console.log(response.data[0]);
