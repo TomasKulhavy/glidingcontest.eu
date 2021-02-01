@@ -10,7 +10,7 @@ const Home = () => {
     axios
         .post(`https://localhost:44346/api/User`)
         .then((response) => {
-            setTop(response.data)
+            setTop(response.data);
             console.log(response.data);
         })
   }, []);

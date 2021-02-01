@@ -86,7 +86,7 @@ const FlightView = () => {
             <b>Datum: </b>{flightLog.date}
           </tr> 
           <tr>
-            <b>Pilot: </b>{flightLog.pilotId}
+            <b>Pilot: </b>{flightLog.userId}
           </tr> 
           <tr>
             <b>Kluzák: </b>{flightLog.gliderType}

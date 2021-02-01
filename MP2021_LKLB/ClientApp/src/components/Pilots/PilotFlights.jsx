@@ -9,6 +9,7 @@ const PilotFlights = () => {
     const history = useHistory();
     const [flights, setFlights] = useState([]);
     const [state, dispatch] = useContext(FlightDataContext);
+    const [year, setYear] = useState();
     console.log(state.pilotId);
 
     useEffect(() => {
@@ -19,6 +20,18 @@ const PilotFlights = () => {
                 console.log(response.data);
             });
     }, []);
+
+    function renderYears() {
+        const years = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021];
+        const array = years.map((item) => {
+            return (
+              <td key={item}>
+                  <Button color="primary" onClick={e => {setYear(item);}}>{item}</Button>
+              </td> 
+            );
+          });
+        return array;
+    }
 
     function renderFlights() {
         const array = flights.map((item) => {
@@ -43,6 +56,11 @@ const PilotFlights = () => {
         <>
             <NavMenu />
             <Container>
+                <Table borderless>
+                        <tbody>
+                            {renderYears()}
+                        </tbody>
+                </Table>
                 <Table striped>
                     <thead>
                         <tr>
