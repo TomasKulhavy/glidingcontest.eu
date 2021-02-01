@@ -14,7 +14,7 @@ namespace MP2021_LKLB.Services
         public List<FlightLog> GetTopFlights();
         public List<ApplicationUser> GetTops();
         public List<Fixes> GetFlight(int flightid);
-        public string GetActiveUserId();
+        public string GetActiveUserId(string id);
         public void GiveTopBool(FlightLog flightLog);
     }
 }

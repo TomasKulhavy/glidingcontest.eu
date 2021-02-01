@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using MP2021_LKLB.Data;
+using MP2021_LKLB.Helpers;
 using MP2021_LKLB.Models;
 using MP2021_LKLB.Services.UserService;
 using System;
@@ -17,12 +19,15 @@ namespace MP2021_LKLB.Controllers
     {
         private ApplicationDbContext _db;
         private IUserService _user;
+        private readonly ISession _session;
 
-        public UserController(ApplicationDbContext db, IUserService user)
+        public UserController(ApplicationDbContext db, IUserService user, IHttpContextAccessor hca)
         {
             _db = db;
             _user = user;
+            _session = hca.HttpContext.Session;
         }
+
         // GET: api/<UserController>
         [HttpGet]
         public async Task<IEnumerable<ApplicationUser>> Get()
@@ -51,9 +56,16 @@ namespace MP2021_LKLB.Controllers
         }
 
         // POST api/<UserController>
+        [HttpPost]
         public async Task<ICollection<ApplicationUser>> GetTop()
         {
             return await _user.GetPilotTops();
+        }
+
+        [HttpPost("{id}")]
+        public void GetId(string id)
+        {
+            _session.Set("userId", id);
         }
 
         // PUT api/<UserController>/5

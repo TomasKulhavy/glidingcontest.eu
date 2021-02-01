@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using MP2021_LKLB.Data;
+using MP2021_LKLB.Helpers;
 using MP2021_LKLB.Models;
 using MP2021_LKLB.Services;
 using MP2021_LKLB.Services.FlightLogService;
@@ -20,13 +22,14 @@ namespace MP2021_LKLB.Controllers
         private ApplicationDbContext _db;
         private IFlightLogService _flightLog;
         private IFlight _flight;
-        private string UserId { get; set; }
+        private readonly ISession _session;
 
-        public FlightLogController(ApplicationDbContext db, IFlightLogService flightLog, IFlight flight)
+        public FlightLogController(ApplicationDbContext db, IFlightLogService flightLog, IFlight flight, IHttpContextAccessor httpContext)
         {
             _db = db;
             _flightLog = flightLog;
             _flight = flight;
+            _session = httpContext.HttpContext.Session;
         }
 
         public class InputModel
@@ -55,11 +58,11 @@ namespace MP2021_LKLB.Controllers
         {
             string message = "started";
             string data = Data.Payload;
-            string userId = _flight.GetActiveUserId();
+            string userId = _session.Get<string>("userId");
             if (data != null)
             {
                 var returnDataObj = JsonConvert.DeserializeObject<FlightLog>(data);
-                returnDataObj.UserId = "WOLF";
+                returnDataObj.UserId = userId;
                 _flight.GiveTopBool(returnDataObj);
                 _db.FlightLogs.Add(returnDataObj);
                 await _db.SaveChangesAsync();

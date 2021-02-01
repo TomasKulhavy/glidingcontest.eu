@@ -48,6 +48,8 @@ namespace MP2021_LKLB
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IViewService, ViewService>();
 
+            services.AddSession();
+
             services.AddAuthorization();
 
             services.AddAuthentication()
@@ -87,6 +89,7 @@ namespace MP2021_LKLB
             app.UseAuthentication();
             app.UseIdentityServer();
             app.UseAuthorization();
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

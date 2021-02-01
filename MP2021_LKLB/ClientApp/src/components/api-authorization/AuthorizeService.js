@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { FlightDataContext } from "../../providers/FlightDataContext"; 
+import axios from "axios";
 import { UserManager, WebStorageStateStore } from 'oidc-client';
 import { ApplicationPaths, ApplicationName } from './ApiAuthorizationConstants';
 
@@ -22,6 +23,10 @@ export class AuthorizeService {
 
     async isAuthenticated() {
         const user = await this.getUser();
+        if(user != null)
+        {
+            axios.post(`https://localhost:44346/api/User/${user.sub}`);
+        }
         return !!user;
     }
 

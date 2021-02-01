@@ -25,7 +25,7 @@ const FlightList = () => {
           return (
             <tr key={item.id}>
                 <td>{item.date}</td>
-                <td>{item.pilot}</td>
+                <td>{item.userId}</td>
                 <td>{item.gliderType}</td>
                 <td><Button color="primary" onClick={() =>
                     dispatch({

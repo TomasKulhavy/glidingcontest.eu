@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Container, Table } from "reactstrap";
-import { useHistory } from "react-router-dom";
+import { Container, Table, Button } from "reactstrap";
+import { useHistory, Link } from "react-router-dom";
 import NavMenu from "../Layout/NavMenu";
-import { FlightDataContext } from "../../providers/FlightDataContext";
+import { FlightDataContext, ADD_FLIGHTID } from "../../providers/FlightDataContext";
 import axios from "axios";
 
 const PilotFlights = () => {
@@ -13,7 +13,7 @@ const PilotFlights = () => {
 
     useEffect(() => {
         axios
-            .get(`https://localhost:44346/api/User/pilotFlights/${state.pilotId})`)
+            .get(`https://localhost:44346/api/User/pilotFlights/${state.pilotId}`)
             .then((response) => {
                 setFlights(response.data);
                 console.log(response.data);
@@ -27,6 +27,12 @@ const PilotFlights = () => {
                 <td>{item.date}</td>
                 <td>{item.gliderType}</td>
                 <td>{item.registration}</td>
+                <td><Button color="primary" onClick={() =>
+                    dispatch({
+                        type: ADD_FLIGHTID,
+                        currentFlightId: item.id
+                    })} tag={Link} to="/flight/viewer">
+                Zobrazit let</Button></td>
             </tr> 
           );
         });
@@ -43,6 +49,7 @@ const PilotFlights = () => {
                             <th>Datum</th>
                             <th>Typ kluzáku</th>
                             <th>Registrace</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>

@@ -16,6 +16,7 @@ namespace MP2021_LKLB.Services
         private readonly IHttpContextAccessor _http;
         public string _user;
 
+        public string ActiveUserId { get; set; }
         public FlightService(ApplicationDbContext db, IHttpContextAccessor http, Identity identity)
         {
             _db = db;
@@ -49,10 +50,12 @@ namespace MP2021_LKLB.Services
             IQueryable<FlightLog> flightLogs = _db.FlightLogs.Include(f => f.FlightLogAnalyse).Include(f => f.User).OrderByDescending(f => f.FlightLogAnalyse.Score).Take(10);
             return flightLogs.ToList();
         }
-        public string GetActiveUserId()
+        public string GetActiveUserId(string id)
         {
-            var output = _http.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return output;
+            ApplicationUser user = _db.Pilots.Where(f => f.UserName == id).FirstOrDefault();
+            string userId = user.Id;
+            ActiveUserId = userId;
+            return userId;
         }
 
         public void GiveTopBool(FlightLog flightLog)
