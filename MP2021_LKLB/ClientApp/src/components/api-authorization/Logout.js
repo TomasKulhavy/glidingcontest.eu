@@ -58,14 +58,14 @@ export class Logout extends Component {
                     return (
                         <div className="text-center align-middle">
                             <Loader type="TailSpin" color="#00BFFF" height={80} width={80}/>
-                            <div>Processing logout</div>
+                            <div>Za okamžik budete přesměrováni</div>
                         </div>
                     );
                 case LogoutActions.LogoutCallback:
                     return (
                         <div className="text-center align-middle">
                             <Loader type="TailSpin" color="#00BFFF" height={80} width={80}/>
-                            <div>Processing logout callback</div>
+                            <div>Za okamžik budete přesměrováni</div>
                         </div>
                     );
                 case LogoutActions.LoggedOut:

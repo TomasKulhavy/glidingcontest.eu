@@ -9,17 +9,17 @@ const PilotFlights = () => {
     const history = useHistory();
     const [flights, setFlights] = useState([]);
     const [state, dispatch] = useContext(FlightDataContext);
-    const [year, setYear] = useState();
+    const [year, setYear] = useState(2021);
     console.log(state.pilotId);
 
     useEffect(() => {
         axios
-            .get(`https://localhost:44346/api/User/pilotFlights/${state.pilotId}`)
+            .get(`https://localhost:44346/api/User/pilotFlights/${state.pilotId}/${year}`)
             .then((response) => {
                 setFlights(response.data);
                 console.log(response.data);
             });
-    }, []);
+    }, [year]);
 
     function renderYears() {
         const years = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021];
@@ -30,6 +30,7 @@ const PilotFlights = () => {
               </td> 
             );
           });
+          console.log(year);
         return array;
     }
 

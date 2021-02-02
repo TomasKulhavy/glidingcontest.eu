@@ -55,14 +55,14 @@ export class Login extends Component {
                     return (
                         <div className="text-center align-middle">
                             <Loader type="TailSpin" color="#00BFFF" height={80} width={80}/>
-                            <div>Processing login</div>
+                            <div>Za okamžik budete přesměrováni</div>
                         </div>
                         );
                 case LoginActions.LoginCallback:
                     return (
                         <div className="text-center align-middle">
                             <Loader type="TailSpin" color="#00BFFF" height={80} width={80}/>
-                            <div>Processing logout callback</div>
+                            <div>Za okamžik budete přesměrováni</div>
                         </div>
                     );
                 case LoginActions.Profile:
