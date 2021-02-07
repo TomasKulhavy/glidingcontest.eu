@@ -17,6 +17,8 @@ const FlightView = () => {
   const [fixId, setFixId] = useState();
   const [score, setScore] = useState();
   const [flightTime, setFlightTime] = useState();
+  const [speed, setSpeed] = useState();
+  const [kilometers, setKilometers] = useState();
   const [state, dispatch] = useContext(FlightDataContext);
 
   useEffect(() => {
@@ -44,8 +46,10 @@ const FlightView = () => {
         console.log(response.data[0]);
         setScore(response.data[0].score);
         setFlightTime(response.data[0].flightTime.totalSeconds);
+        setKilometers(response.data[0].kilometers);
+        setSpeed(Number((response.data[0].avgSpeed).toFixed(2)));
       });
-  }, [fixId]);
+  }, []);
 
   function renderFixes() {
     const array = ([]);
@@ -113,6 +117,12 @@ const FlightView = () => {
                 </tr>
                 <tr>
                   <b>Body za let: </b>{score}
+                </tr>
+                <tr>
+                  <b>Kilometry: </b>{kilometers} KM
+                </tr>
+                <tr>
+                  <b>Prům. rychlost: </b>{speed} KM/H
                 </tr>
               </td>
             </tbody>

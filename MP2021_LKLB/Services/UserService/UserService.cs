@@ -27,6 +27,11 @@ namespace MP2021_LKLB.Services.UserService
             return await _db.Pilots.OrderByDescending(f => f.TopScore).ThenBy(f => f.FirstName).ToListAsync();
         }
 
+        public async Task<ApplicationUser> GetPilotsStats(string id)
+        {
+            return await _db.Pilots.Where(f => f.Id == id).FirstOrDefaultAsync();
+        }
+
         public async Task<ICollection<FlightLog>> GetPilotsFlights(string id, int? year)
         {
             ICollection<FlightLog> flights = await _db.FlightLogs

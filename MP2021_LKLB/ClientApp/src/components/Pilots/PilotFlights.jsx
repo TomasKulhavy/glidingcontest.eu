@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Container, Table, Button } from "reactstrap";
+import { Container, Table, Button, Card, CardBody, CardHeader, Row } from "reactstrap";
 import { useHistory, Link } from "react-router-dom";
 import NavMenu from "../Layout/NavMenu";
 import { FlightDataContext, ADD_FLIGHTID } from "../../providers/FlightDataContext";
@@ -8,6 +8,9 @@ import axios from "axios";
 const PilotFlights = () => {
     const history = useHistory();
     const [flights, setFlights] = useState([]);
+    const [pilot, setPilot] = useState([]);
+    const [flightTime, setFlightTime] = useState([]);
+    const [seconds, setSeconds] = useState();
     const [state, dispatch] = useContext(FlightDataContext);
     const [year, setYear] = useState(2021);
     console.log(state.pilotId);
@@ -19,15 +22,20 @@ const PilotFlights = () => {
                 setFlights(response.data);
                 console.log(response.data);
             });
+        axios
+            .get(`https://localhost:44346/api/User/pilotStats/${state.pilotId}`)
+            .then((response) => {
+                setPilot(response.data);
+                setFlightTime(response.data.sumHour);
+                setSeconds(flightTime.totalSeconds);
+            });
     }, [year]);
 
     function renderYears() {
         const years = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021];
         const array = years.map((item) => {
             return (
-              <td key={item}>
-                  <Button color="primary" onClick={e => {setYear(item);}}>{item}</Button>
-              </td> 
+                <Button className="mr-1" key={item} color="primary" onClick={e => {setYear(item);}}>{item}</Button>
             );
           });
           console.log(year);
@@ -53,28 +61,63 @@ const PilotFlights = () => {
         return array;
     }
 
+    function secondsToHms() {
+        var d = Number(seconds);
+        var h = Math.floor(d / 3600);
+        var m = Math.floor(d % 3600 / 60);
+        var s = Math.floor(d % 3600 % 60);
+    
+        var hDisplay = h > 0 ? h + ":" : "";
+        var mDisplay = m > 9 ? m + ":" : "0" + m + ":";
+        var sDisplay = s;
+        return hDisplay + mDisplay + sDisplay; 
+      }
+
+    function renderPilotCard() {
+        return(
+            <Card className="mr-3">
+                <CardHeader>
+                    {state.pilotId}
+                </CardHeader>
+                <CardBody>
+                    <tr>
+                        <b>Nálet hodin: </b> {secondsToHms()}
+                    </tr>
+                    <tr>
+                        <b>Nálet kilometrů: </b> {pilot.sumKilometers}
+                    </tr>
+                </CardBody>
+            </Card>
+        )
+    }
+
     return (
         <>
             <NavMenu />
             <Container>
-                <Table borderless>
+                <Row>
+                {renderPilotCard()}
+                <div className="">
+                    <Table borderless>
+                            <tbody className="">
+                                {renderYears()}
+                            </tbody>
+                    </Table>
+                    <Table striped>
+                        <thead>
+                            <tr>
+                                <th>Datum</th>
+                                <th>Typ kluzáku</th>
+                                <th>Registrace</th>
+                                <th></th>
+                            </tr>
+                        </thead>
                         <tbody>
-                            {renderYears()}
+                            {renderFlights()}
                         </tbody>
-                </Table>
-                <Table striped>
-                    <thead>
-                        <tr>
-                            <th>Datum</th>
-                            <th>Typ kluzáku</th>
-                            <th>Registrace</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {renderFlights()}
-                    </tbody>
-                </Table>
+                    </Table>
+                </div>
+                </Row>
             </Container>
         </>
     )

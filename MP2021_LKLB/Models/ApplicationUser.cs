@@ -35,6 +35,10 @@ namespace MP2021_LKLB.Models
         }
         [Display(Name = "Body")]
         public float? TopScore { get; set; }
+        [Display(Name = "Nálet hodin")]
+        public TimeSpan? SumHour { get; set; }
+        [Display(Name = "Nálet kilometrů")]
+        public float? SumKilometers { get; set; }
 
         public ICollection<FlightLog> Flights { get; set; }
     }

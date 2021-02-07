@@ -15,6 +15,10 @@ namespace MP2021_LKLB.Models
         public TimeSpan FlightTime { get; set; }
         [Display(Name = "Body")]
         public float? Score { get; set; }
+        [Display(Name = "Kilometry")]
+        public float? Kilometers { get; set; }
+        [Display(Name = "Prům. rychlost")]
+        public float? AvgSpeed { get; set; }
         public bool Topflight { get; set; }
         public FlightLog FlightLog { get; set; }
     }

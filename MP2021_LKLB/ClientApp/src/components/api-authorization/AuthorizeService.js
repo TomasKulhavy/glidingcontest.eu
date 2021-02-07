@@ -23,6 +23,7 @@ export class AuthorizeService {
 
     async isAuthenticated() {
         const user = await this.getUser();
+        console.log(user);
         if(user != null)
         {
             axios.post(`https://localhost:44346/api/User/${user.sub}`);

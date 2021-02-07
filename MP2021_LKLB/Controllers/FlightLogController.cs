@@ -64,7 +64,7 @@ namespace MP2021_LKLB.Controllers
             {
                 var returnDataObj = JsonConvert.DeserializeObject<FlightLog>(data);
                 returnDataObj.UserId = userId;
-                _flight.GiveTopBool(returnDataObj);
+                _flightLog.GiveTopBool(returnDataObj);
                 _db.FlightLogs.Add(returnDataObj);
                 await _db.SaveChangesAsync();
             }

@@ -47,6 +47,12 @@ namespace MP2021_LKLB.Controllers
             return await _user.GetPilotsFlights(id, year);
         }
 
+        [HttpGet("pilotStats/{id}")]
+        public async Task<ApplicationUser> GetStats(string id)
+        {
+            return await _user.GetPilotsStats(id);
+        }
+        
         // GET api/<UserController>/5
         [HttpGet("{id}")]
         public async Task<ICollection<ApplicationUser>> Get(string id)
