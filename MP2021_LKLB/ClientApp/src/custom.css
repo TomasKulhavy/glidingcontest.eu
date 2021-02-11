@@ -1,4 +1,17 @@
 /* Provide sufficient contrast against white background */
+.App {
+  text-align: center;
+  background-image: url(./appbackground.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: -5;
+  overflow: auto;
+}
+
 a {
   color: #0366d6;
 }

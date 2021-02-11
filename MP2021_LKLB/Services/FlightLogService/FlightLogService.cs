@@ -81,8 +81,18 @@ namespace MP2021_LKLB.Services.FlightLogService
                 if (flightLog.FlightLogAnalyse.Score > item.FlightLogAnalyse.Score)
                 {
                     flightLog.FlightLogAnalyse.Topflight = true;
-                    flightLog.FlightLogAnalyse.Topflight = false;
-                    
+                    //flightLog.FlightLogAnalyse.Topflight = false;
+                    if (flightLog.FlightLogAnalyse.Topflight == true)
+                    {
+                        if (Users.TopScore == null)
+                        {
+                            Users.TopScore = flightLog.FlightLogAnalyse.Score;
+                        }
+                        else if (Users.TopScore != null)
+                        {
+                            Users.TopScore = Users.TopScore + flightLog.FlightLogAnalyse.Score;
+                        }
+                    }
                 }
                 else if (item.FlightLogAnalyse.Score == null)
                 {
@@ -95,27 +105,21 @@ namespace MP2021_LKLB.Services.FlightLogService
                 }
             }
 
-            if (Users.SumKilometers == null && Users.SumHour == null)
+            if (Users.SumKilometers == null)
             {
-                Users.SumHour = flightLog.FlightLogAnalyse.FlightTime;
                 Users.SumKilometers = flightLog.FlightLogAnalyse.Kilometers;
             }
-            else if (Users.SumKilometers != null && Users.SumHour != null)
+            else if (Users.SumKilometers != null)
             {
-                Users.SumHour = Users.SumHour + flightLog.FlightLogAnalyse.FlightTime;
                 Users.SumKilometers = Users.SumKilometers + flightLog.FlightLogAnalyse.Kilometers;
             }
-
-            if (flightLog.FlightLogAnalyse.Topflight == true)
+            if (Users.SumHour == null)
             {
-                if (Users.TopScore == null)
-                {
-                    Users.TopScore = flightLog.FlightLogAnalyse.Score;
-                }
-                else if (Users.TopScore != null)
-                {
-                    Users.TopScore = Users.TopScore + flightLog.FlightLogAnalyse.Score;
-                }
+                Users.SumHour = flightLog.FlightLogAnalyse.FlightTime;
+            }
+            else if (Users.SumHour != null)
+            {
+                Users.SumHour = Users.SumHour + flightLog.FlightLogAnalyse.FlightTime;
             }
         }
         public List<FlightLog> GetPilotsFlights(string id, int? year)

@@ -35,7 +35,7 @@ const PilotOrder = () => {
         <>
             <NavMenu />
             <Container>
-                <Table striped>
+                <Table className="bg-light" striped>
                     <thead>
                         <tr>
                             <th>Body</th>

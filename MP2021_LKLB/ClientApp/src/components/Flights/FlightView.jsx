@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from "axios";
-import { Container, Table, Button, Row, Card, CardBody, CardHeader, CardFooter } from "reactstrap";
+import { Container, Table, Card, CardBody, CardHeader, CardFooter, Button } from "reactstrap";
 import NavMenu from "../Layout/NavMenu";
-import { FlightDataContext } from "../../providers/FlightDataContext";
-import { MapContainer, TileLayer, Polyline, CircleMarker, Popup } from "react-leaflet";
+import { Link } from "react-router-dom";
+import { MapContainer, TileLayer, Polyline } from "react-leaflet";
 import CanvasJSReact from '../../assets/canvasjs.react';
+import { FlightDataContext, ADD_PILOTID } from "../../providers/FlightDataContext";
+import Chart from 'react-apexcharts';
 
 import './Flight.css'
 
@@ -90,7 +92,12 @@ const FlightView = () => {
             <b>Datum: </b>{flightLog.date}
           </tr> 
           <tr>
-            <b>Pilot: </b>{flightLog.userId}
+            <b>Pilot: </b> <Button color="primary" outline onClick={() =>
+              dispatch({
+                type: ADD_PILOTID,
+                pilotId: flightLog.userId
+              })} tag={Link} to="/pilot/flights">
+              {flightLog.userId}</Button>
           </tr> 
           <tr>
             <b>Kluzák: </b>{flightLog.gliderType}

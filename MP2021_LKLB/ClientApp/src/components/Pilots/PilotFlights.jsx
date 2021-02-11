@@ -26,6 +26,7 @@ const PilotFlights = () => {
             .get(`https://localhost:44346/api/User/pilotStats/${state.pilotId}`)
             .then((response) => {
                 setPilot(response.data);
+                console.log(response.data)
                 setFlightTime(response.data.sumHour);
                 setSeconds(flightTime.totalSeconds);
             });
@@ -65,26 +66,24 @@ const PilotFlights = () => {
         var d = Number(seconds);
         var h = Math.floor(d / 3600);
         var m = Math.floor(d % 3600 / 60);
-        var s = Math.floor(d % 3600 % 60);
     
         var hDisplay = h > 0 ? h + ":" : "";
-        var mDisplay = m > 9 ? m + ":" : "0" + m + ":";
-        var sDisplay = s;
-        return hDisplay + mDisplay + sDisplay; 
+        var mDisplay = m > 9 ? m : "0" + m;
+        return hDisplay + mDisplay; 
       }
 
     function renderPilotCard() {
         return(
             <Card className="mr-3">
                 <CardHeader>
-                    {state.pilotId}
+                    {pilot.fullName}
                 </CardHeader>
                 <CardBody>
                     <tr>
                         <b>Nálet hodin: </b> {secondsToHms()}
                     </tr>
                     <tr>
-                        <b>Nálet kilometrů: </b> {pilot.sumKilometers}
+                        <b>Nálet kilometrů: </b> {Math.round(pilot.sumKilometers)} KM
                     </tr>
                 </CardBody>
             </Card>
@@ -103,7 +102,7 @@ const PilotFlights = () => {
                                 {renderYears()}
                             </tbody>
                     </Table>
-                    <Table striped>
+                    <Table className="bg-light" striped>
                         <thead>
                             <tr>
                                 <th>Datum</th>

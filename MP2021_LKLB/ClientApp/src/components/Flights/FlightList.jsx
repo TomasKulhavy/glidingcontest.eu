@@ -60,7 +60,7 @@ const FlightList = () => {
                             {renderYears()}
                         </tbody>
                 </Table>
-                <Table striped>
+                <Table className="bg-light" striped>
                     <thead>
                         <tr>
                             <th>Datum</th>

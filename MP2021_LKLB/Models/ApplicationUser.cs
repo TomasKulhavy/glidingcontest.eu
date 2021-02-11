@@ -33,10 +33,13 @@ namespace MP2021_LKLB.Models
                 return FirstName + " " + LastName;
             }
         }
+
         [Display(Name = "Body")]
         public float? TopScore { get; set; }
+
         [Display(Name = "Nálet hodin")]
         public TimeSpan? SumHour { get; set; }
+
         [Display(Name = "Nálet kilometrů")]
         public float? SumKilometers { get; set; }
 

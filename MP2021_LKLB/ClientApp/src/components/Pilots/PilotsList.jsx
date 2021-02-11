@@ -42,7 +42,7 @@ const PilotsList = () => {
         <>
             <NavMenu />
             <Container>
-                <Table striped>
+                <Table className="bg-light" striped>
                     <thead>
                         <tr>
                             <th>Jméno</th>
