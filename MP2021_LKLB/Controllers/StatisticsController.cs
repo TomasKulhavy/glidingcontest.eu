@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MP2021_LKLB.Models;
+using MP2021_LKLB.Services.StatisticsService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +14,18 @@ namespace MP2021_LKLB.Controllers
     [ApiController]
     public class StatisticsController : ControllerBase
     {
+        private IStatisticsService _stats;
+
+        public StatisticsController(IStatisticsService stats)
+        {
+            _stats = stats;
+        }
+
         // GET: api/<StatisticsController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<OverallStats> Get()
         {
-            return new string[] { "value1", "value2" };
+            return await _stats.GetStats();
         }
 
         // GET api/<StatisticsController>/5

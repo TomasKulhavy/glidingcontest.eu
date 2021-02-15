@@ -97,7 +97,7 @@ class UploadFlight extends Component {
                 <div className="Flight container h-100">
                     <div className="row align-items-center h-100">
                         <div className="col-md-6 .offset-md-3 mx-auto d-flex justify-content-center">
-                            <Card className="" body inverse style={{ backgroundColor: '#333', borderColor: '#333' }}>
+                            <Card body inverse style={{ backgroundColor: '#333', borderColor: '#333' }}>
                                 <CardTitle tag="h5">Nahraj svůj let</CardTitle>
                                 <Input className="my-2" type="file" accept=".igc" onChange={(e) => this.showFile(e)} />
                                 <Button className="my-2" onClick={() => this.sendFile()}>Odeslat</Button>

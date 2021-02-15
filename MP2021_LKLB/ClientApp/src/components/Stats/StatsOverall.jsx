@@ -1,20 +1,33 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Container, Table, Button, Card, CardTitle, CardText, Row } from "reactstrap";
-import { useHistory, Link } from "react-router-dom";
 import NavMenu from "../Layout/NavMenu";
 import axios from "axios";
 
 const StatsOverall = () => {
-    const [stats, setStats] = useState(null);
+    const [flightsNo, setFlightsNo] = useState();
+    const [time, setTime] = useState();
+    const [km, setKm] = useState();
 
     useEffect(() => {
         axios
             .get(`https://localhost:44346/api/Statistics`)
             .then((response) => {
-                setStats(response.data);
+                setFlightsNo(response.data.flightsNo);
+                setTime(response.data.timeInSeconds);
+                setKm(response.data.kilometers);
                 console.log(response.data);
             });
     }, []);
+
+    function renderTime() {
+        var d = Number(time);
+        var h = Math.floor(d / 3600);
+        var m = Math.floor(d % 3600 / 60);
+    
+        var hDisplay = h > 0 ? h + ":" : "";
+        var mDisplay = m > 9 ? m : "0" + m;
+        return hDisplay + mDisplay; 
+    }
 
     return(
         <>
@@ -23,22 +36,18 @@ const StatsOverall = () => {
                 <Row>
                     <Card className="my-3 col-4" body inverse color="dark">
                         <CardTitle tag="h5">Počet letů</CardTitle>
-                        <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
-                        <Button color="secondary">Button</Button>
+                        <CardText>{flightsNo}</CardText>
                     </Card>
                     <Card className="my-3 col-4" body inverse color="dark">
                         <CardTitle tag="h5">Počet hodin</CardTitle>
-                        <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
-                        <Button color="secondary">Button</Button>
+                        <CardText>{renderTime()}</CardText>
                     </Card>
                     <Card className="my-3 col-4" body inverse color="dark">
                         <CardTitle tag="h5">Počet kilometrů</CardTitle>
-                        <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
-                        <Button color="secondary">Button</Button>
+                        <CardText>{Math.round(km)} KM</CardText>
                     </Card>
                 </Row>
             </Container>
-
         </>
     )
 }

@@ -23,7 +23,7 @@ namespace MP2021_LKLB.Services.StatisticsService
             double sec = TimeSpan.FromTicks(ticks).TotalSeconds;
             float? kilometers = flightLog.FlightLogAnalyse.Kilometers;
             byte flightno = 1;
-            
+
             OverallStats stats = await _db.Stats.Where(f => f.Id == 1).FirstOrDefaultAsync();
             if (stats == null)
             {
@@ -37,6 +37,11 @@ namespace MP2021_LKLB.Services.StatisticsService
             }
 
             return stats;
+        }
+
+        public async Task<OverallStats> GetStats()
+        {
+            return await _db.Stats.Where(f => f.Id == 1).FirstOrDefaultAsync();
         }
     }
 }

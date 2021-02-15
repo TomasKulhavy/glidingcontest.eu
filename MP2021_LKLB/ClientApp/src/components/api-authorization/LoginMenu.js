@@ -38,17 +38,18 @@ export class LoginMenu extends Component {
             const loginPath = `${ApplicationPaths.Login}`;
             return this.anonymousView(registerPath, loginPath);
         } else {
+            const uploadPath = `flight/upload`;
             const profilePath = `${ApplicationPaths.Profile}`;
             const logoutPath = { pathname: `${ApplicationPaths.LogOut}`, state: { local: true } };
-            return this.authenticatedView(userName, profilePath, logoutPath);
+            return this.authenticatedView(userName, uploadPath, profilePath, logoutPath);
         }
     }
 
-    authenticatedView(userName, profilePath, logoutPath) {
+    authenticatedView(userName, uploadPath, profilePath, logoutPath) {
         return (
         <Fragment>
             <NavItem>
-                <NavLink tag={Link} className="text-light" to={'flight/upload'}><Button className="text-light" outline color="secondary">Nahrát let</Button></NavLink>
+                <NavLink tag={Link} className="text-light" to={uploadPath}><Button className="text-light" outline color="primary" size="sm">Nahrát let</Button></NavLink>
             </NavItem>
             <NavItem>
                 <NavLink tag={Link} className="text-light" to={profilePath}>Vítej, {userName}</NavLink>

@@ -29,7 +29,7 @@ const Home = () => {
       return (
         <tr key={item.id}>
             <td>{index + 1}</td>
-            <td>{item.topScore}</td>
+            <td>{Math.round(item.topScore)}</td>
             <td>{item.fullName}</td>
         </tr> 
       );
@@ -41,9 +41,13 @@ const Home = () => {
     var options = {
       method: 'GET',
       url: 'https://community-open-weather-map.p.rapidapi.com/weather',
-      params: {q: 'Liberec', lat: '504606', lon: '150130', units: 'metric', mode: 'json'},
+      params: {
+        q: 'Liberec,cz',
+        lang: 'en',
+        units: 'metric'
+      },
       headers: {
-        'x-rapidapi-key': 'b8864890b5msh1068a5a50ca5735p1cdac3jsnec0b6e055f2a',
+        'x-rapidapi-key': '1f7fc5207fmshaa1355de5f292f1p1324f6jsn796de1e54877',
         'x-rapidapi-host': 'community-open-weather-map.p.rapidapi.com'
       }
     };
@@ -59,9 +63,10 @@ const Home = () => {
     }).catch(function (error) {
       console.error(error);
     });
+
     return(
       <>
-        <Card className="my-3" body inverse color="dark">
+        <Card style={{backgroundColor: '#172b4d'}} className="my-3" body inverse color="dark">
           <CardTitle tag="h5">Počasí na letišti Liberec</CardTitle>
           <CardText>
             <FontAwesomeIcon className="mr-1" icon={faTemperatureHigh} /> <b className="mr-3">{temp}°C</b>
@@ -80,7 +85,7 @@ const Home = () => {
     <>
       <Layout>
         <Container>
-          {renderWeather()}
+
           <Row className="mb-3">
             <Card className="col-4 col-sm m-2 bg-dark text-light text-center">
               <CardHeader tag="h5">

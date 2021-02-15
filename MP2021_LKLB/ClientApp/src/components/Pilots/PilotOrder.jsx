@@ -20,7 +20,7 @@ const PilotOrder = () => {
           return (
             <tr key={item.id}>
                 <td>{index + 1}</td>
-                <td>{item.topScore}</td>
+                <td>{Math.round(item.topScore)}</td>
                 <td>{item.fullName}</td>
                 <td>{item.email}</td>
             </tr> 

@@ -10,5 +10,6 @@ namespace MP2021_LKLB.Services.StatisticsService
     public interface IStatisticsService
     {
         Task<OverallStats> SetStats(FlightLog flightlog);
+        Task<OverallStats> GetStats();
     }
 }
