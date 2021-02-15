@@ -1,7 +1,9 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTachometerAlt, faPlaneArrival, faRulerHorizontal, faBroadcastTower, faSearchLocation, faHome, faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
+import { faTachometerAlt, faPlaneArrival, faRulerHorizontal, faBroadcastTower, faSearchLocation, faHome, faEnvelope, faPhone, faCommentDots } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
+import { Link } from 'react-router-dom';
+
 const Footer = () => {
   return (
     <footer style={{position: 'absolute', width: '100%'}} className="page-footer font-small bg-dark text-white pt-4">
@@ -43,19 +45,24 @@ const Footer = () => {
         <div className="row d-flex align-items-center">
           <div className="col-md-7 col-lg-8">
             <p className="text-center text-md-left">
-              © 2021 - Databáze letů pro Aeroklub Liberec - <a asp-area asp-page="/Privacy">Privacy</a>
+              © 2021 - Databáze letů pro Aeroklub Liberec
             </p>
           </div>
           <div className="col-md-5 col-lg-4 ml-lg-0">
             <div className="text-center text-md-right">
               <ul className="list-unstyled list-inline">
                 <li className="list-inline-item">
-                  <a className="btn-floating btn-sm rgba-white-slight mx-1" target="_blank" href="https://www.facebook.com/tomas.kulhavy.52/">
+                  <Link className="btn-floating btn-sm rgba-white-slight mx-1" className="text-light" to="/feedback">
+                    Feedback <FontAwesomeIcon className="ml-1 mr-3" icon={faCommentDots} />
+                  </Link>
+                </li>
+                <li className="list-inline-item">
+                  <a className="btn-floating btn-sm rgba-white-slight mx-1" className="text-light" target="_blank" href="https://www.facebook.com/tomas.kulhavy.52/">
                     <FontAwesomeIcon className="mr-3" icon={faFacebook} />
                   </a>
                 </li>
                 <li className="list-inline-item">
-                  <a className="btn-floating btn-sm rgba-white-slight mx-1" target="_blank" href="https://www.instagram.com/tomaslklb/">
+                  <a className="btn-floating btn-sm rgba-white-slight mx-1" className="text-light" target="_blank" href="https://www.instagram.com/tomaslklb/">
                     <FontAwesomeIcon className="mr-3" icon={faInstagram} />
                   </a>
                 </li>

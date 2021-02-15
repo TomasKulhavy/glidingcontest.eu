@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using MP2021_LKLB.Data;
 using MP2021_LKLB.Models;
+using MP2021_LKLB.Services.StatisticsService;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -13,18 +14,17 @@ namespace MP2021_LKLB.Services.FlightLogService
     public class FlightLogService : IFlightLogService
     {
         private ApplicationDbContext _db;
-        private readonly IHttpContextAccessor _http;
+        private IStatisticsService _stats;
         public string _user;
         public class InputModel
         {
             public string Payload { get; set; }
         }
 
-        public FlightLogService(ApplicationDbContext db, IHttpContextAccessor http, Identity identity)
+        public FlightLogService(ApplicationDbContext db, IStatisticsService stats)
         {
             _db = db;
-            _http = http;
-            _user = identity.LoginId;
+            _stats = stats;
         }
         // GET
         public async Task<ICollection<FlightLog>> GetAllFlightLogs()
@@ -65,23 +65,22 @@ namespace MP2021_LKLB.Services.FlightLogService
                 return null;
             }
         }
-        public void GiveTopBool(FlightLog flightLog)
+        public async Task GiveTopBool(FlightLog flightLog)
         {
             string id = flightLog.UserId;
             int? year = flightLog.Date.Year;
             string userScoreId = flightLog.UserId;
-            List<FlightLog> flightsLog = GetPilotsFlights(id, year);
-            ApplicationUser Users = _db.Pilots.Where(f => f.Id == userScoreId).FirstOrDefault();
+            ICollection<FlightLog> flightsLog = GetPilotsFlights(id, year);
+            ApplicationUser Users = await _db.Pilots.Where(f => f.Id == userScoreId).FirstOrDefaultAsync();
 
-            List<FlightLog> flights = flightsLog.OrderByDescending(f => f.FlightLogAnalyse.Score).Take(3).ToList();
-            //FlightLog flight = flightsLog.OrderBy(f => f.FlightLogAnalyse.Score).First();
+            ICollection<FlightLog> flights = flightsLog.OrderByDescending(f => f.FlightLogAnalyse.Score).Take(3).ToList();
 
             foreach (var item in flights)
             {
                 if (flightLog.FlightLogAnalyse.Score > item.FlightLogAnalyse.Score)
                 {
                     flightLog.FlightLogAnalyse.Topflight = true;
-                    //flightLog.FlightLogAnalyse.Topflight = false;
+                    item.FlightLogAnalyse.Topflight = false;
                     if (flightLog.FlightLogAnalyse.Topflight == true)
                     {
                         if (Users.TopScore == null)
@@ -94,14 +93,23 @@ namespace MP2021_LKLB.Services.FlightLogService
                         }
                     }
                 }
-                else if (item.FlightLogAnalyse.Score == null)
-                {
-                    flightLog.FlightLogAnalyse.Topflight = true;
-                }
                 else
                 {
                     flightLog.FlightLogAnalyse.Topflight = false;
                     item.FlightLogAnalyse.Topflight = true;
+                }
+            }
+            if (flights == null)
+            {
+                flightLog.FlightLogAnalyse.Topflight = true;
+
+                if (Users.TopScore == null)
+                {
+                    Users.TopScore = flightLog.FlightLogAnalyse.Score;
+                }
+                else if (Users.TopScore != null)
+                {
+                    Users.TopScore = Users.TopScore + flightLog.FlightLogAnalyse.Score;
                 }
             }
 
@@ -113,18 +121,22 @@ namespace MP2021_LKLB.Services.FlightLogService
             {
                 Users.SumKilometers = Users.SumKilometers + flightLog.FlightLogAnalyse.Kilometers;
             }
-            if (Users.SumHour == null)
-            {
-                Users.SumHour = flightLog.FlightLogAnalyse.FlightTime;
-            }
-            else if (Users.SumHour != null)
-            {
-                Users.SumHour = Users.SumHour + flightLog.FlightLogAnalyse.FlightTime;
-            }
+
+            long ticks = flightLog.FlightLogAnalyse.FlightTime.Ticks;
+            double sec = TimeSpan.FromTicks(ticks).TotalSeconds;
+            Users.TimeInSec += sec;
+
+            _db.SaveChangesAsync();
         }
         public List<FlightLog> GetPilotsFlights(string id, int? year)
         {
-            IQueryable<FlightLog> flightLogs = _db.FlightLogs.Include(f => f.FlightLogAnalyse).Include(i => i.User).Where(i => i.UserId.Equals(id)).OrderByDescending(f => f.Date).ThenByDescending(f => f.FlightLogAnalyse.Score).Where(f => f.Date.Year == year);
+            IQueryable<FlightLog> flightLogs = _db.FlightLogs
+                .Include(f => f.FlightLogAnalyse)
+                .Include(i => i.User)
+                .Where(i => i.UserId.Equals(id))
+                .OrderByDescending(f => f.Date)
+                .ThenByDescending(f => f.FlightLogAnalyse.Score)
+                .Where(f => f.Date.Year == year);
             return flightLogs.ToList();
         }
 

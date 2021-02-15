@@ -5,6 +5,7 @@ import IGCParser from "igc-parser";
 import { solver, scoringRules as scoring } from "igc-xc-score";
 import { getSpeed, convertSpeed, getDistance } from 'geolib';
 import NavMenu from "../Layout/NavMenu";
+import { useDropzone } from "react-dropzone";
 
 import './Flight.css'
 

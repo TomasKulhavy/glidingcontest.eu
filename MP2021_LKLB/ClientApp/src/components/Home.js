@@ -64,11 +64,11 @@ const Home = () => {
         <Card className="my-3" body inverse color="dark">
           <CardTitle tag="h5">Počasí na letišti Liberec</CardTitle>
           <CardText>
-            <FontAwesomeIcon className="mr-3" icon={faTemperatureHigh} /> <b className="mr-3">{temp}°C</b>
-            <FontAwesomeIcon className="mr-3" icon={faTachometerAlt} /> <b className="mr-3">{pressure} hPa</b>
-            <FontAwesomeIcon className="mr-3" icon={faPercentage} /> <b className="mr-3">{humidity} %</b>
-            <FontAwesomeIcon className="mr-3" icon={faCloud} /> <b className="mr-3">{clouds}</b>
-            <FontAwesomeIcon className="mr-3" icon={faWind} /> <b className="mr-3">{windDeg}°/{windSp} m/s</b>
+            <FontAwesomeIcon className="mr-1" icon={faTemperatureHigh} /> <b className="mr-3">{temp}°C</b>
+            <FontAwesomeIcon className="mr-1" icon={faTachometerAlt} /> <b className="mr-3">{pressure} hPa</b>
+            <FontAwesomeIcon className="mr-1" icon={faPercentage} /> <b className="mr-3">{humidity} %</b>
+            <FontAwesomeIcon className="mr-1" icon={faCloud} /> <b className="mr-3">{clouds}</b>
+            <FontAwesomeIcon className="mr-1" icon={faWind} /> <b className="mr-3">{windDeg}°/{windSp} m/s</b>
           </CardText>
           <Button color="secondary" href="http://www.aeroklubliberec.cz/" target="blank">Aeroklub Liberec</Button>
         </Card>
@@ -81,9 +81,9 @@ const Home = () => {
       <Layout>
         <Container>
           {renderWeather()}
-          <Row>
+          <Row className="mb-3">
             <Card className="col-4 col-sm m-2 bg-dark text-light text-center">
-              <CardHeader>
+              <CardHeader tag="h5">
                 Top piloti
               </CardHeader>
               <CardBody>
@@ -95,7 +95,7 @@ const Home = () => {
               </CardBody>
             </Card>
             <Card className="text-center m-2">
-              <CardHeader className="bg-dark text-light">Kde se právě lítá?</CardHeader>
+              <CardHeader className="bg-dark text-light" tag="h5">Kde se právě lítá?</CardHeader>
               <CardBody style={{padding: '0%'}}>
                 <iframe src="https://glideandseek.com/?viewport=50.75235,15.18841,10" allow="geolocation" width={700} height={350}>
                 </iframe>

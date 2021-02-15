@@ -38,7 +38,7 @@ namespace MP2021_LKLB.Models
         public float? TopScore { get; set; }
 
         [Display(Name = "Nálet hodin")]
-        public TimeSpan? SumHour { get; set; }
+        public double TimeInSec { get; set; }
 
         [Display(Name = "Nálet kilometrů")]
         public float? SumKilometers { get; set; }

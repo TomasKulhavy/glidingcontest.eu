@@ -26,6 +26,8 @@ namespace MP2021_LKLB.Data
         public DbSet<FlightTask> FlightTasks { get; set; }
         public DbSet<FlightLogAnalyse> FlightLogAnalyses { get; set; }
         public DbSet<Points> Points { get; set; }
+        public DbSet<FeedbackUser> Feedbacks { get; set; }
+        public DbSet<OverallStats> Stats { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

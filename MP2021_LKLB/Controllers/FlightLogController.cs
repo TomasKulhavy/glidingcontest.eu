@@ -6,6 +6,7 @@ using MP2021_LKLB.Helpers;
 using MP2021_LKLB.Models;
 using MP2021_LKLB.Services;
 using MP2021_LKLB.Services.FlightLogService;
+using MP2021_LKLB.Services.StatisticsService;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -22,15 +23,17 @@ namespace MP2021_LKLB.Controllers
     {
         private ApplicationDbContext _db;
         private IFlightLogService _flightLog;
+        private IStatisticsService _stats;
         private IFlight _flight;
         private readonly ISession _session;
 
-        public FlightLogController(ApplicationDbContext db, IFlightLogService flightLog, IFlight flight, IHttpContextAccessor httpContext)
+        public FlightLogController(ApplicationDbContext db, IFlightLogService flightLog, IFlight flight, IHttpContextAccessor httpContext, IStatisticsService stats)
         {
             _db = db;
             _flightLog = flightLog;
             _flight = flight;
             _session = httpContext.HttpContext.Session;
+            _stats = stats;
         }
 
         public class InputModel
@@ -64,8 +67,9 @@ namespace MP2021_LKLB.Controllers
             {
                 var returnDataObj = JsonConvert.DeserializeObject<FlightLog>(data);
                 returnDataObj.UserId = userId;
-                _flightLog.GiveTopBool(returnDataObj);
-                _db.FlightLogs.Add(returnDataObj);
+                await _stats.SetStats(returnDataObj);
+                await _flightLog.GiveTopBool(returnDataObj);
+                await _db.FlightLogs.AddAsync(returnDataObj);
                 await _db.SaveChangesAsync();
             }
 

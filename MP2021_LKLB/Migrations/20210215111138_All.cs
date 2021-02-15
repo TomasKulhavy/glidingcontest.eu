@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MP2021_LKLB.Migrations
 {
-    public partial class all : Migration
+    public partial class All : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -31,7 +31,7 @@ namespace MP2021_LKLB.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Gender = table.Column<int>(type: "int", nullable: false),
                     TopScore = table.Column<float>(type: "real", nullable: true),
-                    SumHour = table.Column<TimeSpan>(type: "time", nullable: true),
+                    TimeInSec = table.Column<double>(type: "float", nullable: false),
                     SumKilometers = table.Column<float>(type: "real", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -73,6 +73,24 @@ namespace MP2021_LKLB.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Feedbacks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Club = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Feedback = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GDPR = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Feedbacks", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Images",
                 columns: table => new
                 {
@@ -104,6 +122,21 @@ namespace MP2021_LKLB.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PersistedGrants", x => x.Key);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Stats",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TimeInSeconds = table.Column<double>(type: "float", nullable: false),
+                    Kilometers = table.Column<float>(type: "real", nullable: true),
+                    FlightsNo = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Stats", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -401,25 +434,25 @@ namespace MP2021_LKLB.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "ADMIN", "967cbc0e-594e-474a-ba60-70c62e259f5c", "PilotRole", "Administrator", "ADMINISTRATOR" },
-                    { "PILOT", "9c622fff-0b9c-451d-ab15-46fd5d14a067", "PilotRole", "Pilot", "PILOT" }
+                    { "ADMIN", "29e9679d-137d-44c8-9f2b-db50c447c34d", "PilotRole", "Administrator", "ADMINISTRATOR" },
+                    { "PILOT", "2624fa4a-6103-4cd4-9cab-a49c0976a6b0", "PilotRole", "Pilot", "PILOT" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "Gender", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "SumHour", "SumKilometers", "TopScore", "TwoFactorEnabled", "UserName" },
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "Gender", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "SumKilometers", "TimeInSec", "TopScore", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "TOMAS123", 0, "c8cbce41-1f10-466e-b5b1-73f77233d3d9", "tomas.kulhavy@pslib.cz", true, "Tomáš", 0, "Kulhavý", false, null, "TOMAS.KULHAVY@PSLIB.CZ", "TOMASLKLB", "AQAAAAEAACcQAAAAEPtnm8zKk6j5WYctyYnqAOhCHBwcP61qorRLOSrqA20dwuHWL04du+gXV6tgbpr9OQ==", null, false, "", null, null, null, false, "TomasLKLB" },
-                    { "WOLF", 0, "90a12438-52a2-459c-ae69-6ede4d86634e", "w.sluka@seznam.cz", true, "Wolfgang", 0, "Sluka", false, null, "W.SLUKA@SEZNAM.CZ", "WOLF", "AQAAAAEAACcQAAAAEPQ8u9VtdT9QRi9SMsiBIV4CkyCTjhRIQt7gPUbK8dtkHJ7ot8aoqxsme3BrYRYRNw==", null, false, "", null, null, null, false, "Wolf" },
-                    { "CICA", 0, "7957423d-7a01-411f-8ffa-50cb819c8a41", "meta5@seznam.cz", true, "Martin", 0, "Cicvárek", false, null, "META5@SEZNAM.CZ", "CÍCA", "AQAAAAEAACcQAAAAEI+07k3WCk1Eu6pyBzrZyh9yOFcQzzd1nfC+NN76Xsttewo9IquGq5lR+8ZmtaqXHw==", null, false, "", null, null, null, false, "Cíca" },
-                    { "LUKASZ", 0, "8ea3c75d-47d2-4d36-9ea6-3e205917f447", "czajkolu@gmail.com", true, "Lukasz", 0, "Czaikowski", false, null, "CZAJKOLU@GMAIL.COM", "LUKASZ", "AQAAAAEAACcQAAAAEGwz7ezQA3NI6CE3vaPSdyjzX6mOB/74Rfu+RnRaL9dXJTW3c1GBBId6myStTsiRkA==", null, false, "", null, null, null, false, "Lukasz" },
-                    { "JANHYB", 0, "4436b97b-eb63-4b42-9d78-ce784f019edf", "jan.hyb@seznam.cz", true, "Jan", 0, "Hybner", false, null, "JAN.HYB@SEZNAM.CZ", "HONZAHYB", "AQAAAAEAACcQAAAAEAr/vgOIMhiIxiW4c/2MeDQcenbkcRos+sy2ynHmbO2+w2dL+cHpR+IfWfMNHIsR9A==", null, false, "", null, null, null, false, "HonzaHyb" },
-                    { "ZDENEK", 0, "6c48ca80-6607-4dae-9fb2-dbb501f5844e", "Zdenek.Ulrych@seznam.cz", true, "Zdeněk", 0, "Ulrych", false, null, "ZDENEK.ULRYCH@SEZNAM.CZ", "ZDENEK", "AQAAAAEAACcQAAAAEHo+HVe4IUEvl7MwkNRcE8DKw11az+2jYZv/aJthb8WxAG4dCDwpfr4Hgifk+adIEw==", null, false, "", null, null, null, false, "Zdenek" },
-                    { "PETRZA", 0, "bcbe78b0-1f90-4614-83a3-e1d35965a0b2", "petr-zajic@volny.cz", true, "Petr", 0, "Zajíc", false, null, "PETR-ZAJIC@VOLNY.CZ", "ZAJDA", "AQAAAAEAACcQAAAAEC48NzR28QB3VKBezmlEGMccsAA1+cOS7bHel3kn14ME1Nx0Et3Zw+PpHdEyo4llzA==", null, false, "", null, null, null, false, "Zajda" },
-                    { "PETRHYB", 0, "f70be20e-ab4d-4bbf-9ef7-aa5645223964", "petr-hybner@seznam.cz", true, "Petr", 0, "Hybner", false, null, "PETR-HYBNER@SEZNAM.CZ", "PETRHYB", "AQAAAAEAACcQAAAAELZavNvT+aJXghhvTvlu3H2UhWBXvPEO6Prf7zsYUeSCt+h4AdNI1HSX+6HdKrHgAA==", null, false, "", null, null, null, false, "PetrHyb" },
-                    { "RUDA", 0, "cadbcbcf-09e0-4a96-a3e0-bdb59f8350f5", "patrman.rudolf@seznam.cz", true, "Rudolf", 0, "Patrman", false, null, "PATRMAN.RUDOLF@SEZNAM.CZ", "RUDA", "AQAAAAEAACcQAAAAEPFrPCXznpiTCxKNJy2AfCZqKrrLQONXvLnwUNx2Ou2JRE1VWTohFTo65uScV+hyLg==", null, false, "", null, null, null, false, "Ruda" },
-                    { "MILAN", 0, "e2bb043b-04bc-4578-adf7-26fc00c0f5a0", "milandvorak.gld@seznam.cz", true, "Milan", 0, "Dvořák", false, null, "MILANDVORAK.GLD@SEZNAM.CZ", "MILAN", "AQAAAAEAACcQAAAAEL1j0z0//qGVZrQscqxnDpy0YR4OoKGyNRKjsyT3+LuCzyxi4ldFjKKGXVHlHOR45A==", null, false, "", null, null, null, false, "Milan" }
+                    { "TOMAS123", 0, "961c4437-de84-4a18-8008-067f3a5622ef", "tomas.kulhavy@pslib.cz", true, "Tomáš", 0, "Kulhavý", false, null, "TOMAS.KULHAVY@PSLIB.CZ", "TOMASLKLB", "AQAAAAEAACcQAAAAECrdV30AFE9R1n1uKHqw2uhItzhki+RmtnfPU1PPywNXUuCo5z6cHDP3dxG/rgh6tw==", null, false, "", null, 0.0, null, false, "TomasLKLB" },
+                    { "WOLF", 0, "635d55e3-cdfb-4ef7-aa3d-d40637b4c694", "w.sluka@seznam.cz", true, "Wolfgang", 0, "Sluka", false, null, "W.SLUKA@SEZNAM.CZ", "WOLF", "AQAAAAEAACcQAAAAEMBB+xNOrMB2BYgfCZzE+X4+uxXHmPrSaqTC1o/24dqY/wO5/2nMTFjpoVVm7TUe7A==", null, false, "", null, 0.0, null, false, "Wolf" },
+                    { "CICA", 0, "13d70fa7-2748-4807-9265-4990818c9b45", "meta5@seznam.cz", true, "Martin", 0, "Cicvárek", false, null, "META5@SEZNAM.CZ", "CÍCA", "AQAAAAEAACcQAAAAEJOdYHEMUQrMWr9j9TaOA6AhFn1rVszXWQeszBinD688ibgI1/1DqAvFQk1s3pRGaA==", null, false, "", null, 0.0, null, false, "Cíca" },
+                    { "LUKASZ", 0, "a440fbbd-53ea-4624-bccd-9a71f919b97c", "czajkolu@gmail.com", true, "Lukasz", 0, "Czaikowski", false, null, "CZAJKOLU@GMAIL.COM", "LUKASZ", "AQAAAAEAACcQAAAAEJaUwM0TxxIbBi9yT0mPpB4ZEFJXVw5/ue5b3d6fyvdQ3Vo9hDaIam98LnspOCb7UQ==", null, false, "", null, 0.0, null, false, "Lukasz" },
+                    { "JANHYB", 0, "7fd79bc1-347d-4f41-911a-8ba2340f8507", "jan.hyb@seznam.cz", true, "Jan", 0, "Hybner", false, null, "JAN.HYB@SEZNAM.CZ", "HONZAHYB", "AQAAAAEAACcQAAAAEF6FSnNsm6EoRQGr13P3EKoPqE9bSGhMfmjyp/EDtb0b8gYJVjfPhPB0aMlrnZ1D6w==", null, false, "", null, 0.0, null, false, "HonzaHyb" },
+                    { "ZDENEK", 0, "f82c9e12-b354-4cf9-8d81-2a330dba33c5", "Zdenek.Ulrych@seznam.cz", true, "Zdeněk", 0, "Ulrych", false, null, "ZDENEK.ULRYCH@SEZNAM.CZ", "ZDENEK", "AQAAAAEAACcQAAAAEHRHU0LM3EBPth12Lh96amUl/GvD39TM6kdYLEInpH4qeqBw2ivohBsF2Bb7j1maCw==", null, false, "", null, 0.0, null, false, "Zdenek" },
+                    { "PETRZA", 0, "db2c9bef-6c2b-47c3-820d-9624c4bffc45", "petr-zajic@volny.cz", true, "Petr", 0, "Zajíc", false, null, "PETR-ZAJIC@VOLNY.CZ", "ZAJDA", "AQAAAAEAACcQAAAAENb6T1AoPUFpf8kOA4VgiVzXJC4GS61WGUoIArg1G53GFF4oVzLfrptO/gKK+cRE8w==", null, false, "", null, 0.0, null, false, "Zajda" },
+                    { "PETRHYB", 0, "d495cabd-2671-48b5-aa1d-ea27bb28ec0e", "petr-hybner@seznam.cz", true, "Petr", 0, "Hybner", false, null, "PETR-HYBNER@SEZNAM.CZ", "PETRHYB", "AQAAAAEAACcQAAAAEEPV4hAt0xPTpM/92txChdlitPsPETwJKcBIHu1eChCgAbYYG1AJUAiDaovJ/lw2NQ==", null, false, "", null, 0.0, null, false, "PetrHyb" },
+                    { "RUDA", 0, "b6ecd200-8b1c-4a2f-b3b5-b85e0da5ed58", "patrman.rudolf@seznam.cz", true, "Rudolf", 0, "Patrman", false, null, "PATRMAN.RUDOLF@SEZNAM.CZ", "RUDA", "AQAAAAEAACcQAAAAEFeP90MySBIhpHki3DyC1cj0flghdTNCWJZl0fyhmYDr9Sc64eoq2bOV6PcwV+m7fg==", null, false, "", null, 0.0, null, false, "Ruda" },
+                    { "MILAN", 0, "b3c654b4-f5c2-41dc-ab0c-9c79e24188ea", "milandvorak.gld@seznam.cz", true, "Milan", 0, "Dvořák", false, null, "MILANDVORAK.GLD@SEZNAM.CZ", "MILAN", "AQAAAAEAACcQAAAAEHClyfagIy+kF06y6cH54qrt9tWFZdLZjmIz8LageU58Cn3lpICzzZN7pW7vZhErpQ==", null, false, "", null, 0.0, null, false, "Milan" }
                 });
 
             migrationBuilder.InsertData(
@@ -562,6 +595,9 @@ namespace MP2021_LKLB.Migrations
                 name: "Extensions");
 
             migrationBuilder.DropTable(
+                name: "Feedbacks");
+
+            migrationBuilder.DropTable(
                 name: "FlightLogAnalyses");
 
             migrationBuilder.DropTable(
@@ -572,6 +608,9 @@ namespace MP2021_LKLB.Migrations
 
             migrationBuilder.DropTable(
                 name: "Points");
+
+            migrationBuilder.DropTable(
+                name: "Stats");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Container, Table } from "reactstrap";
-import { useHistory } from "react-router-dom";
 import NavMenu from "../Layout/NavMenu";
 import axios from "axios";
 
 const PilotOrder = () => {
-    const history = useHistory();
     const [pilots, setPilots] = useState([]);
 
     useEffect(() => {
@@ -18,9 +16,10 @@ const PilotOrder = () => {
     }, []);
 
     function renderUsers() {
-        const array = pilots.map((item) => {
+        const array = pilots.map((item, index) => {
           return (
             <tr key={item.id}>
+                <td>{index + 1}</td>
                 <td>{item.topScore}</td>
                 <td>{item.fullName}</td>
                 <td>{item.email}</td>
@@ -38,6 +37,7 @@ const PilotOrder = () => {
                 <Table className="bg-light" striped>
                     <thead>
                         <tr>
+                            <th>#</th>
                             <th>Body</th>
                             <th>Jméno</th>
                             <th>Email</th>

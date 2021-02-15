@@ -10,7 +10,6 @@ const PilotFlights = () => {
     const [flights, setFlights] = useState([]);
     const [pilot, setPilot] = useState([]);
     const [flightTime, setFlightTime] = useState([]);
-    const [seconds, setSeconds] = useState();
     const [state, dispatch] = useContext(FlightDataContext);
     const [year, setYear] = useState(2021);
     console.log(state.pilotId);
@@ -27,8 +26,7 @@ const PilotFlights = () => {
             .then((response) => {
                 setPilot(response.data);
                 console.log(response.data)
-                setFlightTime(response.data.sumHour);
-                setSeconds(flightTime.totalSeconds);
+                setFlightTime(response.data.timeInSec);
             });
     }, [year]);
 
@@ -63,7 +61,7 @@ const PilotFlights = () => {
     }
 
     function secondsToHms() {
-        var d = Number(seconds);
+        var d = Number(flightTime);
         var h = Math.floor(d / 3600);
         var m = Math.floor(d % 3600 / 60);
     

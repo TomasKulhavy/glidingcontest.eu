@@ -158,7 +158,6 @@ const FlightView = () => {
 			animationEnabled: true,
 			data: data
     }
-				
 		return (
 		<div>
 			<CanvasJSChart options = {options} />

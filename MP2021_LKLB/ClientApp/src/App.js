@@ -11,6 +11,8 @@ import PilotFlights from "./components/Pilots/PilotFlights";
 import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
 import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
 import Stats from "./components/Stats/StatsOverall";
+import Feedback from "./components/Feedback/Feedback";
+import FeedbackReview from "./components/Feedback/FeedbackReview";
 import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
 import FlightList from "./components/Flights/FlightList";
 import { FlightDataProvider } from "./providers/FlightDataContext";
@@ -32,7 +34,9 @@ function App() {
               <Route exact path="/pilot/list" component={PilotsList} />
               <Route exact path="/pilot/order" component={PilotOrder} />
               <Route exact path="/pilot/flights" component={PilotFlights} />
-              <Route exact apth="/statistics" component={Stats} />
+              <Route exact path="/statistics" component={Stats} />
+              <Route exact path="/feedback" component={Feedback} />
+              <AuthorizeRoute exact path="/feedback/review" component={FeedbackReview} />
               <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
           </Switch>
         </Router>

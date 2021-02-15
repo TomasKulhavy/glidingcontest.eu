@@ -1,5 +1,6 @@
 import React from 'react'
 import { Component } from 'react';
+import { Button } from "reactstrap";
 import authService from './AuthorizeService';
 import { AuthenticationResultStatus } from './AuthorizeService';
 import { QueryParameterNames, LogoutActions, ApplicationPaths } from './ApiAuthorizationConstants';
@@ -34,7 +35,7 @@ export class Logout extends Component {
                 this.processLogoutCallback();
                 break;
             case LogoutActions.LoggedOut:
-                this.setState({ isReady: true, message: "You successfully logged out!" });
+                this.setState({ isReady: true, message: "" });
                 this.logout(this.getReturnUrl());
                 break;
             default:
@@ -56,14 +57,14 @@ export class Logout extends Component {
             switch (action) {
                 case LogoutActions.Logout:
                     return (
-                        <div className="text-center align-middle">
+                        <div className="text-center align-middle center">
                             <Loader type="TailSpin" color="#00BFFF" height={80} width={80}/>
-                            <div>Za okamžik budete přesměrováni</div>
+                            <div>Odhlašujeme Vás</div>
                         </div>
                     );
                 case LogoutActions.LogoutCallback:
                     return (
-                        <div className="text-center align-middle">
+                        <div className="text-center align-middle center">
                             <Loader type="TailSpin" color="#00BFFF" height={80} width={80}/>
                             <div>Za okamžik budete přesměrováni</div>
                         </div>
@@ -94,7 +95,7 @@ export class Logout extends Component {
                     throw new Error("Invalid authentication result status.");
             }
         } else {
-            this.setState({ message: "You successfully logged out!" });
+            this.setState({ message: "" });
         }
     }
 
