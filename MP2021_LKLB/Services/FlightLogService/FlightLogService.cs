@@ -31,6 +31,7 @@ namespace MP2021_LKLB.Services.FlightLogService
         {
             return await _db.FlightLogs.ToListAsync();
         }
+
         // GET ID
         public async Task<ICollection<FlightLog>> GetFlightLog(int id)
         {
@@ -139,47 +140,5 @@ namespace MP2021_LKLB.Services.FlightLogService
                 .Where(f => f.Date.Year == year);
             return flightLogs.ToList();
         }
-
-        //    public void FlightAnalyse(FlightLog flightLog)
-        //    {
-        //        string id = flightLog.UserId;
-        //        int? year = flightLog.Date.Year;
-        //        string userScoreId = flightLog.UserId;
-        //        ApplicationUser Users = _db.Pilots.Where(f => f.Id == userScoreId).FirstOrDefault();
-        //        FlightLogAnalyse Analyse = _db.FlightLogAnalyses.Where(f => f.Fligh == userScoreId).FirstOrDefault();
-
-        //        Users.Flights.
-
-        //        foreach (var item in flights)
-        //        {
-        //            if (flightLog.FlightLogAnalyse.Score > item.FlightLogAnalyse.Score)
-        //            {
-        //                flightLog.FlightLogAnalyse.Topflight = true;
-        //                //flight.FlightLogAnalyse.Topflight = false;
-        //            }
-        //            else if (item.FlightLogAnalyse.Score == null)
-        //            {
-        //                flightLog.FlightLogAnalyse.Topflight = true;
-        //            }
-        //            else
-        //            {
-        //                flightLog.FlightLogAnalyse.Topflight = false;
-        //                item.FlightLogAnalyse.Topflight = true;
-        //            }
-        //        }
-
-        //        if (flightLog.FlightLogAnalyse.Topflight == true)
-        //        {
-        //            if (Users.TopScore == null)
-        //            {
-        //                Users.TopScore = flightLog.FlightLogAnalyse.Score;
-        //            }
-        //            else if (Users.TopScore != null)
-        //            {
-        //                Users.TopScore = Users.TopScore + flightLog.FlightLogAnalyse.Score;
-        //            }
-        //        }
-        //    }
-        //}
     }
 }

@@ -27,17 +27,17 @@ function App() {
       <FlightDataProvider>
         <Router history={history}>
           <Switch>
-              <Route exact path="/" component={Home} />
-              <Route exact path="/flight/list" component={FlightList} />
-              <Route exact path="/flight/viewer" component={FlightView} />
-              <AuthorizeRoute exact path="/flight/upload" component={UploadFlight} />
-              <Route exact path="/pilot/list" component={PilotsList} />
-              <Route exact path="/pilot/order" component={PilotOrder} />
-              <Route exact path="/pilot/flights" component={PilotFlights} />
-              <Route exact path="/statistics" component={Stats} />
-              <Route exact path="/feedback" component={Feedback} />
-              <AuthorizeRoute exact path="/feedback/review" component={FeedbackReview} />
-              <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
+            <Route exact path="/" component={Home} />
+            <Route exact path="/flight/list" component={FlightList} />
+            <Route exact path="/flight/viewer" component={FlightView} />
+            <AuthorizeRoute exact path="/flight/upload" component={UploadFlight} />
+            <Route exact path="/pilot/list" component={PilotsList} />
+            <Route exact path="/pilot/order" component={PilotOrder} />
+            <Route exact path="/pilot/flights" component={PilotFlights} />
+            <Route exact path="/statistics" component={Stats} />
+            <Route exact path="/feedback" component={Feedback} />
+            <AuthorizeRoute exact path="/feedback/review" component={FeedbackReview} />
+            <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
           </Switch>
         </Router>
       </FlightDataProvider>

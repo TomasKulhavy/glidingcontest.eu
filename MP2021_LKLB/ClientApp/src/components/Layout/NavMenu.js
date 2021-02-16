@@ -9,7 +9,7 @@ const NavMenu = () => {
     <header>
       <Navbar className="navbar-expand-sm navbar-toggleable-sm bg-dark border-bottom box-shadow mb-3">
         <Container>
-          <NavbarBrand tag={Link} className="text-light" to="/">Databáze letů</NavbarBrand>
+          <NavbarBrand tag={Link} className="text-light text-uppercase" to="/">Databáze letů</NavbarBrand>
           <Collapse className="d-sm-inline-flex flex-sm-row-reverse" navbar>
             <ul className="navbar-nav flex-grow">
               <NavItem>
@@ -23,9 +23,6 @@ const NavMenu = () => {
               </NavItem>
               <NavItem>
                 <NavLink tag={Link} className="text-light" to="/statistics">Statistiky</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink tag={Link} className="text-light" to="/photogallery">Fotogalerie</NavLink>
               </NavItem>
               <LoginMenu>
               </LoginMenu>

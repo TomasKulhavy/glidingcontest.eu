@@ -140,6 +140,37 @@ const FlightView = () => {
   }
 
   function renderGraph() { 
+  /* 
+  
+    // APEX CHART, načítá se dlouho
+
+    const data = fixes.map((item) => {
+      return (item.timestamp);
+    });
+
+    const fixAlt = fixes.map((item) => {
+      return (item.gpsAltitude);
+    });
+
+    const options = {
+      stroke: {
+        curve: 'smooth'
+      },
+      markers: {
+        size: 0
+      },
+      xaxis: {
+        categories: data
+      }
+    }
+    const series = [{
+      data: fixAlt
+    }]
+    return (
+        <Chart options={options} series={series} type="line" />
+    );
+    */
+  
 		var data = [];
 		var dataSeries = { type: "line" };
 		var dataPoints = [];
@@ -165,6 +196,7 @@ const FlightView = () => {
 			<span id="timeToRender" className="graph"></span>
 		</div>
 		);
+    
   }
 
   const flightLine = [

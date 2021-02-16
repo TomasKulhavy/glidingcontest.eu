@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Container, Table, Button, Card, CardBody, CardHeader, Row } from "reactstrap";
+import { Container, Table, Button, Card, CardBody, Col, Row } from "reactstrap";
 import { useHistory, Link } from "react-router-dom";
 import NavMenu from "../Layout/NavMenu";
 import { FlightDataContext, ADD_FLIGHTID } from "../../providers/FlightDataContext";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from "axios";
+import { faRulerVertical, faStopwatch, faUser } from "@fortawesome/free-solid-svg-icons";
 
 const PilotFlights = () => {
     const history = useHistory();
@@ -72,19 +74,30 @@ const PilotFlights = () => {
 
     function renderPilotCard() {
         return(
-            <Card className="mr-3">
-                <CardHeader>
-                    {pilot.fullName}
-                </CardHeader>
-                <CardBody>
-                    <tr>
-                        <b>Nálet hodin: </b> {secondsToHms()}
-                    </tr>
-                    <tr>
-                        <b>Nálet kilometrů: </b> {Math.round(pilot.sumKilometers)} KM
-                    </tr>
-                </CardBody>
-            </Card>
+            <>
+                <Col lg="3">
+                    <Card className="card-box bg-dark border-0 text-light mb-5">
+                        <CardBody>
+                            <div className="d-flex align-items-start">
+                                <div className="font-weight-bold">
+                                    <small className="text-white-70 d-block mb-1 text-uppercase">{pilot.fullName}</small>
+                                    <tr>
+                                        <span className="font-size-xl mt-1"><FontAwesomeIcon icon={faStopwatch} className="font-size-l mr-3" />{secondsToHms()}</span>
+                                    </tr>
+                                    <tr>
+                                        <span className="font-size-xl mt-1"><FontAwesomeIcon icon={faRulerVertical} className="font-size-l mr-3" />{Math.round(pilot.sumKilometers)} KM</span>
+                                    </tr>
+                                </div>
+                                <div className="ml-auto">
+                                    <div className="text-center mb-1">
+                                        <FontAwesomeIcon icon={faUser} className="font-size-xl" />
+                                    </div>
+                                </div>
+                            </div>
+                        </CardBody>
+                    </Card>
+                </Col>    
+            </>
         )
     }
 
@@ -100,7 +113,7 @@ const PilotFlights = () => {
                                 {renderYears()}
                             </tbody>
                     </Table>
-                    <Table className="bg-light" striped>
+                    <Table className="bg-dark text-white" striped>
                         <thead>
                             <tr>
                                 <th>Datum</th>

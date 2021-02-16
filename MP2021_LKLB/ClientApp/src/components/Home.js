@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import Layout from "./Layout/Layout";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Container, Card, CardHeader, CardBody, CardText, CardTitle, Row, Table, Button } from "reactstrap";
-import { faTemperatureHigh, faTachometerAlt, faWind, faCloud, faPercentage } from '@fortawesome/free-solid-svg-icons';
+import { Container, Card, CardBody, CardText, CardTitle, Row, Table, Button, Col } from "reactstrap";
+import { faTemperatureHigh, faTachometerAlt, faWind, faCloud, faPercentage, faStopwatch, faMapMarkedAlt, faPlaneArrival, faSortAmountDown, faRulerVertical } from '@fortawesome/free-solid-svg-icons';
 
 
 const Home = () => {
   const [top, setTop] = useState([]);
+  const [topHours, setTopHours] = useState([]);
+  const [topKm, setTopKm] = useState([]);
   const [temp, setTemp] = useState();
   const [pressure, setPressure] = useState();
   const [humidity, setHumidity] = useState();
@@ -22,19 +24,67 @@ const Home = () => {
             setTop(response.data);
             console.log(response.data);
         })
+    axios
+        .get(`https://localhost:44346/api/User/hours`)
+        .then((response) => {
+            setTopHours(response.data);
+            console.log(response.data);
+        })
+      axios
+        .get(`https://localhost:44346/api/User/kilometers`)
+        .then((response) => {
+            setTopKm(response.data);
+            console.log(response.data);
+        })
   }, []);
 
   function renderTop() {
     const array = top.map((item, index) => {
       return (
         <tr key={item.id}>
-            <td>{index + 1}</td>
+            <td>{index + 1}.</td>
             <td>{Math.round(item.topScore)}</td>
             <td>{item.fullName}</td>
         </tr> 
       );
     });
     return array;
+  }
+
+  function renderTopHours() {
+    const array = topHours.map((item, index) => {
+      return (
+        <tr key={item.id}>
+            <td>{index + 1}.</td>
+            <td>{renderTime(item.timeInSec)}</td>
+            <td>{item.fullName}</td>
+        </tr> 
+      );
+    });
+    return array;
+  }
+
+  function renderTopKm() {
+    const array = topKm.map((item, index) => {
+      return (
+        <tr key={item.id}>
+            <td>{index + 1}.</td>
+            <td>{Math.round(item.sumKilometers)} KM</td>
+            <td>{item.fullName}</td>
+        </tr> 
+      );
+    });
+    return array;
+  }
+
+  function renderTime(dataToCalc) {
+    var d = Number(dataToCalc);
+    var h = Math.floor(d / 3600);
+    var m = Math.floor(d % 3600 / 60);
+
+    var hDisplay = h > 0 ? h + ":" : "";
+    var mDisplay = m > 9 ? m : "0" + m;
+    return hDisplay + mDisplay; 
   }
 
   function renderWeather() {
@@ -67,7 +117,7 @@ const Home = () => {
     return(
       <>
         <Card style={{backgroundColor: '#172b4d'}} className="my-3" body inverse color="dark">
-          <CardTitle tag="h5">Počasí na letišti Liberec</CardTitle>
+          <CardTitle tag="h5" className="text-white-70 d-block mb-1 text-uppercase">Počasí na letišti Liberec</CardTitle>
           <CardText>
             <FontAwesomeIcon className="mr-1" icon={faTemperatureHigh} /> <b className="mr-3">{temp}°C</b>
             <FontAwesomeIcon className="mr-1" icon={faTachometerAlt} /> <b className="mr-3">{pressure} hPa</b>
@@ -85,29 +135,82 @@ const Home = () => {
     <>
       <Layout>
         <Container>
-
           <Row className="mb-3">
-            <Card className="col-4 col-sm m-2 bg-dark text-light text-center">
-              <CardHeader tag="h5">
-                Top piloti
-              </CardHeader>
-              <CardBody>
-                <Table className="text-light">
-                  <tbody>
-                    {renderTop()}
-                  </tbody>
-                </Table>
-              </CardBody>
-            </Card>
-            <Card className="text-center m-2">
-              <CardHeader className="bg-dark text-light" tag="h5">Kde se právě lítá?</CardHeader>
-              <CardBody style={{padding: '0%'}}>
-                <iframe src="https://glideandseek.com/?viewport=50.75235,15.18841,10" allow="geolocation" width={700} height={350}>
-                </iframe>
-              </CardBody>
-            </Card>
+            <Col lg="4">
+              <Card className="card-box bg-dark border-0 text-light mb-5">
+                <CardBody>
+                  <div className="d-flex align-items-start">
+                      <div className="font-weight-bold">
+                          <small className="text-white-70 d-block mb-1 text-uppercase">Top piloti (podle bodů)</small>
+                      </div>
+                      <div className="ml-auto">
+                          <div className="text-center mb-1">
+                              <FontAwesomeIcon icon={faSortAmountDown} className="font-size-xl" />
+                          </div>
+                      </div>
+                  </div>
+                  <Table className="text-light">
+                    <tbody>
+                      {renderTop()}
+                    </tbody>
+                  </Table>
+                </CardBody>
+              </Card>
+            </Col>    
+            <Col lg="4">
+              <Card className="card-box bg-dark border-0 text-light mb-5">
+                <CardBody>
+                  <div className="d-flex align-items-start">
+                      <div className="font-weight-bold">
+                          <small className="text-white-70 d-block mb-1 text-uppercase">Top piloti (podle hodin)</small>
+                      </div>
+                      <div className="ml-auto">
+                          <div className="text-center mb-1">
+                              <FontAwesomeIcon icon={faStopwatch} className="font-size-xl" />
+                          </div>
+                      </div>
+                  </div>
+                  <Table className="text-light">
+                    <tbody>
+                      {renderTopHours()}
+                    </tbody>
+                  </Table>
+                </CardBody>
+              </Card>
+            </Col> 
+            <Col lg="4">
+              <Card className="card-box bg-dark border-0 text-light mb-5">
+                <CardBody>
+                  <div className="d-flex align-items-start">
+                      <div className="font-weight-bold">
+                          <small className="text-white-70 d-block mb-1 text-uppercase">Top piloti (podle km)</small>
+                      </div>
+                      <div className="ml-auto">
+                          <div className="text-center mb-1">
+                              <FontAwesomeIcon icon={faRulerVertical} className="font-size-xl" />
+                          </div>
+                      </div>
+                  </div>
+                  <Table className="text-light">
+                    <tbody>
+                      {renderTopKm()}
+                    </tbody>
+                  </Table>
+                </CardBody>
+              </Card>
+            </Col>         
           </Row>
         </Container>
+        <div className="container-fluid">
+          <Row className="bg-dark d-flex justify-content-center align-items-center" style={{height: "75px"}}>
+            <div className="">
+              <h5 className="font-weight-bold text-white d-block mb-1 text-uppercase"><FontAwesomeIcon icon={faMapMarkedAlt} className="font-size-xl mr-3" />Kde se právě lítá?</h5>
+            </div>
+          </Row>
+          <Row className="bg-dark">
+            <iframe src="https://glideandseek.com/?viewport=50.75235,15.18841,10" allow="geolocation" style={{width: "100%"}} height={400}></iframe>
+          </Row>
+        </div>
       </Layout>
     </>
   );

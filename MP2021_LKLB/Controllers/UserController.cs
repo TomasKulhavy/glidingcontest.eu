@@ -35,6 +35,18 @@ namespace MP2021_LKLB.Controllers
             return await _user.GetAllUsers();
         }
 
+        [HttpGet("hours")]
+        public async Task<IEnumerable<ApplicationUser>> GetHours()
+        {
+            return await _user.GetUsersHours();
+        }
+
+        [HttpGet("kilometers")]
+        public async Task<IEnumerable<ApplicationUser>> GetKm()
+        {
+            return await _user.GetUsersKilometers();
+        }
+
         [HttpGet("order")]
         public async Task<IEnumerable<ApplicationUser>> GetOrder()
         {
