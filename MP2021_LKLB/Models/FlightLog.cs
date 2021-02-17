@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using Castle.MicroKernel.SubSystems.Conversion;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MP2021_LKLB.Models
 {
@@ -33,7 +35,7 @@ namespace MP2021_LKLB.Models
         public string LoggerId { get; set; }
         public string LoggerManufacturer { get; set; }
         [Display(Name = "Datum")]
-        [DataType(DataType.Date)]
+        [Column(TypeName = "date")]
         public DateTime Date { get; set; }
 
         public string UserId { get; set; }

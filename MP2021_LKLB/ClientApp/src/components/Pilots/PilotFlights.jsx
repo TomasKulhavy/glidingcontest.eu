@@ -67,7 +67,13 @@ const PilotFlights = () => {
             const array = flights.map((item) => {
                 return (
                   <tr key={item.id}>
-                        <td>{item.date}</td>
+                        <td>{
+                            new Intl.DateTimeFormat("en-GB", {
+                            year: "numeric",
+                            month: "long",
+                            day: "2-digit"
+                            }).format(item.date)}
+                        </td>
                         <td>{item.gliderType}</td>
                         <td>{item.registration}</td>
                         <td><Button color="primary" onClick={() =>
@@ -75,11 +81,12 @@ const PilotFlights = () => {
                                 type: ADD_FLIGHTID,
                                 currentFlightId: item.id
                             })} tag={Link} to="/flight/viewer">
-                        Zobrazit let</Button></td>
+                            Zobrazit let</Button></td>
                         <td>
                             <Button color="danger" refresh="true" onClick={() =>
                                 deleteFlight(item.id)}>
-                            <FontAwesomeIcon icon={faTimes} className="font-size-xl" /></Button>
+                                <FontAwesomeIcon icon={faTimes} className="font-size-xl" />
+                            </Button>
                         </td>
                   </tr> 
                 );

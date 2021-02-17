@@ -19,7 +19,6 @@ namespace MP2021_LKLB.Data
         {
         }
         public DbSet<ApplicationUser> Pilots { get; set; }
-        public DbSet<Image> Images { get; set; }
         public DbSet<FlightLog> FlightLogs { get; set; }
         public DbSet<DataRecords> DataRecords { get; set; }
         public DbSet<Fixes> Fixes { get; set; }
