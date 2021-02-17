@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Route } from "react-router-dom";
-import { Container } from 'reactstrap';
 import NavMenu from './NavMenu';
 import Footer from './Footer';
 

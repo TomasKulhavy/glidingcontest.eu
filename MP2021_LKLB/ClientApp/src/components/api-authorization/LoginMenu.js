@@ -3,6 +3,8 @@ import { NavItem, NavLink, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import authService from './AuthorizeService';
 import { ApplicationPaths } from './ApiAuthorizationConstants';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faIdCard, faUpload, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 
 export class LoginMenu extends Component {
     constructor(props) {
@@ -38,27 +40,54 @@ export class LoginMenu extends Component {
             const loginPath = `${ApplicationPaths.Login}`;
             return this.anonymousView(registerPath, loginPath);
         } else {
-            const uploadPath = `flight/upload`;
             const profilePath = `${ApplicationPaths.Profile}`;
             const logoutPath = { pathname: `${ApplicationPaths.LogOut}`, state: { local: true } };
-            return this.authenticatedView(userName, uploadPath, profilePath, logoutPath);
+            return this.authenticatedView(userName, profilePath, logoutPath);
         }
     }
 
-    authenticatedView(userName, uploadPath, profilePath, logoutPath) {
-        return (
-        <Fragment>
-            <NavItem>
-                <NavLink tag={Link} className="text-light" to={uploadPath}><Button className="text-light" outline color="primary" size="sm">Nahrát let</Button></NavLink>
-            </NavItem>
-            <NavItem>
-                <NavLink tag={Link} className="text-light" to={profilePath}>Vítej, {userName}</NavLink>
-            </NavItem>
-            <NavItem>
-                <NavLink tag={Link} className="text-light" to={logoutPath}>Odhlásit se</NavLink>
-            </NavItem>
-        </Fragment>);
-
+    authenticatedView(userName, profilePath, logoutPath) {
+        if(userName === "TomasLKLB")
+        {
+            return (
+                <Fragment>
+                    <NavItem>
+                        <NavLink tag={Link} className="text-light" to="/feedback/review">Feedback</NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink tag={Link} className="text-light" to="/flight/upload">
+                                <FontAwesomeIcon icon={faUpload} className="font-size-xl mr-1 mt-1" /> 
+                                Nahrát let
+                        </NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink tag={Link} className="text-light" to={profilePath}>
+                            <FontAwesomeIcon icon={faIdCard} className="font-size-xl mr-1 mt-1" /> 
+                            {userName}
+                        </NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink tag={Link} className="text-light" to={logoutPath}>
+                            <FontAwesomeIcon icon={faSignOutAlt} className="font-size-xl mr-1 mt-1" /> 
+                            Odhlásit se
+                        </NavLink>
+                    </NavItem>
+                </Fragment>);
+        }
+        else {
+            return (
+            <Fragment>
+                <NavItem>
+                    <NavLink tag={Link} className="text-light" to="/flight/upload"><Button className="text-light" outline color="primary" size="sm">Nahrát let</Button></NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink tag={Link} className="text-light" to={profilePath}><FontAwesomeIcon icon={faIdCard} className="font-size-xl mr-1 mt-1" /> {userName}</NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink tag={Link} className="text-light" to={logoutPath}>Odhlásit se</NavLink>
+                </NavItem>
+            </Fragment>);
+        }
     }
 
     anonymousView(registerPath, loginPath) {

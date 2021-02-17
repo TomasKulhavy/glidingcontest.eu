@@ -1,10 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Container, Table, Button } from "reactstrap";
-import { useHistory, Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Container, Table } from "reactstrap";
 import NavMenu from "../Layout/NavMenu";
 import axios from "axios";
-import { FlightDataContext, ADD_PILOTID } from "../../providers/FlightDataContext";
-import { render } from "react-dom";
 
 const FeedbackReview = () => {
     const [feedback, setFeedback] = useState([]);

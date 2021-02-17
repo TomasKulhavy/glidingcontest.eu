@@ -3,9 +3,10 @@ import axios from "axios";
 import { Card, Input, CardTitle, Button } from "reactstrap";
 import IGCParser from "igc-parser";
 import { solver, scoringRules as scoring } from "igc-xc-score";
-import { getSpeed, convertSpeed, getDistance } from 'geolib';
+import { getDistance } from 'geolib';
 import NavMenu from "../Layout/NavMenu";
-import { useDropzone } from "react-dropzone";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUpload, faShareSquare } from "@fortawesome/free-solid-svg-icons";
 
 import './Flight.css'
 
@@ -98,9 +99,22 @@ class UploadFlight extends Component {
                     <div className="row align-items-center h-100">
                         <div className="col-md-6 .offset-md-3 mx-auto d-flex justify-content-center">
                             <Card body inverse style={{ backgroundColor: '#333', borderColor: '#333' }}>
-                                <CardTitle tag="h5">Nahraj svůj let</CardTitle>
+                                <div className="d-flex align-items-start">
+                                    <div className="font-weight-bold">
+                                        <small className="text-white-70 d-block font-size-xl mb-1 text-uppercase">Nahraj svůj let</small>
+                                        <span className="font-size-xxl mt-1"></span>
+                                    </div>
+                                    <div className="ml-auto">
+                                        <div className="text-center">
+                                            <FontAwesomeIcon icon={faUpload} className="font-size-xl" />
+                                        </div>
+                                    </div>
+                                </div>
                                 <Input className="my-2" type="file" accept=".igc" onChange={(e) => this.showFile(e)} />
-                                <Button className="my-2" onClick={() => this.sendFile()}>Odeslat</Button>
+                                <Button className="my-2" onClick={() => this.sendFile()}>
+                                    <FontAwesomeIcon icon={faShareSquare} className="font-size-xl mr-1" />
+                                    Odeslat
+                                </Button>
                             </Card>
                         </div>
                     </div>

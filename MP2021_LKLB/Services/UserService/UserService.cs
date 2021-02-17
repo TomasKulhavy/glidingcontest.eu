@@ -24,7 +24,7 @@ namespace MP2021_LKLB.Services.UserService
 
         public async Task<ICollection<ApplicationUser>> GetUsersHours()
         {
-            return await _db.Pilots.OrderByDescending(f => f.TimeInSec).Take(5).ToListAsync();
+            return await _db.Pilots.Where(f => f.TimeInSec > 0).OrderByDescending(f => f.TimeInSec).Take(5).ToListAsync();
         }
 
         public async Task<ICollection<ApplicationUser>> GetPilotOrder()
@@ -80,7 +80,7 @@ namespace MP2021_LKLB.Services.UserService
 
         public async Task<ICollection<ApplicationUser>> GetUsersKilometers()
         {
-            return await _db.Pilots.OrderByDescending(f => f.SumKilometers).Take(5).ToListAsync();
+            return await _db.Pilots.Where(f => f.SumKilometers != null).OrderByDescending(f => f.SumKilometers).Take(5).ToListAsync();
         }
     }
 }

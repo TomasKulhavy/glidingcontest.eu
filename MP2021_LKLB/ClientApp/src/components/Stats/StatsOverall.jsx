@@ -30,6 +30,29 @@ const StatsOverall = () => {
             });
     }, []);
 
+    function renderBarPlanes()
+    {
+        const options = {
+            dataLabels: {
+                enabled: false
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: true
+                }
+            },
+            xaxis: {
+                categories: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            }
+        }
+        const series = [{
+            data: [30, 40, 25, 50, 49, 21, 70, 51]
+        }]
+        return (
+            <Chart options={options} series={series} type="bar" />
+        );
+    }
+
     function renderPie()
     {
         const data = users.map((item) => {
@@ -42,6 +65,26 @@ const StatsOverall = () => {
         const options = {
             labels: data,
         }
+        return (
+            <div className="d-flex justify-content-center">
+                <Chart options={options} series={series} type="pie" width="400" />
+            </div>
+        );
+    }
+
+    function renderPieFlights()
+    {
+        const data = users.map((item) => {
+            return (item.fullName);
+        });
+
+        const series = users.map((item) => {
+            return (item.flightsNo);
+        });
+        const options = {
+            labels: data,
+        }
+        
         return (
             <div className="d-flex justify-content-center">
                 <Chart options={options} series={series} type="pie" width="400" />
@@ -142,7 +185,7 @@ const StatsOverall = () => {
                             <CardBody>
                                 <div className="d-flex align-items-start">
                                     <div className="font-weight-bold">
-                                        <small className="text-white-70 d-block mb-1 text-uppercase">Nálet pilotů (podle letů)</small>
+                                        <small className="text-white-70 d-block mb-1 text-uppercase">Nálet pilotů (podle kilometrů)</small>
                                     </div>
                                     <div className="ml-auto">
                                         <div className="text-center">
@@ -168,6 +211,23 @@ const StatsOverall = () => {
                                     </div>
                                 </div>
                                 {renderPieHours()}
+                            </CardBody>
+                        </Card>
+                    </Col>
+                    <Col lg="6">
+                        <Card className="card-box border-0 bg-dark text-light mb-5">
+                            <CardBody>
+                                <div className="d-flex align-items-start">
+                                    <div className="font-weight-bold">
+                                        <small className="text-white-70 d-block mb-1 text-uppercase">Nálet pilotů (podle letů)</small>
+                                    </div>
+                                    <div className="ml-auto">
+                                        <div className="text-center">
+                                            <FontAwesomeIcon icon={faPercentage} className="font-size-xl" />
+                                        </div>
+                                    </div>
+                                </div>
+                                {renderPieFlights()}
                             </CardBody>
                         </Card>
                     </Col>

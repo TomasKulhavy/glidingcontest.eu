@@ -16,7 +16,6 @@ const FlightView = () => {
   const [flightLog, setFlightLog] = useState([]);
   const [task, setTask] = useState([]);
   const [analyse, setAnalyse] = useState([]);
-  const [fixId, setFixId] = useState();
   const [score, setScore] = useState();
   const [flightTime, setFlightTime] = useState();
   const [speed, setSpeed] = useState();

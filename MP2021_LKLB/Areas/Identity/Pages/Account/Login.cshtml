@@ -2,7 +2,7 @@
 @model LoginModel
 
 @{
-    ViewData["Title"] = "Log in";
+    ViewData["Title"] = "Přihlášení";
 }
 @{
     Layout = null;
@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <meta name="google-signin-client_id" content="153531049143-mfvdf3t4svse4m5t4tr4b8iup3dheeb9.apps.googleusercontent.com">
-    <title>@ViewData["Title"] - FlightDatabaseAndComputer</title>
+    <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <script src="https://kit.fontawesome.com/ac3a2e59dc.js" crossorigin="anonymous"></script>
@@ -68,9 +68,6 @@
                     Nejste zaregistrován?
                     <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Registruj se</a>
                 </p>
-                <!-- Social login -->
-                <p>nebo se přihlaš přes:</p>
-                <a class="g-signin2 mx-2" data-onsuccess="onSignIn"></a>
             </form>
         </section>
     </div>
@@ -79,22 +76,7 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
-<script>
-    function onSignIn(googleUser) {
-        var profile = googleUser.getBasicProfile();
-        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-        console.log('Name: ' + profile.getName());
-        console.log('Image URL: ' + profile.getImageUrl());
-        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-    }
-    function signOut() {
-        var auth2 = gapi.auth2.getAuthInstance();
-        auth2.signOut().then(function () {
-            console.log('User signed out.');
-        });
-    }
 
-</script>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

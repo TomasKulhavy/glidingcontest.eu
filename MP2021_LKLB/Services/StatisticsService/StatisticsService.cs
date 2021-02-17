@@ -41,7 +41,7 @@ namespace MP2021_LKLB.Services.StatisticsService
 
         public async Task<OverallStats> GetStats()
         {
-            return await _db.Stats.Where(f => f.Id == 1).FirstOrDefaultAsync();
+            return await _db.Stats.FindAsync(1);
         }
     }
 }

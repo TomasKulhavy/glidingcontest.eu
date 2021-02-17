@@ -3,7 +3,7 @@ import axios from "axios";
 import Layout from "./Layout/Layout";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Container, Card, CardBody, CardText, CardTitle, Row, Table, Button, Col } from "reactstrap";
-import { faTemperatureHigh, faTachometerAlt, faWind, faCloud, faPercentage, faStopwatch, faMapMarkedAlt, faPlaneArrival, faSortAmountDown, faRulerVertical } from '@fortawesome/free-solid-svg-icons';
+import { faTemperatureHigh, faTachometerAlt, faWind, faCloud, faPercentage, faStopwatch, faMapMarkedAlt, faSortAmountDown, faRulerHorizontal } from '@fortawesome/free-solid-svg-icons';
 
 
 const Home = () => {
@@ -187,7 +187,7 @@ const Home = () => {
                       </div>
                       <div className="ml-auto">
                           <div className="text-center mb-1">
-                              <FontAwesomeIcon icon={faRulerVertical} className="font-size-xl" />
+                              <FontAwesomeIcon icon={faRulerHorizontal} className="font-size-xl" />
                           </div>
                       </div>
                   </div>

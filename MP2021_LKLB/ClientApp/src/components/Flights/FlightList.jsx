@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Container, Table, Button, Row } from "reactstrap";
+import { Container, Table, Button } from "reactstrap";
 import { useHistory, Link } from "react-router-dom";
 import NavMenu from "../Layout/NavMenu";
 import { FlightDataContext, ADD_FLIGHTID } from "../../providers/FlightDataContext";
 import axios from "axios";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const FlightList = () => {
     const history = useHistory();
@@ -20,6 +22,16 @@ const FlightList = () => {
             })
     }, [year]);
 
+    function deleteFlight(deleteFlightNo)
+    {
+        axios
+        .delete(`https://localhost:44346/api/FlightLog/${deleteFlightNo}`)
+        .then((response) => {
+            setFlights(response.data)
+            console.log(response.data);
+        })    
+        return flights; 
+    }
     function renderFlights() {
         const array = flights.map((item) => {
           return (
@@ -32,7 +44,13 @@ const FlightList = () => {
                         type: ADD_FLIGHTID,
                         currentFlightId: item.id
                     })} tag={Link} to="/flight/viewer">
-                Zobrazit let</Button></td>
+                    Zobrazit let</Button>
+                </td>
+                <td>
+                    <Button color="danger" refresh="true" onClick={() =>
+                        deleteFlight(item.id)}>
+                    <FontAwesomeIcon icon={faTimes} className="font-size-xl" /></Button>
+                </td>
             </tr> 
           );
         });

@@ -1,10 +1,13 @@
 import React from 'react'
 import { Component } from 'react';
-import { Button } from "reactstrap";
 import authService from './AuthorizeService';
 import { AuthenticationResultStatus } from './AuthorizeService';
 import { QueryParameterNames, LogoutActions, ApplicationPaths } from './ApiAuthorizationConstants';
 import Loader from "react-loader-spinner";
+import { Button, Container } from 'reactstrap';
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHome } from "@fortawesome/free-solid-svg-icons";
 
 // The main responsibility of this component is to handle the user's logout process.
 // This is the starting point for the logout process, which is usually initiated when a
@@ -70,7 +73,13 @@ export class Logout extends Component {
                         </div>
                     );
                 case LogoutActions.LoggedOut:
-                    return (<div>{message}</div>);
+                    return (
+                        <Container className="align-items-center">
+                            <Button className="btn-dark mt-5 mb-3" tag={Link} to="/">
+                                <FontAwesomeIcon icon={faHome} className="font-size-xl mr-3" />
+                            Zpět na domovskou obrazovku</Button>
+                        </Container>
+                    );
                 default:
                     throw new Error(`Invalid action '${action}'`);
             }

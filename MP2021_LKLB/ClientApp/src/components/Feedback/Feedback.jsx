@@ -1,8 +1,10 @@
-import React, {useState} from "react";
+import React from "react";
 import { Button, Form, FormGroup, Input, Label, FormFeedback, Card, CardHeader, CardBody, Row, Container } from "reactstrap";
 import { useFormik, FormikProvider } from 'formik';
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCommentDots, faHome } from "@fortawesome/free-solid-svg-icons";
 
 const validate = values => {
     const errors = {};
@@ -52,10 +54,21 @@ const Feedback = () => {
     console.log(formik);
     return (
         <Container>
+            <Button className="btn-dark mt-5 mb-3" tag={Link} to="/"><FontAwesomeIcon icon={faHome} className="font-size-xl mr-3" />Zpět na domovskou obrazovku</Button>
             <FormikProvider value={formik}>
                 <Card className="m-2 text-center">
-                    <CardHeader className="text-light bg-dark"><h5>Sdělte nám svůj názor na tuto aplikaci</h5></CardHeader>
                     <CardBody className="text-center bg-dark text-light">
+                    <div className="d-flex align-items-start">
+                        <div className="font-weight-bold">
+                            <small className="text-white-70 d-block font-size-xl mb-1 text-uppercase">Sdělte nám svůj názor na tuto aplikaci</small>
+                            <span className="font-size-xxl mt-1"></span>
+                        </div>
+                        <div className="ml-auto">
+                            <div className="text-center">
+                                <FontAwesomeIcon icon={faCommentDots} className="font-size-xl" />
+                            </div>
+                        </div>
+                    </div>
                     <Form onSubmit={formik.handleSubmit}>
                         <FormGroup className="m-2">
                             <Label for="firstname">Jméno</Label>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MP2021_LKLB.Data;
 using MP2021_LKLB.Models;
@@ -127,7 +128,16 @@ namespace MP2021_LKLB.Services.FlightLogService
             double sec = TimeSpan.FromTicks(ticks).TotalSeconds;
             Users.TimeInSec += sec;
 
-            _db.SaveChangesAsync();
+            if (Users.FlightsNo == null)
+            {
+                Users.FlightsNo = 1;
+            }
+            else if (Users.FlightsNo != null)
+            {
+                Users.FlightsNo += 1;
+            }
+
+            await _db.SaveChangesAsync();
         }
         public List<FlightLog> GetPilotsFlights(string id, int? year)
         {
@@ -139,6 +149,31 @@ namespace MP2021_LKLB.Services.FlightLogService
                 .ThenByDescending(f => f.FlightLogAnalyse.Score)
                 .Where(f => f.Date.Year == year);
             return flightLogs.ToList();
+        }
+
+        public async Task<FlightLog> DeleteFlight(int id)
+        {
+            FlightLog flight = await _db.FlightLogs.Include(f => f.FlightLogAnalyse).Include(f => f.User).Where(fa => fa.Id == id).FirstOrDefaultAsync();
+            ApplicationUser Users = await _db.Pilots.Where(f => f.Id == flight.UserId).FirstOrDefaultAsync();
+            OverallStats stats = await _db.Stats.FindAsync(1);
+
+            if (flight != null)
+            {
+                Users.SumKilometers -= flight.FlightLogAnalyse.Kilometers;
+                long ticks = flight.FlightLogAnalyse.FlightTime.Ticks;
+                double sec = TimeSpan.FromTicks(ticks).TotalSeconds;
+                Users.TimeInSec -= sec;
+                Users.FlightsNo -= 1;
+                stats.FlightsNo -= 1;
+                stats.Kilometers -= flight.FlightLogAnalyse.Kilometers;
+                stats.TimeInSeconds -= sec;
+                Users.TopScore -= flight.FlightLogAnalyse.Score;
+
+                _db.FlightLogs.Remove(flight);
+
+                await _db.SaveChangesAsync();
+            }
+            return flight;
         }
     }
 }

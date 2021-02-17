@@ -57,7 +57,7 @@ namespace MP2021_LKLB.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Nebylo možné načíst uživatele s ID '{_userManager.GetUserId(User)}'.");
             }
 
             await LoadAsync(user);
@@ -69,7 +69,7 @@ namespace MP2021_LKLB.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Nebylo možné načíst uživatele s ID '{_userManager.GetUserId(User)}'.");
             }
 
             if (!ModelState.IsValid)
@@ -84,13 +84,13 @@ namespace MP2021_LKLB.Areas.Identity.Pages.Account.Manage
                 var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
                 if (!setPhoneResult.Succeeded)
                 {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
+                    StatusMessage = "UVyskytla se chyb aapři nastavovaání tel. čísla";
                     return RedirectToPage();
                 }
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
+            StatusMessage = "Váš profil byl updatován";
             return RedirectToPage();
         }
     }

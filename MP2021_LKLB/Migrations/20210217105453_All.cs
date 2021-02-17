@@ -32,6 +32,7 @@ namespace MP2021_LKLB.Migrations
                     Gender = table.Column<int>(type: "int", nullable: false),
                     TopScore = table.Column<float>(type: "real", nullable: true),
                     TimeInSec = table.Column<double>(type: "float", nullable: false),
+                    FlightsNo = table.Column<int>(type: "int", nullable: true),
                     SumKilometers = table.Column<float>(type: "real", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -434,25 +435,25 @@ namespace MP2021_LKLB.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "ADMIN", "29e9679d-137d-44c8-9f2b-db50c447c34d", "PilotRole", "Administrator", "ADMINISTRATOR" },
-                    { "PILOT", "2624fa4a-6103-4cd4-9cab-a49c0976a6b0", "PilotRole", "Pilot", "PILOT" }
+                    { "ADMIN", "4ed4b1fd-2cb8-4f52-a048-d963cd48a4ab", "PilotRole", "Administrator", "ADMINISTRATOR" },
+                    { "PILOT", "3c71f365-f47a-44af-afb4-66e02b0a1e99", "PilotRole", "Pilot", "PILOT" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "Gender", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "SumKilometers", "TimeInSec", "TopScore", "TwoFactorEnabled", "UserName" },
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "FlightsNo", "Gender", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "SumKilometers", "TimeInSec", "TopScore", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "TOMAS123", 0, "961c4437-de84-4a18-8008-067f3a5622ef", "tomas.kulhavy@pslib.cz", true, "Tomáš", 0, "Kulhavý", false, null, "TOMAS.KULHAVY@PSLIB.CZ", "TOMASLKLB", "AQAAAAEAACcQAAAAECrdV30AFE9R1n1uKHqw2uhItzhki+RmtnfPU1PPywNXUuCo5z6cHDP3dxG/rgh6tw==", null, false, "", null, 0.0, null, false, "TomasLKLB" },
-                    { "WOLF", 0, "635d55e3-cdfb-4ef7-aa3d-d40637b4c694", "w.sluka@seznam.cz", true, "Wolfgang", 0, "Sluka", false, null, "W.SLUKA@SEZNAM.CZ", "WOLF", "AQAAAAEAACcQAAAAEMBB+xNOrMB2BYgfCZzE+X4+uxXHmPrSaqTC1o/24dqY/wO5/2nMTFjpoVVm7TUe7A==", null, false, "", null, 0.0, null, false, "Wolf" },
-                    { "CICA", 0, "13d70fa7-2748-4807-9265-4990818c9b45", "meta5@seznam.cz", true, "Martin", 0, "Cicvárek", false, null, "META5@SEZNAM.CZ", "CÍCA", "AQAAAAEAACcQAAAAEJOdYHEMUQrMWr9j9TaOA6AhFn1rVszXWQeszBinD688ibgI1/1DqAvFQk1s3pRGaA==", null, false, "", null, 0.0, null, false, "Cíca" },
-                    { "LUKASZ", 0, "a440fbbd-53ea-4624-bccd-9a71f919b97c", "czajkolu@gmail.com", true, "Lukasz", 0, "Czaikowski", false, null, "CZAJKOLU@GMAIL.COM", "LUKASZ", "AQAAAAEAACcQAAAAEJaUwM0TxxIbBi9yT0mPpB4ZEFJXVw5/ue5b3d6fyvdQ3Vo9hDaIam98LnspOCb7UQ==", null, false, "", null, 0.0, null, false, "Lukasz" },
-                    { "JANHYB", 0, "7fd79bc1-347d-4f41-911a-8ba2340f8507", "jan.hyb@seznam.cz", true, "Jan", 0, "Hybner", false, null, "JAN.HYB@SEZNAM.CZ", "HONZAHYB", "AQAAAAEAACcQAAAAEF6FSnNsm6EoRQGr13P3EKoPqE9bSGhMfmjyp/EDtb0b8gYJVjfPhPB0aMlrnZ1D6w==", null, false, "", null, 0.0, null, false, "HonzaHyb" },
-                    { "ZDENEK", 0, "f82c9e12-b354-4cf9-8d81-2a330dba33c5", "Zdenek.Ulrych@seznam.cz", true, "Zdeněk", 0, "Ulrych", false, null, "ZDENEK.ULRYCH@SEZNAM.CZ", "ZDENEK", "AQAAAAEAACcQAAAAEHRHU0LM3EBPth12Lh96amUl/GvD39TM6kdYLEInpH4qeqBw2ivohBsF2Bb7j1maCw==", null, false, "", null, 0.0, null, false, "Zdenek" },
-                    { "PETRZA", 0, "db2c9bef-6c2b-47c3-820d-9624c4bffc45", "petr-zajic@volny.cz", true, "Petr", 0, "Zajíc", false, null, "PETR-ZAJIC@VOLNY.CZ", "ZAJDA", "AQAAAAEAACcQAAAAENb6T1AoPUFpf8kOA4VgiVzXJC4GS61WGUoIArg1G53GFF4oVzLfrptO/gKK+cRE8w==", null, false, "", null, 0.0, null, false, "Zajda" },
-                    { "PETRHYB", 0, "d495cabd-2671-48b5-aa1d-ea27bb28ec0e", "petr-hybner@seznam.cz", true, "Petr", 0, "Hybner", false, null, "PETR-HYBNER@SEZNAM.CZ", "PETRHYB", "AQAAAAEAACcQAAAAEEPV4hAt0xPTpM/92txChdlitPsPETwJKcBIHu1eChCgAbYYG1AJUAiDaovJ/lw2NQ==", null, false, "", null, 0.0, null, false, "PetrHyb" },
-                    { "RUDA", 0, "b6ecd200-8b1c-4a2f-b3b5-b85e0da5ed58", "patrman.rudolf@seznam.cz", true, "Rudolf", 0, "Patrman", false, null, "PATRMAN.RUDOLF@SEZNAM.CZ", "RUDA", "AQAAAAEAACcQAAAAEFeP90MySBIhpHki3DyC1cj0flghdTNCWJZl0fyhmYDr9Sc64eoq2bOV6PcwV+m7fg==", null, false, "", null, 0.0, null, false, "Ruda" },
-                    { "MILAN", 0, "b3c654b4-f5c2-41dc-ab0c-9c79e24188ea", "milandvorak.gld@seznam.cz", true, "Milan", 0, "Dvořák", false, null, "MILANDVORAK.GLD@SEZNAM.CZ", "MILAN", "AQAAAAEAACcQAAAAEHClyfagIy+kF06y6cH54qrt9tWFZdLZjmIz8LageU58Cn3lpICzzZN7pW7vZhErpQ==", null, false, "", null, 0.0, null, false, "Milan" }
+                    { "TOMAS123", 0, "ffb2a012-8d87-4f40-bad2-1a17a0b52972", "tomas.kulhavy@pslib.cz", true, "Tomáš", null, 0, "Kulhavý", false, null, "TOMAS.KULHAVY@PSLIB.CZ", "TOMASLKLB", "AQAAAAEAACcQAAAAENGsIqqEvQvIyvBT9tt9c9WAP0AKMrBxtXkZiqnUJMPsaJ6CTHZ7BCIH9dyiKnDv4Q==", null, false, "", null, 0.0, null, false, "TomasLKLB" },
+                    { "WOLF", 0, "37266715-6d46-4072-bace-2a677b656f79", "w.sluka@seznam.cz", true, "Wolfgang", null, 0, "Sluka", false, null, "W.SLUKA@SEZNAM.CZ", "WOLF", "AQAAAAEAACcQAAAAELS9CyvrQWoUSoQsBEOOBuQAwMZ8Tcx/ko5KujLWAv29uywMWCzmPlUXCO/6IwEZeA==", null, false, "", null, 0.0, null, false, "Wolf" },
+                    { "CICA", 0, "cd0023b7-b50c-4d2f-bdc0-2eb0e5d28e6c", "meta5@seznam.cz", true, "Martin", null, 0, "Cicvárek", false, null, "META5@SEZNAM.CZ", "CÍCA", "AQAAAAEAACcQAAAAENrU9EKaQyPl8D4qHRoKa8zluy21hvs/llRuafgiN319A7cTNSU8Us972yfHp6PzrQ==", null, false, "", null, 0.0, null, false, "Cíca" },
+                    { "LUKASZ", 0, "dbfcfafd-6794-44dd-b1dc-4e3e2250a3eb", "czajkolu@gmail.com", true, "Lukasz", null, 0, "Czaikowski", false, null, "CZAJKOLU@GMAIL.COM", "LUKASZ", "AQAAAAEAACcQAAAAEPPZkzw+6O1tWD+RXqil3e0D0oCmPOiO6OS93Do3Am+569CDfCgCOtKIP7R7GM2EIw==", null, false, "", null, 0.0, null, false, "Lukasz" },
+                    { "JANHYB", 0, "ecce6f43-1807-4976-a079-6c144e548c9e", "jan.hyb@seznam.cz", true, "Jan", null, 0, "Hybner", false, null, "JAN.HYB@SEZNAM.CZ", "HONZAHYB", "AQAAAAEAACcQAAAAEN1Zff1qlO4Gf93odHehzIfvrg+6F289eBjU4DHcdFSUNPv9yFvk5On4hlyN6/2jMQ==", null, false, "", null, 0.0, null, false, "HonzaHyb" },
+                    { "ZDENEK", 0, "10201ee8-9fe1-4447-826b-27a2ad552f51", "Zdenek.Ulrych@seznam.cz", true, "Zdeněk", null, 0, "Ulrych", false, null, "ZDENEK.ULRYCH@SEZNAM.CZ", "ZDENEK", "AQAAAAEAACcQAAAAEACoXJzHD0Lk6dEUJIJkAezECUnn3LBtikRVaskfp61mSifNYPvRlmFEjuNz4b7sxA==", null, false, "", null, 0.0, null, false, "Zdenek" },
+                    { "PETRZA", 0, "c9d8c634-5e5d-4ce2-a95f-a00910cbec70", "petr-zajic@volny.cz", true, "Petr", null, 0, "Zajíc", false, null, "PETR-ZAJIC@VOLNY.CZ", "ZAJDA", "AQAAAAEAACcQAAAAEJPOwtpJILuMF10P+8/ZNlBilkdhwvMc0okdENSNSUU/bzhngZ03ok0J9jfQcL0GxQ==", null, false, "", null, 0.0, null, false, "Zajda" },
+                    { "PETRHYB", 0, "19fc9437-597b-4682-90ed-b58bbf7af5be", "petr-hybner@seznam.cz", true, "Petr", null, 0, "Hybner", false, null, "PETR-HYBNER@SEZNAM.CZ", "PETRHYB", "AQAAAAEAACcQAAAAEBXGvho1G7EL2FT4dmtP+AhMAEadtQNBoUryjFs0Gpb51rGY4jbr+CfM/NsQPfnkhA==", null, false, "", null, 0.0, null, false, "PetrHyb" },
+                    { "RUDA", 0, "ab21cfe9-28bb-42f2-89f2-d2e6098e7161", "patrman.rudolf@seznam.cz", true, "Rudolf", null, 0, "Patrman", false, null, "PATRMAN.RUDOLF@SEZNAM.CZ", "RUDA", "AQAAAAEAACcQAAAAEFkJAkmrOjmr1/c/LImOb7OC2q5fwvMlJHSuWY0glissYlJAD1pfKjYqEsm5FnDbCQ==", null, false, "", null, 0.0, null, false, "Ruda" },
+                    { "MILAN", 0, "c090522d-c1b8-456b-82c7-9f3b77a5303a", "milandvorak.gld@seznam.cz", true, "Milan", null, 0, "Dvořák", false, null, "MILANDVORAK.GLD@SEZNAM.CZ", "MILAN", "AQAAAAEAACcQAAAAEBC+Tj41Vf+/uz1gFujQuauv4heKrdh3p2tevyAepbelYlBj9ZN9deG4aGInNKZ98g==", null, false, "", null, 0.0, null, false, "Milan" }
                 });
 
             migrationBuilder.InsertData(

@@ -39,6 +39,8 @@ namespace MP2021_LKLB.Models
 
         [Display(Name = "Nálet hodin")]
         public double TimeInSec { get; set; }
+        [Display(Name = "Počet letů")]
+        public int? FlightsNo { get; set; }
 
         [Display(Name = "Nálet kilometrů")]
         public float? SumKilometers { get; set; }

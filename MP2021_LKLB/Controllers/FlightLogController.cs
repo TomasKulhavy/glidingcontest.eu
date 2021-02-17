@@ -78,8 +78,9 @@ namespace MP2021_LKLB.Controllers
 
         // DELETE api/<FlightLogController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult<FlightLog>> Delete(int id)
         {
+            return await _flightLog.DeleteFlight(id);
         }
     }
 }

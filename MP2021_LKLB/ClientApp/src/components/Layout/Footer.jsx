@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTachometerAlt, faPlaneArrival, faRulerHorizontal, faBroadcastTower, faSearchLocation, faHome, faEnvelope, faPhone, faCommentDots } from '@fortawesome/free-solid-svg-icons';
+import { faTachometerAlt, faPlaneArrival, faInfoCircle, faIdCardAlt, faRulerHorizontal, faBroadcastTower, faSearchLocation, faHome, faEnvelope, faPhone, faCommentDots } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { Link } from 'react-router-dom';
 
@@ -10,7 +10,10 @@ const Footer = () => {
       <div className="container text-center text-md-left">
         <div className="row text-center text-md-left mt-3 pb-3">
           <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-            <h6 className="text-uppercase mb-4 font-weight-bold">Informace o letišti</h6>
+            <h6 className="text-uppercase mb-4 font-weight-bold">
+              <FontAwesomeIcon className="mr-3" icon={faInfoCircle} />
+              Informace o letišti
+            </h6>
             <p>
               <FontAwesomeIcon className="mr-3" icon={faPlaneArrival} /> LKLB
             </p>
@@ -26,7 +29,10 @@ const Footer = () => {
           </div>
           <hr className="w-100 clearfix d-md-none" />
           <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-            <h6 className="text-uppercase mb-4 font-weight-bold">Kontakt</h6>
+            <h6 className="text-uppercase mb-4 font-weight-bold">
+              <FontAwesomeIcon className="mr-3" icon={faIdCardAlt} />
+              Kontakt
+            </h6>
             <p>
               <FontAwesomeIcon className="mr-3" icon={faSearchLocation} /> GPS: 50°46'06" N, 15°01'30" E
             </p>
