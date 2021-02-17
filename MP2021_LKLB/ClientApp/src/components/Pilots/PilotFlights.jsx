@@ -5,12 +5,13 @@ import NavMenu from "../Layout/NavMenu";
 import { FlightDataContext, ADD_FLIGHTID } from "../../providers/FlightDataContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from "axios";
-import { faRulerVertical, faStopwatch, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faRulerVertical, faStopwatch, faUser, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const PilotFlights = () => {
     const history = useHistory();
     const [flights, setFlights] = useState([]);
     const [pilot, setPilot] = useState([]);
+    const [loggedPilot, setLoggedPilot] = useState("");
     const [flightTime, setFlightTime] = useState([]);
     const [state, dispatch] = useContext(FlightDataContext);
     const [year, setYear] = useState(2021);
@@ -30,6 +31,12 @@ const PilotFlights = () => {
                 console.log(response.data)
                 setFlightTime(response.data.timeInSec);
             });
+        axios
+            .get(`https://localhost:44346/api/User/pilot`)
+            .then((response) => {
+                setLoggedPilot(response.data);
+                console.log(response.data);
+            });
     }, [year]);
 
     function renderYears() {
@@ -43,23 +50,62 @@ const PilotFlights = () => {
         return array;
     }
 
+    function deleteFlight(deleteFlightNo)
+    {
+        axios
+        .delete(`https://localhost:44346/api/FlightLog/${deleteFlightNo}`)
+        .then((response) => {
+            setFlights(response.data)
+            console.log(response.data);
+        })    
+        return flights; 
+    }
+
     function renderFlights() {
-        const array = flights.map((item) => {
-          return (
-            <tr key={item.id}>
-                <td>{item.date}</td>
-                <td>{item.gliderType}</td>
-                <td>{item.registration}</td>
-                <td><Button color="primary" onClick={() =>
-                    dispatch({
-                        type: ADD_FLIGHTID,
-                        currentFlightId: item.id
-                    })} tag={Link} to="/flight/viewer">
-                Zobrazit let</Button></td>
-            </tr> 
-          );
-        });
-        return array;
+        if(state.pilotId === loggedPilot)
+        {
+            const array = flights.map((item) => {
+                return (
+                  <tr key={item.id}>
+                        <td>{item.date}</td>
+                        <td>{item.gliderType}</td>
+                        <td>{item.registration}</td>
+                        <td><Button color="primary" onClick={() =>
+                            dispatch({
+                                type: ADD_FLIGHTID,
+                                currentFlightId: item.id
+                            })} tag={Link} to="/flight/viewer">
+                        Zobrazit let</Button></td>
+                        <td>
+                            <Button color="danger" refresh="true" onClick={() =>
+                                deleteFlight(item.id)}>
+                            <FontAwesomeIcon icon={faTimes} className="font-size-xl" /></Button>
+                        </td>
+                  </tr> 
+                );
+            });
+            return array;
+        }
+        else if(state.pilotId !== loggedPilot)
+        {
+            const array = flights.map((item) => {
+                return (
+                  <tr key={item.id}>
+                        <td>{item.date}</td>
+                        <td>{item.gliderType}</td>
+                        <td>{item.registration}</td>
+                        <td><Button color="primary" onClick={() =>
+                            dispatch({
+                                type: ADD_FLIGHTID,
+                                currentFlightId: item.id
+                            })} tag={Link} to="/flight/viewer">
+                        Zobrazit let</Button></td>
+                        <td></td>
+                  </tr> 
+                );
+            });
+            return array;
+        }
     }
 
     function secondsToHms() {
@@ -119,6 +165,7 @@ const PilotFlights = () => {
                                 <th>Datum</th>
                                 <th>Typ kluzáku</th>
                                 <th>Registrace</th>
+                                <th></th>
                                 <th></th>
                             </tr>
                         </thead>

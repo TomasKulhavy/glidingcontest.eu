@@ -24,14 +24,12 @@ namespace MP2021_LKLB.Controllers
         private ApplicationDbContext _db;
         private IFlightLogService _flightLog;
         private IStatisticsService _stats;
-        private IFlight _flight;
         private readonly ISession _session;
 
-        public FlightLogController(ApplicationDbContext db, IFlightLogService flightLog, IFlight flight, IHttpContextAccessor httpContext, IStatisticsService stats)
+        public FlightLogController(ApplicationDbContext db, IFlightLogService flightLog, IHttpContextAccessor httpContext, IStatisticsService stats)
         {
             _db = db;
             _flightLog = flightLog;
-            _flight = flight;
             _session = httpContext.HttpContext.Session;
             _stats = stats;
         }

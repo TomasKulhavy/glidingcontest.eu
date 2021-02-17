@@ -17,15 +17,13 @@ namespace MP2021_LKLB.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private ApplicationDbContext _db;
         private IUserService _user;
         private readonly ISession _session;
 
-        public UserController(ApplicationDbContext db, IUserService user, IHttpContextAccessor hca)
+        public UserController(IUserService user, IHttpContextAccessor httpContext)
         {
-            _db = db;
             _user = user;
-            _session = hca.HttpContext.Session;
+            _session = httpContext.HttpContext.Session;
         }
 
         // GET: api/<UserController>
@@ -63,6 +61,13 @@ namespace MP2021_LKLB.Controllers
         public async Task<ApplicationUser> GetStats(string id)
         {
             return await _user.GetPilotsStats(id);
+        }
+
+        [HttpGet("pilot")]
+        public string GetIdPilot()
+        {
+            string userId = _session.Get<string>("userId");
+            return userId;
         }
         
         // GET api/<UserController>/5
