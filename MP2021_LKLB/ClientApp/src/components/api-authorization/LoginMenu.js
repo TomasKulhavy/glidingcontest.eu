@@ -52,23 +52,23 @@ export class LoginMenu extends Component {
             return (
                 <Fragment>
                     <NavItem>
-                        <NavLink tag={Link} className="text-light" to="/feedback/review">Feedback</NavLink>
+                        <NavLink tag={Link} className="text-light mr-3" to="/feedback/review">Feedback</NavLink>
                     </NavItem>
                     <NavItem>
                         <NavLink tag={Link} className="text-light" to="/flight/upload">
-                                <FontAwesomeIcon icon={faUpload} className="font-size-xl mr-1 mt-1" /> 
-                                Nahrát let
+                            <FontAwesomeIcon icon={faUpload} className="font-size-xl mr-2 mt-1" /> 
+                            Nahrát let
                         </NavLink>
                     </NavItem>
                     <NavItem>
                         <NavLink tag={Link} className="text-light" to={profilePath}>
-                            <FontAwesomeIcon icon={faIdCard} className="font-size-xl mr-1 mt-1" /> 
+                            <FontAwesomeIcon icon={faIdCard} className="font-size-xl mr-2 mt-1" /> 
                             {userName}
                         </NavLink>
                     </NavItem>
                     <NavItem>
                         <NavLink tag={Link} className="text-light" to={logoutPath}>
-                            <FontAwesomeIcon icon={faSignOutAlt} className="font-size-xl mr-1 mt-1" /> 
+                            <FontAwesomeIcon icon={faSignOutAlt} className="font-size-xl mr-2 mt-1" /> 
                             Odhlásit se
                         </NavLink>
                     </NavItem>
@@ -78,13 +78,22 @@ export class LoginMenu extends Component {
             return (
             <Fragment>
                 <NavItem>
-                    <NavLink tag={Link} className="text-light" to="/flight/upload"><Button className="text-light" outline color="primary" size="sm">Nahrát let</Button></NavLink>
+                    <NavLink tag={Link} className="text-light" to="/flight/upload">
+                        <FontAwesomeIcon icon={faUpload} className="font-size-xl mr-2 mt-1" /> 
+                        Nahrát let
+                    </NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink tag={Link} className="text-light" to={profilePath}><FontAwesomeIcon icon={faIdCard} className="font-size-xl mr-1 mt-1" /> {userName}</NavLink>
+                    <NavLink tag={Link} className="text-light" to={profilePath}>
+                        <FontAwesomeIcon icon={faIdCard} className="font-size-xl mr-2 mt-1" /> 
+                        {userName}
+                    </NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink tag={Link} className="text-light" to={logoutPath}>Odhlásit se</NavLink>
+                    <NavLink tag={Link} className="text-light" to={logoutPath}>
+                        <FontAwesomeIcon icon={faSignOutAlt} className="font-size-xl mr-2 mt-1" /> 
+                        Odhlásit se
+                    </NavLink>
                 </NavItem>
             </Fragment>);
         }
