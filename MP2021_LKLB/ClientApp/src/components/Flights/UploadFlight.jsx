@@ -36,22 +36,18 @@ class UploadFlight extends Component {
     }
 
     calculateDistance(result) {
-        var dis1 = getDistance(
-            { latitude: result.task.points[1].latitude, longitude: result.task.points[1].longitude },
-            { latitude: result.task.points[2].latitude, longitude: result.task.points[2].longitude },
-        )
-        var dis2 = getDistance(
-            { latitude: result.task.points[2].latitude, longitude: result.task.points[2].longitude },
-            { latitude: result.task.points[3].latitude, longitude: result.task.points[3].longitude },
-        )
-        var dis3 = getDistance(
-            { latitude: result.task.points[3].latitude, longitude: result.task.points[3].longitude },
-            { latitude: result.task.points[4].latitude, longitude: result.task.points[4].longitude },
-        )
-        var dis4 = getDistance(
-            { latitude: result.task.points[4].latitude, longitude: result.task.points[4].longitude },
-            { latitude: result.task.points[5].latitude, longitude: result.task.points[5].longitude },
-        )
+        var dist = 0;
+
+        for (let index = 1; index < result.task.points.length - 2; index++) {
+            var distT = getDistance(
+                { latitude: result.task.points[index].latitude, longitude: result.task.points[index].longitude },
+                { latitude: result.task.points[index + 1].latitude, longitude: result.task.points[index + 1].longitude },
+            )
+            console.log(distT);
+            dist = dist + distT;
+        }
+
+        console.log(dist);
 
         const flight = solver(result, scoring.XContest).next().value;
         delete result.closestPairs;
@@ -74,19 +70,12 @@ class UploadFlight extends Component {
         var totalTimeInSec = timetwo - timeone;
         var time = new Date(totalTimeInSec * 1000).toISOString().substr(11, 8);
 
-        var dis = dis1 + dis2 + dis3;
-
-        var speedTotal = (dis) / totalTimeInSec;
-        
-        console.log(speedTotal*3.6);
-        console.log(
-          `Distance\n${dis / 1000} KM`
-        );
+        var speedTotal = (dist) / totalTimeInSec;
 
         const scoreFlight = { 
             "score": flight.score + speedTotal*3.6,
             "flightTime": time,
-            "kilometers": dis / 1000,
+            "kilometers": dist / 1000,
             "avgSpeed": speedTotal*3.6,
         }
         result.flightLogAnalyse = scoreFlight;

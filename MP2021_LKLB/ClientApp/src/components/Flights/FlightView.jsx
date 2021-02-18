@@ -53,7 +53,7 @@ const FlightView = () => {
       .then((response) => {
         setAnalyse(response.data[0]);
         console.log(response.data[0]);
-        setScore(response.data[0].score);
+        setScore(Number((response.data[0].score).toFixed(1)));
         setFlightTime(response.data[0].flightTime.totalSeconds);
         setKilometers(response.data[0].kilometers);
         setSpeed(Number((response.data[0].avgSpeed).toFixed(2)));
