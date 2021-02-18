@@ -204,7 +204,7 @@ const Home = () => {
         <div className="container-fluid">
           <Row className="bg-dark d-flex justify-content-center align-items-center" style={{height: "75px"}}>
             <div className="">
-              <h5 className="font-weight-bold text-white d-block mb-1 text-uppercase"><FontAwesomeIcon icon={faMapMarkedAlt} className="font-size-xl mr-3" />Kde se právě lítá?</h5>
+              <h5 className="font-weight-bold text-white d-block mb-1 text-uppercase"><FontAwesomeIcon icon={faMapMarkedAlt} className="font-size-xl mr-3" />Kde se právě létá?</h5>
             </div>
           </Row>
           <Row className="bg-dark">

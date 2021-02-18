@@ -8,7 +8,8 @@ namespace MP2021_LKLB.Services.ViewService
 {
     public interface IViewService
     {
-        Task<ICollection<Fixes>> GetFlightFixes(int id);
+        Task<ICollection<FlightFixesVM>> GetFlightFixes(int id);
+        Task<ICollection<FlightGraphVM>> GetFlightGraph(int id);
         Task<ICollection<FlightLogAnalyse>> GetFlightLogAnalyse(int id);
         Task<ICollection<Points>> GetTask(int id);
 

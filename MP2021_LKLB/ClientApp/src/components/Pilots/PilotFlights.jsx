@@ -67,12 +67,7 @@ const PilotFlights = () => {
             const array = flights.map((item) => {
                 return (
                   <tr key={item.id}>
-                        <td>{
-                            new Intl.DateTimeFormat("en-GB", {
-                            year: "numeric",
-                            month: "long",
-                            day: "2-digit"
-                            }).format(item.date)}
+                        <td>{item.date}
                         </td>
                         <td>{item.gliderType}</td>
                         <td>{item.registration}</td>

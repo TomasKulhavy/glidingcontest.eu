@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MP2021_LKLB.Data;
 using MP2021_LKLB.Helpers;
 using MP2021_LKLB.Models;
@@ -65,10 +66,18 @@ namespace MP2021_LKLB.Controllers
             {
                 var returnDataObj = JsonConvert.DeserializeObject<FlightLog>(data);
                 returnDataObj.UserId = userId;
-                await _stats.SetStats(returnDataObj);
-                await _flightLog.GiveTopBool(returnDataObj);
-                await _db.FlightLogs.AddAsync(returnDataObj);
-                await _db.SaveChangesAsync();
+                FlightLog log = await _db.FlightLogs.Where(f => f.Security == returnDataObj.Security).FirstOrDefaultAsync();
+                if (log == null)
+                { 
+                    await _stats.SetStats(returnDataObj);
+                    await _flightLog.GiveTopBool(returnDataObj);
+                    await _db.FlightLogs.AddAsync(returnDataObj);
+                    await _db.SaveChangesAsync();
+                }
+                else
+                {
+                    return Conflict();
+                }
             }
 
             return Ok(message);

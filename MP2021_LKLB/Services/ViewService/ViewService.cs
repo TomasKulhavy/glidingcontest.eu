@@ -17,11 +17,18 @@ namespace MP2021_LKLB.Services.ViewService
             _db = db;
         }
 
-        public async Task<ICollection<Fixes>> GetFlightFixes(int id)
+        public async Task<ICollection<FlightFixesVM>> GetFlightFixes(int id)
         {
-            ICollection<Fixes> fixes = await _db.Fixes
+            //ICollection<Fixes> fixes = await _db.Fixes
+            //    .Where(x => x.FlightLogId == id)
+            //    .OrderBy(x => x.Timestamp)
+            //    .ToListAsync();
+
+            // Tahání Lat, Long přímo z DB
+             var fixes = await _db.Fixes
                 .Where(x => x.FlightLogId == id)
                 .OrderBy(x => x.Timestamp)
+                .Select(f => new FlightFixesVM { Latitude = f.Latitude, Longitude = f.Longitude })
                 .ToListAsync();
 
             if (fixes != null)
@@ -33,6 +40,25 @@ namespace MP2021_LKLB.Services.ViewService
                 return null;
             }
         }
+
+        public async Task<ICollection<FlightGraphVM>> GetFlightGraph(int id)
+        {
+            var fixes = await _db.Fixes
+               .Where(x => x.FlightLogId == id)
+               .OrderBy(x => x.Timestamp)
+               .Select(f => new FlightGraphVM { Timestamp = f.Timestamp, GpsAltitude = f.GpsAltitude })
+               .ToListAsync();
+
+            if (fixes != null)
+            {
+                return fixes;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public async Task<ICollection<FlightLogAnalyse>> GetFlightLogAnalyse(int id)
         {
             ICollection<FlightLogAnalyse> fixes = await _db.FlightLogAnalyses

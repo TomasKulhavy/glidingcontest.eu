@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import axios from "axios";
-import { Card, Input, CardTitle, Button } from "reactstrap";
+import { Card, Input, Alert, Button } from "reactstrap";
 import IGCParser from "igc-parser";
 import { solver, scoringRules as scoring } from "igc-xc-score";
-import { getDistance } from 'geolib';
+import { getDistance, getSpeed } from 'geolib';
 import NavMenu from "../Layout/NavMenu";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload, faShareSquare } from "@fortawesome/free-solid-svg-icons";
@@ -31,7 +31,8 @@ class UploadFlight extends Component {
     }
 
     sendFile(data) {
-        axios.post('https://localhost:44346/api/FlightLog', { payload: data });
+        axios.post('https://localhost:44346/api/FlightLog', { payload: data })
+        .catch(err => { console.log(err); this.renderAlert(err) });
     }
 
     calculateDistance(result) {
@@ -74,14 +75,16 @@ class UploadFlight extends Component {
         var time = new Date(totalTimeInSec * 1000).toISOString().substr(11, 8);
 
         var dis = dis1 + dis2 + dis3;
+
         var speedTotal = (dis) / totalTimeInSec;
+        
         console.log(speedTotal*3.6);
         console.log(
           `Distance\n${dis / 1000} KM`
         );
 
         const scoreFlight = { 
-            "score": flight.score,
+            "score": flight.score + speedTotal*3.6,
             "flightTime": time,
             "kilometers": dis / 1000,
             "avgSpeed": speedTotal*3.6,
@@ -91,18 +94,27 @@ class UploadFlight extends Component {
         console.log(result);
     };
 
+    renderAlert(err)
+    {
+        if(err != null)
+        {
+            const array = "Tento let je již nahraný v naší databázi!";
+            return array;
+        }
+    }
+
     render = () => {
         return (
             <>
                 <NavMenu />
-                <div className="Flight container h-100">
+                <div className="Flight container h-100"> 
                     <div className="row align-items-center h-100">
                         <div className="col-md-6 .offset-md-3 mx-auto d-flex justify-content-center">
                             <Card body inverse style={{ backgroundColor: '#333', borderColor: '#333' }}>
                                 <div className="d-flex align-items-start">
                                     <div className="font-weight-bold">
                                         <small className="text-white-70 d-block font-size-xl mb-1 text-uppercase">Nahraj svůj let</small>
-                                        <span className="font-size-xxl mt-1"></span>
+                                        <span className="font-size-xxl mt-1">{this.renderAlert()}</span>
                                     </div>
                                     <div className="ml-auto">
                                         <div className="text-center">

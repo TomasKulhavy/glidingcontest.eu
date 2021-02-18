@@ -30,9 +30,16 @@ namespace MP2021_LKLB.Controllers
 
         // GET api/<ViewController>/5
         [HttpGet("{id}")]
-        public async Task<ICollection<Fixes>> Get(int id)
+        public async Task<ICollection<FlightFixesVM>> Get(int id)
         {
             var fixes = await _view.GetFlightFixes(id);
+            return fixes;
+        }
+
+        [HttpGet("graph/{id}")]
+        public async Task<ICollection<FlightGraphVM>> GetFlightGraph(int id)
+        {
+            var fixes = await _view.GetFlightGraph(id);
             return fixes;
         }
 

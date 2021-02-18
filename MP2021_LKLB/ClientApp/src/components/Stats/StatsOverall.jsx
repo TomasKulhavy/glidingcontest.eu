@@ -5,7 +5,7 @@ import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlaneDeparture, faClock, faRulerHorizontal, faPercentage } from "@fortawesome/free-solid-svg-icons";
 import Chart from 'react-apexcharts';
-
+import "./style.css";
 
 const StatsOverall = () => {
     const [flightsNo, setFlightsNo] = useState();

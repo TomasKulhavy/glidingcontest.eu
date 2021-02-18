@@ -54,7 +54,10 @@ const Feedback = () => {
     console.log(formik);
     return (
         <Container>
-            <Button className="btn-dark mt-5 mb-3" tag={Link} to="/"><FontAwesomeIcon icon={faHome} className="font-size-xl mr-3" />Zpět na domovskou obrazovku</Button>
+            <Button className="btn-dark mt-5 mb-3" tag={Link} to="/">
+                <FontAwesomeIcon icon={faHome} className="font-size-xl mr-3" />
+                Zpět na domovskou obrazovku
+            </Button>
             <FormikProvider value={formik}>
                 <Card className="m-2 text-center">
                     <CardBody className="text-center bg-dark text-light">

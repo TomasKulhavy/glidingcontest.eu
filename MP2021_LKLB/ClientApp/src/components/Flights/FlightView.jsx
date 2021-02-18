@@ -20,6 +20,7 @@ const FlightView = () => {
   const [flightTime, setFlightTime] = useState();
   const [speed, setSpeed] = useState();
   const [kilometers, setKilometers] = useState();
+  const [fixesToGraph, setFixesToGraph] = useState([]);
   const [state, dispatch] = useContext(FlightDataContext);
 
   useEffect(() => {
@@ -27,6 +28,13 @@ const FlightView = () => {
       .get(`https://localhost:44346/api/View/${state.currentFlightId}`)
       .then((response) => {
         setFixes(response.data)
+        console.log(fixes);
+      });
+    axios
+      .get(`https://localhost:44346/api/View/graph/${state.currentFlightId}`, {params: {fixesToGraph: fixesToGraph}})
+      .then((response) => {
+        setFixesToGraph(response.data)
+        console.log(fixesToGraph);
       });
     axios
       .get(`https://localhost:44346/api/FlightLog/getDetails/${state.currentFlightId}`)
@@ -174,7 +182,7 @@ const FlightView = () => {
 		var dataSeries = { type: "line" };
 		var dataPoints = [];
 		
-		fixes.map((item) => {
+		fixesToGraph.map((item) => {
       dataPoints.push({
 				x: item.timestamp,
 				y: item.gpsAltitude
@@ -183,7 +191,7 @@ const FlightView = () => {
 
 		dataSeries.dataPoints = dataPoints;
 		data.push(dataSeries);
-		
+		console.log(dataPoints);
 		const options = {
 			animationEnabled: true,
 			data: data
@@ -210,7 +218,6 @@ const FlightView = () => {
 
   const blueOptions = { color: 'blue' }
   const limeOptions = { color: 'lime' }
-  const redOptions = { color: 'red' }
 
 return (
   <>
