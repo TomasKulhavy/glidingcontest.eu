@@ -184,14 +184,13 @@ const FlightView = () => {
 		
 		fixesToGraph.map((item) => {
       dataPoints.push({
-				x: item.timestamp,
+				x: item.time,
 				y: item.gpsAltitude
 			});
     });
 
 		dataSeries.dataPoints = dataPoints;
 		data.push(dataSeries);
-		console.log(dataPoints);
 		const options = {
 			animationEnabled: true,
 			data: data
@@ -214,7 +213,7 @@ const FlightView = () => {
     renderTask()
   ]
 
-  const center = [50.7, 15.0]
+  const center = [50.2, 15.8]
 
   const blueOptions = { color: 'blue' }
   const limeOptions = { color: 'lime' }

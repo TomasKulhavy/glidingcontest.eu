@@ -17,7 +17,8 @@ import { ApplicationPaths } from './components/api-authorization/ApiAuthorizatio
 import FlightList from "./components/Flights/FlightList";
 import NotFound from "./components/Pages/NotFound";
 import { FlightDataProvider } from "./providers/FlightDataContext";
-import { logout } from "./components/api-authorization/Logout";
+import Login from "./components/Auth/Login";
+import Register from "./components/Auth/Register";
 
 import './custom.css'
 
@@ -39,6 +40,8 @@ function App() {
             <Route exact path="/statistics" component={Stats} />
             <Route exact path="/feedback" component={Feedback} />
             <AuthorizeRoute exact path="/feedback/review" component={FeedbackReview} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/register" component={Register} />
             <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
           </Switch>
         </Router>

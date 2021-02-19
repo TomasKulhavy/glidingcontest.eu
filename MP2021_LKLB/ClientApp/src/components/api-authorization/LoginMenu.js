@@ -102,10 +102,10 @@ export class LoginMenu extends Component {
     anonymousView(registerPath, loginPath) {
         return (<Fragment>
             <NavItem>
-                <NavLink tag={Link} className="text-light" to={registerPath}>Registrovat se</NavLink>
+                <NavLink tag={Link} className="text-light" to="/register">Registrovat se</NavLink>
             </NavItem>
             <NavItem>
-                <NavLink tag={Link} className="text-light" to={loginPath}>Přihlásit se</NavLink>
+                <NavLink tag={Link} className="text-light" to="/login">Přihlásit se</NavLink>
             </NavItem>
         </Fragment>);
     }
