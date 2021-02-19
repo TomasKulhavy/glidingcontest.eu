@@ -199,7 +199,7 @@ const FlightView = () => {
 		return (
 		<div>
 			<CanvasJSChart options = {options} />
-			<span id="timeToRender" className="graph"></span>
+			<span className="graph"></span>
 		</div>
 		);
     

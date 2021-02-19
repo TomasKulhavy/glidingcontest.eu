@@ -7,5 +7,6 @@ namespace MP2021_LKLB.Models
 {
     public class AuthorizationToken
     {
+        public string AccessToken { get; set; }
     }
 }

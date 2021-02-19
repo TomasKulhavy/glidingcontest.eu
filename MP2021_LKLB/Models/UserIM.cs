@@ -7,5 +7,7 @@ namespace MP2021_LKLB.Models
 {
     public class UserIM
     {
+        public string Email { get; set; }
+        public string Password { get; set; }
     }
 }

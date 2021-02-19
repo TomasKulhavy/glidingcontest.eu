@@ -11,10 +11,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using QuotesApi.InputModels;
-using QuotesApi.Models;
+using MP2021_LKLB.Models;
 
-namespace QuotesApi.Controllers
+namespace MP2021_LKLB.Controllers
 {
     // https://www.c-sharpcorner.com/article/jwt-json-web-token-authentication-in-asp-net-core/
     // https://codeburst.io/jwt-auth-in-asp-net-core-148fb72bed03
@@ -76,7 +75,7 @@ namespace QuotesApi.Controllers
             var user = await _userManager.FindByNameAsync(userData.Email);
             if (user != null)
             {
-                return BadRequest("user already registered");
+                return BadRequest("Uživatel je již zaregistrovaný!");
             }
             var hasher = new PasswordHasher<ApplicationUser>();
             var newUser = new ApplicationUser { 
