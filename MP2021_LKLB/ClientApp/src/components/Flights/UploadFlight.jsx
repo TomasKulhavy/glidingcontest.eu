@@ -38,13 +38,14 @@ class UploadFlight extends Component {
 
     calculateDistance(result) {
         var dist = 0;
+        var countTP = 0;
 
         for (let index = 1; index < result.task.points.length - 2; index++) {
             var distT = getDistance(
                 { latitude: result.task.points[index].latitude, longitude: result.task.points[index].longitude },
                 { latitude: result.task.points[index + 1].latitude, longitude: result.task.points[index + 1].longitude },
             )
-            console.log(distT);
+            countTP += 1;
             dist = dist + distT;
         }
 
@@ -57,15 +58,18 @@ class UploadFlight extends Component {
             if(insideCircle({ lat: result.fixes[index].latitude, lon: result.fixes[index].longitude }, center, radius) === true)
             {
                 storeOfFixes.push(result.fixes[index].time);
+                console.log({ lat: result.fixes[index].latitude, lon: result.fixes[index].longitude })
             }
         }
         const taskStarted = storeOfFixes[storeOfFixes.length - 1];
         console.log(taskStarted);
 
+        const centerF = {lat: result.task.points[countTP + 1].latitude, lon: result.task.points[countTP + 1].longitude};
+        const radiusF = 1000;
         const storeOfFinish = [];
-        for (let index = result.fixes.length / 2; index < result.fixes.length - 1; index++) 
+        for (let index = Math.round(result.fixes.length / 2); index < result.fixes.length - 1; index++) 
         {
-            if(insideCircle({ lat: result.fixes[index].latitude, lon: result.fixes[index].longitude }, center, radius) === true)
+            if(insideCircle({ lat: result.fixes[index].latitude, lon: result.fixes[index].longitude }, centerF, radiusF) === true)
             {
                 storeOfFinish.push(result.fixes[index].time);
             }
@@ -92,12 +96,21 @@ class UploadFlight extends Component {
         //Task time comp
         var timeSF = taskStarted;
         var timeFF = taskFinished;
-        var s = timeSF.split(':');
-        var f = timeFF.split(':');
-        var times = (+s[0]) * 60 * 60 + (+s[1]) * 60 + (+s[2]); 
-        var timef = (+f[0]) * 60 * 60 + (+f[1]) * 60 + (+f[2]); 
-        var totalTimeInSecTask = timef - times;
-        var timeTask = new Date(totalTimeInSecTask * 1000).toISOString().substr(11, 8);
+        if(timeSF !== undefined)
+        {
+            var s = timeSF.split(':');
+            var times = (+s[0]) * 60 * 60 + (+s[1]) * 60 + (+s[2]); 
+        }
+        if(timeFF !== undefined)
+        {
+            var f = timeFF.split(':');
+            var timef = (+f[0]) * 60 * 60 + (+f[1]) * 60 + (+f[2]); 
+        }
+        if(timeFF !== undefined && timeSF !== undefined)
+        {
+            var totalTimeInSecTask = timef - times;
+            var timeTask = new Date(totalTimeInSecTask * 1000).toISOString().substr(11, 8);
+        }
 
         //Flight computing
         var first = firstFix;
@@ -109,10 +122,34 @@ class UploadFlight extends Component {
         var totalTimeInSec = timetwo - timeone;
         var time = new Date(totalTimeInSec * 1000).toISOString().substr(11, 8);
 
-        var speedTotal = (dist) / totalTimeInSecTask;
+        if(timeFF !== undefined && timeSF !== undefined)
+        {
+            var speedTotal = (dist) / totalTimeInSecTask;
+        }
+        else if (timeFF === undefined && timeSF === undefined)
+        {
+            var speedTotal = 0;
+            dist = 0;
+            timeTask = 0;
+        }
+        if(timeFF === undefined)
+        {
+            var speedTotal = 0;
+            timeTask = 0;
+        }
+
+
+        if(taskStarted === null)
+        {
+            flight.score = 0;
+        }
+        if(taskFinished === null)
+        {
+            flight.score = dist / 1000;
+        }
 
         const scoreFlight = { 
-            "score": flight.score + speedTotal*3.6,
+            "score": flight.score,
             "flightTime": time,
             "taskTime": timeTask,
             "kilometers": dist / 1000,

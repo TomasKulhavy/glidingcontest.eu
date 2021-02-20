@@ -13,6 +13,8 @@ namespace MP2021_LKLB.Models
 
         [Display(Name = "Čas letu")]
         public TimeSpan FlightTime { get; set; }
+        [Display(Name = "Čas úlohy")]
+        public TimeSpan TaskTime { get; set; }
         [Display(Name = "Body")]
         public float? Score { get; set; }
         [Display(Name = "Kilometry")]
