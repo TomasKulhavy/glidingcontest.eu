@@ -7,6 +7,7 @@ import { getDistance, getSpeed } from 'geolib';
 import NavMenu from "../Layout/NavMenu";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload, faShareSquare } from "@fortawesome/free-solid-svg-icons";
+import { insideCircle } from "geolocation-utils";
 
 import './Flight.css'
 
@@ -47,6 +48,32 @@ class UploadFlight extends Component {
             dist = dist + distT;
         }
 
+        const center = {lat: result.task.points[1].latitude, lon: result.task.points[1].longitude};
+        const radius = 1000;
+
+        const storeOfFixes = [];
+        for (let index = 1; index < result.fixes.length - result.fixes.length / 2; index++) 
+        {
+            if(insideCircle({ lat: result.fixes[index].latitude, lon: result.fixes[index].longitude }, center, radius) === true)
+            {
+                storeOfFixes.push(result.fixes[index].time);
+            }
+        }
+        const taskStarted = storeOfFixes[storeOfFixes.length - 1];
+        console.log(taskStarted);
+
+        const storeOfFinish = [];
+        for (let index = result.fixes.length / 2; index < result.fixes.length - 1; index++) 
+        {
+            if(insideCircle({ lat: result.fixes[index].latitude, lon: result.fixes[index].longitude }, center, radius) === true)
+            {
+                storeOfFinish.push(result.fixes[index].time);
+            }
+        }
+
+        const taskFinished = storeOfFinish[1];
+        console.log(taskFinished);
+
         console.log(dist);
 
         const flight = solver(result, scoring.XContest).next().value;
@@ -60,7 +87,19 @@ class UploadFlight extends Component {
         // Flight time
         var firstFix = result.fixes[0].time;
         var lastFix = result.fixes[result.fixes.length-1].time;
+        //var taskStart = 
 
+        //Task time comp
+        var timeSF = taskStarted;
+        var timeFF = taskFinished;
+        var s = timeSF.split(':');
+        var f = timeFF.split(':');
+        var times = (+s[0]) * 60 * 60 + (+s[1]) * 60 + (+s[2]); 
+        var timef = (+f[0]) * 60 * 60 + (+f[1]) * 60 + (+f[2]); 
+        var totalTimeInSecTask = timef - times;
+        var timeTask = new Date(totalTimeInSecTask * 1000).toISOString().substr(11, 8);
+
+        //Flight computing
         var first = firstFix;
         var second = lastFix;
         var a = first.split(':');
@@ -70,11 +109,12 @@ class UploadFlight extends Component {
         var totalTimeInSec = timetwo - timeone;
         var time = new Date(totalTimeInSec * 1000).toISOString().substr(11, 8);
 
-        var speedTotal = (dist) / totalTimeInSec;
+        var speedTotal = (dist) / totalTimeInSecTask;
 
         const scoreFlight = { 
             "score": flight.score + speedTotal*3.6,
             "flightTime": time,
+            "taskTime": timeTask,
             "kilometers": dist / 1000,
             "avgSpeed": speedTotal*3.6,
         }

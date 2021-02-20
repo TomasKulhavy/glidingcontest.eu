@@ -16,6 +16,7 @@
     "canvasjs": "^1.8.3",
     "formik": "^2.2.6",
     "geolib": "^3.3.1",
+    "geolocation-utils": "^1.2.3",
     "igc-parser": "^0.5.0",
     "igc-xc-score": "^1.5.2",
     "jquery": "^3.4.1",

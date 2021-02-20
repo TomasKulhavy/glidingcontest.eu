@@ -33,7 +33,7 @@ function App() {
             <Route exact path="/" component={Home} />
             <Route exact path="/flight/list" component={FlightList} />
             <Route exact path="/flight/viewer" component={FlightView} />
-            <AuthorizeRoute exact path="/flight/upload" component={UploadFlight} />
+            <Route exact path="/flight/upload" component={UploadFlight} />
             <Route exact path="/pilot/list" component={PilotsList} />
             <Route exact path="/pilot/order" component={PilotOrder} />
             <Route exact path="/pilot/flights" component={PilotFlights} />
