@@ -7,6 +7,7 @@ import { MapContainer, TileLayer, Polyline } from "react-leaflet";
 import CanvasJSReact from '../../assets/canvasjs.react';
 import { FlightDataContext, ADD_PILOTID } from "../../providers/FlightDataContext";
 import Chart from 'react-apexcharts';
+import moment from 'moment-with-locales-es6';
 
 import './Flight.css'
 
@@ -92,11 +93,12 @@ const FlightView = () => {
   }
 
   function renderFlights() {
+    moment.locale('cs'); 
     return (
       <>
         <td>
           <tr>
-            <b>Datum: </b>{flightLog.date}
+            <b>Datum: </b>{moment(`${flightLog.date}`).format('L')}
           </tr> 
           <tr>
             <b>Pilot: </b> <Button color="primary" outline onClick={() =>

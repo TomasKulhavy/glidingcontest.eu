@@ -4,6 +4,7 @@ import { useHistory, Link } from "react-router-dom";
 import NavMenu from "../Layout/NavMenu";
 import { FlightDataContext, ADD_FLIGHTID } from "../../providers/FlightDataContext";
 import axios from "axios";
+import moment from 'moment-with-locales-es6';
 
 const FlightList = () => {
     const history = useHistory();
@@ -21,10 +22,11 @@ const FlightList = () => {
     }, [year]);
 
     function renderFlights() {
+        moment.locale('cs'); 
         const array = flights.map((item) => {
           return (
             <tr key={item.id}>
-                <td>{item.date}</td>
+                <td>{moment(`${item.date}`).format('L')}</td>
                 <td>{item.userId}</td>
                 <td>{item.gliderType}</td>
                 <td><Button color="primary" onClick={() =>
@@ -41,14 +43,13 @@ const FlightList = () => {
     }
 
     function renderYears() {
-        const years = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021];
+        const years = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021];
         const array = years.map((item) => {
             return (
-              <td key={item}>
-                  <Button color="primary" onClick={e => {setYear(item);}}>{item}</Button>
-              </td> 
+                <Button className="mr-2 mt-1" key={item} color="primary" onClick={e => {setYear(item);}}>{item}</Button>
             );
           });
+          console.log(year);
         return array;
     }
 
@@ -61,7 +62,7 @@ const FlightList = () => {
                             {renderYears()}
                         </tbody>
                 </Table>
-                <Table className="bg-light" striped>
+                <Table className="bg-dark text-white" striped>
                     <thead>
                         <tr>
                             <th>Datum</th>

@@ -22,7 +22,6 @@ const PilotOrder = () => {
                 <td>{index + 1}</td>
                 <td>{Math.round(item.topScore)}</td>
                 <td>{item.fullName}</td>
-                <td>{item.email}</td>
             </tr> 
           );
         });
@@ -34,13 +33,12 @@ const PilotOrder = () => {
         <>
             <NavMenu />
             <Container>
-                <Table className="bg-light" striped>
+                <Table className="bg-dark text-white" striped>
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>Body</th>
                             <th>Jméno</th>
-                            <th>Email</th>
                         </tr>
                     </thead>
                     <tbody>

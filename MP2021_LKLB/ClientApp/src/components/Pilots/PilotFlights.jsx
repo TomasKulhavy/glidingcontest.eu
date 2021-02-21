@@ -6,6 +6,7 @@ import { FlightDataContext, ADD_FLIGHTID } from "../../providers/FlightDataConte
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from "axios";
 import { faRulerVertical, faStopwatch, faUser, faTimes } from "@fortawesome/free-solid-svg-icons";
+import moment from 'moment-with-locales-es6';
 
 const PilotFlights = () => {
     const history = useHistory();
@@ -40,10 +41,10 @@ const PilotFlights = () => {
     }, [year]);
 
     function renderYears() {
-        const years = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021];
+        const years = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021];
         const array = years.map((item) => {
             return (
-                <Button className="mr-1" key={item} color="primary" onClick={e => {setYear(item);}}>{item}</Button>
+                <Button className="mr-2 mt-1" key={item} color="primary" onClick={e => {setYear(item);}}>{item}</Button>
             );
           });
           console.log(year);
@@ -62,13 +63,14 @@ const PilotFlights = () => {
     }
 
     function renderFlights() {
+        moment.locale('cs'); 
+
         if(state.pilotId === loggedPilot)
         {
             const array = flights.map((item) => {
                 return (
                   <tr key={item.id}>
-                        <td>{item.date}
-                        </td>
+                        <td>{moment(`${item.date}`).format('L')}</td>
                         <td>{item.gliderType}</td>
                         <td>{item.registration}</td>
                         <td><Button color="primary" onClick={() =>
@@ -93,7 +95,7 @@ const PilotFlights = () => {
             const array = flights.map((item) => {
                 return (
                   <tr key={item.id}>
-                        <td>{item.date}</td>
+                        <td>{moment(`${item.date}`).format('L')}</td>
                         <td>{item.gliderType}</td>
                         <td>{item.registration}</td>
                         <td><Button color="primary" onClick={() =>

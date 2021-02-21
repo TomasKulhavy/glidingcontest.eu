@@ -25,7 +25,6 @@ const PilotsList = () => {
             <tr key={item.id}>
                 <td>{item.fullName}</td>
                 <td>{item.userName}</td>
-                <td>{item.email}</td>
                 <td><Button color="primary" onClick={() =>
                     dispatch({
                         type: ADD_PILOTID,
@@ -47,7 +46,7 @@ const PilotsList = () => {
                         <tr>
                             <th>Jméno</th>
                             <th>Uživatelské jméno</th>
-                            <th>Email</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
