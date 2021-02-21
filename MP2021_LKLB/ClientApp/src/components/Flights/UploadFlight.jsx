@@ -50,7 +50,7 @@ class UploadFlight extends Component {
         }
 
         const center = {lat: result.task.points[1].latitude, lon: result.task.points[1].longitude};
-        const radius = 1000;
+        const radius = 5000;
 
         const storeOfFixes = [];
         for (let index = 1; index < result.fixes.length - result.fixes.length / 2; index++) 
@@ -65,17 +65,42 @@ class UploadFlight extends Component {
         console.log(taskStarted);
 
         const centerF = {lat: result.task.points[countTP + 1].latitude, lon: result.task.points[countTP + 1].longitude};
+
         const radiusF = 1000;
         const storeOfFinish = [];
+        var state = false;
         for (let index = Math.round(result.fixes.length / 2); index < result.fixes.length - 1; index++) 
         {
             if(insideCircle({ lat: result.fixes[index].latitude, lon: result.fixes[index].longitude }, centerF, radiusF) === true)
             {
                 storeOfFinish.push(result.fixes[index].time);
             }
-        }
+            else if(insideCircle({ lat: result.fixes[index].latitude, lon: result.fixes[index].longitude }, centerF, radiusF) === false)
+            {
+                const centerT = {lat: result.task.points[countTP].latitude, lon: result.task.points[countTP].longitude};
 
-        const taskFinished = storeOfFinish[1];
+                if (insideCircle({ lat: result.fixes[index].latitude, lon: result.fixes[index].longitude }, centerT, radiusF) === true)
+                {
+                    state = true;
+                    storeOfFinish.push({lat: result.fixes[index].latitude, lon: result.fixes[index].longitude, time: result.fixes[index].time});
+                }
+            }
+        }
+        console.log(storeOfFinish)
+        var distTFinished = getDistance(
+            { latitude: storeOfFinish[1].lat, longitude: storeOfFinish[1].lon },
+            { latitude: result.fixes[result.fixes.length - 1].latitude, longitude: result.fixes[result.fixes.length - 1].longitude },
+        )
+        var distLast = getDistance(
+            { latitude: result.task.points[countTP].latitude, longitude: result.task.points[countTP].longitude },
+            { latitude: result.task.points[countTP + 1].latitude, longitude: result.task.points[countTP + 1].longitude },
+        )
+        console.log(distTFinished);
+        const rightdist = dist - distLast + distTFinished;
+        console.log(rightdist)
+        const taskFinished = storeOfFinish[1].time;
+
+
         console.log(taskFinished);
 
         console.log(dist);
@@ -95,7 +120,14 @@ class UploadFlight extends Component {
 
         //Task time comp
         var timeSF = taskStarted;
-        var timeFF = taskFinished;
+        if(state === false)
+        {
+            var timeFF = taskFinished;
+        }
+        else if (state === true)
+        {
+            var timeFF = result.fixes[result.fixes.length-1].time;
+        }
         if(timeSF !== undefined)
         {
             var s = timeSF.split(':');
@@ -124,7 +156,10 @@ class UploadFlight extends Component {
 
         if(timeFF !== undefined && timeSF !== undefined)
         {
-            var speedTotal = (dist) / totalTimeInSecTask;
+            var speedTotal = rightdist / totalTimeInSecTask;
+            console.log(rightdist);
+            console.log(totalTimeInSecTask)
+            console.log(speedTotal*3.6)
         }
         else if (timeFF === undefined && timeSF === undefined)
         {
@@ -132,12 +167,6 @@ class UploadFlight extends Component {
             dist = 0;
             timeTask = 0;
         }
-        if(timeFF === undefined)
-        {
-            var speedTotal = 0;
-            timeTask = 0;
-        }
-
 
         if(taskStarted === null)
         {
@@ -152,7 +181,7 @@ class UploadFlight extends Component {
             "score": flight.score,
             "flightTime": time,
             "taskTime": timeTask,
-            "kilometers": dist / 1000,
+            "kilometers": rightdist / 1000,
             "avgSpeed": speedTotal*3.6,
         }
         result.flightLogAnalyse = scoreFlight;
