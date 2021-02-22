@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Form, FormGroup, Input, Label, FormFeedback, Card, CardHeader, CardBody, Row, Container } from "reactstrap";
+import { Button, Form, FormGroup, Input, Label, FormFeedback, Card, CardBody, Container } from "reactstrap";
 import { useFormik, FormikProvider } from 'formik';
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
@@ -46,8 +46,7 @@ const Feedback = () => {
             axios.post('https://localhost:44346/api/Feedback', { payload: tisk })
             .then(() => {
                 history.push("/");
-            });
-            
+            });           
         },
     });
 

@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from "axios";
 import { faRulerVertical, faStopwatch, faUser, faTimes } from "@fortawesome/free-solid-svg-icons";
 import moment from 'moment-with-locales-es6';
+import Loading from "../Pages/Loading";
 
 const PilotFlights = () => {
     const history = useHistory();
@@ -16,14 +17,19 @@ const PilotFlights = () => {
     const [flightTime, setFlightTime] = useState([]);
     const [state, dispatch] = useContext(FlightDataContext);
     const [year, setYear] = useState(2021);
+    const [loading, setLoading] = useState(false);
     console.log(state.pilotId);
 
     useEffect(() => {
+        setLoading(true);
         axios
             .get(`https://localhost:44346/api/User/pilotFlights/${state.pilotId}/${year}`)
             .then((response) => {
                 setFlights(response.data);
                 console.log(response.data);
+            }).
+            then(() => {
+                setLoading(false);
             });
         axios
             .get(`https://localhost:44346/api/User/pilotStats/${state.pilotId}`)
@@ -150,38 +156,47 @@ const PilotFlights = () => {
             </>
         )
     }
-
-    return (
-        <>
-            <NavMenu />
-            <Container>
-                <Row>
-                {renderPilotCard()}
-                <div className="">
-                    <Table borderless>
-                            <tbody className="">
-                                {renderYears()}
+    if (loading) {
+        return (
+          <>
+            <Loading />
+          </>
+        );
+    }
+    else if(flights)
+    {
+        return (
+            <>
+                <NavMenu />
+                <Container>
+                    <Row>
+                    {renderPilotCard()}
+                    <div className="">
+                        <Table borderless>
+                                <tbody className="">
+                                    {renderYears()}
+                                </tbody>
+                        </Table>
+                        <Table className="bg-dark text-white" striped>
+                            <thead>
+                                <tr>
+                                    <th>Datum</th>
+                                    <th>Typ kluzáku</th>
+                                    <th>Registrace</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {renderFlights()}
                             </tbody>
-                    </Table>
-                    <Table className="bg-dark text-white" striped>
-                        <thead>
-                            <tr>
-                                <th>Datum</th>
-                                <th>Typ kluzáku</th>
-                                <th>Registrace</th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {renderFlights()}
-                        </tbody>
-                    </Table>
-                </div>
-                </Row>
-            </Container>
-        </>
-    )
+                        </Table>
+                    </div>
+                    </Row>
+                </Container>
+            </>
+        )
+    }
 }
 
 export default PilotFlights;

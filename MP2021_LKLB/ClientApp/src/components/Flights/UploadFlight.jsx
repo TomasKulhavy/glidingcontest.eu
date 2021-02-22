@@ -3,7 +3,7 @@ import axios from "axios";
 import { Card, Input, Alert, Button } from "reactstrap";
 import IGCParser from "igc-parser";
 import { solver, scoringRules as scoring } from "igc-xc-score";
-import { getDistance, getSpeed } from 'geolib';
+import { getDistance } from 'geolib';
 import NavMenu from "../Layout/NavMenu";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload, faShareSquare } from "@fortawesome/free-solid-svg-icons";
@@ -33,7 +33,10 @@ class UploadFlight extends Component {
 
     sendFile(data) {
         axios.post('https://localhost:44346/api/FlightLog', { payload: data })
-        .catch(err => { console.log(err); this.renderAlert(err) });
+        .catch(() => { 
+            console.log(err); 
+                this.renderAlert(err) 
+        });
     }
 
     calculateDistance(result) {
@@ -189,9 +192,9 @@ class UploadFlight extends Component {
         console.log(result);
     };
 
-    renderAlert(err)
+    renderAlert()
     {
-        if(err != null)
+        if(err)
         {
             const array = "Tento let je již nahraný v naší databázi!";
             return array;

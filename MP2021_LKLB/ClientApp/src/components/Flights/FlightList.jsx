@@ -5,20 +5,27 @@ import NavMenu from "../Layout/NavMenu";
 import { FlightDataContext, ADD_FLIGHTID } from "../../providers/FlightDataContext";
 import axios from "axios";
 import moment from 'moment-with-locales-es6';
+import Loading from "../Pages/Loading";
 
 const FlightList = () => {
     const history = useHistory();
     const [flights, setFlights] = useState([]);
     const [year, setYear] = useState(2021);
+    const [loading, setLoading] = useState(false);
     const [state, dispatch] = useContext(FlightDataContext);
 
     useEffect(() => {
+        setLoading(true);
         axios
             .get(`https://localhost:44346/api/FlightLog/${year}`)
             .then((response) => {
                 setFlights(response.data)
                 console.log(response.data);
             })
+            .then(() => {
+                setLoading(false);
+            })
+            
     }, [year]);
 
     function renderFlights() {
@@ -53,31 +60,41 @@ const FlightList = () => {
         return array;
     }
 
-    return (
-        <>
-            <NavMenu />
-            <Container>
-                <Table borderless>
+    if (loading) {
+        return (
+          <>
+            <Loading />
+          </>
+        );
+    }
+    else if (flights)
+    {
+        return (
+            <>
+                <NavMenu />
+                <Container>
+                    <Table borderless>
+                            <tbody>
+                                {renderYears()}
+                            </tbody>
+                    </Table>
+                    <Table className="bg-dark text-white" striped>
+                        <thead>
+                            <tr>
+                                <th>Datum</th>
+                                <th>Jméno pilota</th>
+                                <th>Typ kluzáku</th>
+                                <th></th>
+                            </tr>
+                        </thead>
                         <tbody>
-                            {renderYears()}
+                            {renderFlights()}
                         </tbody>
-                </Table>
-                <Table className="bg-dark text-white" striped>
-                    <thead>
-                        <tr>
-                            <th>Datum</th>
-                            <th>Jméno pilota</th>
-                            <th>Typ kluzáku</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {renderFlights()}
-                    </tbody>
-                </Table>
-            </Container>
-        </>
-    )
+                    </Table>
+                </Container>
+            </>
+        )
+    }
 }
 
 export default FlightList;

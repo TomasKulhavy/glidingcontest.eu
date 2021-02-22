@@ -3,7 +3,7 @@ import { Component } from 'react';
 import authService from './AuthorizeService';
 import { AuthenticationResultStatus } from './AuthorizeService';
 import { QueryParameterNames, LogoutActions, ApplicationPaths } from './ApiAuthorizationConstants';
-import Loader from "react-loader-spinner";
+import Loading from "../Pages/Loading";
 import { Button, Container } from 'reactstrap';
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -61,15 +61,13 @@ export class Logout extends Component {
                 case LogoutActions.Logout:
                     return (
                         <div className="text-center align-middle center">
-                            <Loader type="TailSpin" color="#00BFFF" height={80} width={80}/>
-                            <div>Odhlašujeme Vás</div>
+                            <Loading />
                         </div>
                     );
                 case LogoutActions.LogoutCallback:
                     return (
                         <div className="text-center align-middle center">
-                            <Loader type="TailSpin" color="#00BFFF" height={80} width={80}/>
-                            <div>Za okamžik budete přesměrováni</div>
+                            <Loading />
                         </div>
                     );
                 case LogoutActions.LoggedOut:
@@ -77,7 +75,7 @@ export class Logout extends Component {
                         <Container className="align-items-center">
                             <Button className="btn-dark mt-5 mb-3" tag={Link} to="/">
                                 <FontAwesomeIcon icon={faHome} className="font-size-xl mr-3" />
-                            Zpět na domovskou obrazovku</Button>
+                                Zpět na domovskou obrazovku</Button>
                         </Container>
                     );
                 default:

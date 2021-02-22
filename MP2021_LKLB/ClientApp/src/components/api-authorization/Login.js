@@ -3,7 +3,7 @@ import { Component } from 'react';
 import authService from './AuthorizeService';
 import { AuthenticationResultStatus } from './AuthorizeService';
 import { LoginActions, QueryParameterNames, ApplicationPaths } from './ApiAuthorizationConstants';
-import Loader from "react-loader-spinner";
+import Loading from "../Pages/Loading";
 import './style.css'
 
 // The main responsibility of this component is to handle the user's login process.
@@ -54,16 +54,14 @@ export class Login extends Component {
             switch (action) {
                 case LoginActions.Login:
                     return (
-                        <div className="text-center align-middle center">
-                            <Loader type="TailSpin" color="#00BFFF" height={80} width={80}/>
-                            <div>Za okamžik budete přesměrováni</div>
+                        <div>
+                            <Loading />
                         </div>
                         );
                 case LoginActions.LoginCallback:
                     return (
-                        <div className="text-center align-middle center">
-                            <Loader type="TailSpin" color="#00BFFF" height={80} width={80}/>
-                            <div>Za okamžik budete přesměrováni</div>
+                        <div>
+                            <Loading />
                         </div>
                     );
                 case LoginActions.Profile:

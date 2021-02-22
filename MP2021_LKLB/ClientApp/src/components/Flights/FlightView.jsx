@@ -8,6 +8,7 @@ import CanvasJSReact from '../../assets/canvasjs.react';
 import { FlightDataContext, ADD_PILOTID } from "../../providers/FlightDataContext";
 import Chart from 'react-apexcharts';
 import moment from 'moment-with-locales-es6';
+import Loading from "../Pages/Loading";
 
 import './Flight.css'
 
@@ -23,8 +24,10 @@ const FlightView = () => {
   const [kilometers, setKilometers] = useState();
   const [fixesToGraph, setFixesToGraph] = useState([]);
   const [state, dispatch] = useContext(FlightDataContext);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`https://localhost:44346/api/View/${state.currentFlightId}`)
       .then((response) => {
@@ -48,6 +51,9 @@ const FlightView = () => {
       .then((response) => {
         setTask(response.data)
         console.log(response.data)
+      }).
+      then(() => {
+        setLoading(false);
       });
     axios
       .get(`https://localhost:44346/api/Analyse/${state.currentFlightId}`, {params: {analyse: analyse}})
@@ -219,29 +225,41 @@ const FlightView = () => {
 
   const blueOptions = { color: 'blue' }
   const limeOptions = { color: 'lime' }
+  console.log(loading)
 
-return (
-  <>
-    <NavMenu />
-    <Container>
-      {renderAnalyse()}
-      <Card className="m-2">
-        <CardHeader className="bg-dark text-light text-center"><h5>Trasa letu</h5></CardHeader>
-        <CardBody style={{padding: '0%'}}>
-          <MapContainer className="leaflet" center={center} zoom={8} scrollWheelZoom={true}>
-            <TileLayer
-              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <Polyline pathOptions={blueOptions} positions={flightLine} />
-            <Polyline pathOptions={limeOptions} positions={taskLine} />
-          </MapContainer>
-        </CardBody>
-        <CardFooter>{renderGraph()}</CardFooter>
-      </Card>
-    </Container>
-  </>
-  )
+  if (loading) {
+    return (
+      <>
+        <Loading />
+      </>
+    );
+  }
+
+  else if (task)
+  {
+    return (
+      <>
+        <NavMenu />
+        <Container>
+          {renderAnalyse()}
+          <Card className="m-2">
+            <CardHeader className="bg-dark text-light text-center"><h5>Trasa letu</h5></CardHeader>
+            <CardBody style={{padding: '0%'}}>
+              <MapContainer className="leaflet" center={center} zoom={8} scrollWheelZoom={true}>
+                <TileLayer
+                  attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                <Polyline pathOptions={blueOptions} positions={flightLine} />
+                <Polyline pathOptions={limeOptions} positions={taskLine} />
+              </MapContainer>
+            </CardBody>
+            <CardFooter>{renderGraph()}</CardFooter>
+          </Card>
+        </Container>
+      </>
+    )
+  }
 }
 
 export default FlightView;
