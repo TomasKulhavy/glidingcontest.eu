@@ -36,7 +36,7 @@ namespace MP2021_LKLB.Data
             builder.Entity<PilotRole>().HasData(new PilotRole { Id = "PILOT", Name = "Pilot", NormalizedName = "PILOT" });
             builder.Entity<ApplicationUser>().HasData(new ApplicationUser
             {
-                Id = "TOMAS123",
+                Id = "TomasLKLB",
                 FirstName = "Tomáš",
                 LastName = "Kulhavý",
                 Gender = Gender.Muž,
@@ -51,7 +51,7 @@ namespace MP2021_LKLB.Data
             });
             builder.Entity<ApplicationUser>().HasData(new ApplicationUser
             {
-                Id = "WOLF",
+                Id = "Wolf",
                 FirstName = "Wolfgang",
                 LastName = "Sluka",
                 Gender = Gender.Muž,
@@ -66,12 +66,12 @@ namespace MP2021_LKLB.Data
             });
             builder.Entity<ApplicationUser>().HasData(new ApplicationUser
             {
-                Id = "CICA",
+                Id = "Cicvarek",
                 FirstName = "Martin",
                 LastName = "Cicvárek",
                 Gender = Gender.Muž,
-                UserName = "Cíca",
-                NormalizedUserName = "CÍCA",
+                UserName = "Cicvarek",
+                NormalizedUserName = "CICVAREK",
                 Email = "meta5@seznam.cz",
                 NormalizedEmail = "META5@SEZNAM.CZ",
                 EmailConfirmed = true,
@@ -81,7 +81,7 @@ namespace MP2021_LKLB.Data
             });
             builder.Entity<ApplicationUser>().HasData(new ApplicationUser
             {
-                Id = "LUKASZ",
+                Id = "Lukasz",
                 FirstName = "Lukasz",
                 LastName = "Czaikowski",
                 Gender = Gender.Muž,
@@ -96,12 +96,12 @@ namespace MP2021_LKLB.Data
             });
             builder.Entity<ApplicationUser>().HasData(new ApplicationUser
             {
-                Id = "JANHYB",
+                Id = "HybnerJ",
                 FirstName = "Jan",
                 LastName = "Hybner",
                 Gender = Gender.Muž,
-                UserName = "HonzaHyb",
-                NormalizedUserName = "HONZAHYB",
+                UserName = "HybnerJ",
+                NormalizedUserName = "HybnerJ",
                 Email = "jan.hyb@seznam.cz",
                 NormalizedEmail = "JAN.HYB@SEZNAM.CZ",
                 EmailConfirmed = true,
@@ -111,7 +111,7 @@ namespace MP2021_LKLB.Data
             });
             builder.Entity<ApplicationUser>().HasData(new ApplicationUser
             {
-                Id = "ZDENEK",
+                Id = "Zdenek",
                 FirstName = "Zdeněk",
                 LastName = "Ulrych",
                 Gender = Gender.Muž,
@@ -126,7 +126,7 @@ namespace MP2021_LKLB.Data
             });
             builder.Entity<ApplicationUser>().HasData(new ApplicationUser
             {
-                Id = "PETRZA",
+                Id = "Zajda",
                 FirstName = "Petr",
                 LastName = "Zajíc",
                 Gender = Gender.Muž,
@@ -141,12 +141,12 @@ namespace MP2021_LKLB.Data
             });
             builder.Entity<ApplicationUser>().HasData(new ApplicationUser
             {
-                Id = "PETRHYB",
+                Id = "HybnerP",
                 FirstName = "Petr",
                 LastName = "Hybner",
                 Gender = Gender.Muž,
-                UserName = "PetrHyb",
-                NormalizedUserName = "PETRHYB",
+                UserName = "HybnerP",
+                NormalizedUserName = "HYBNERP",
                 Email = "petr-hybner@seznam.cz",
                 NormalizedEmail = "PETR-HYBNER@SEZNAM.CZ",
                 EmailConfirmed = true,
@@ -157,7 +157,7 @@ namespace MP2021_LKLB.Data
 
             builder.Entity<ApplicationUser>().HasData(new ApplicationUser
             {
-                Id = "RUDA",
+                Id = "Ruda",
                 FirstName = "Rudolf",
                 LastName = "Patrman",
                 Gender = Gender.Muž,
@@ -172,7 +172,7 @@ namespace MP2021_LKLB.Data
             });
             builder.Entity<ApplicationUser>().HasData(new ApplicationUser
             {
-                Id = "MILAN",
+                Id = "Milan",
                 FirstName = "Milan",
                 LastName = "Dvořák",
                 Gender = Gender.Muž,
@@ -185,17 +185,17 @@ namespace MP2021_LKLB.Data
                 SecurityStamp = string.Empty,
                 PasswordHash = hasher.HashPassword(null, "L13Blanik.")
             });
-            builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { RoleId = "ADMIN", UserId = "TOMAS123" });
-            builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { RoleId = "PILOT", UserId = "TOMAS123" });
-            builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { RoleId = "PILOT", UserId = "MILAN" });
-            builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { RoleId = "PILOT", UserId = "RUDA" });
-            builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { RoleId = "PILOT", UserId = "LUKASZ" });
-            builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { RoleId = "PILOT", UserId = "CICA" });
-            builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { RoleId = "PILOT", UserId = "WOLF" });
-            builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { RoleId = "PILOT", UserId = "PETRZA" });
-            builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { RoleId = "PILOT", UserId = "PETRHYB" });
-            builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { RoleId = "PILOT", UserId = "ZDENEK" });
-            builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { RoleId = "PILOT", UserId = "JANHYB" });
+            builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { RoleId = "ADMIN", UserId = "TomasLKLB" });
+            builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { RoleId = "PILOT", UserId = "TomasLKLB" });
+            builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { RoleId = "PILOT", UserId = "Milan" });
+            builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { RoleId = "PILOT", UserId = "Ruda" });
+            builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { RoleId = "PILOT", UserId = "Lukasz" });
+            builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { RoleId = "PILOT", UserId = "Cicvarek" });
+            builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { RoleId = "PILOT", UserId = "Wolf" });
+            builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { RoleId = "PILOT", UserId = "Zajda" });
+            builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { RoleId = "PILOT", UserId = "HybnerP" });
+            builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { RoleId = "PILOT", UserId = "Zdenek" });
+            builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { RoleId = "PILOT", UserId = "HybnerJ" });
 
             builder.Entity<FlightLog>()
             .Property(e => e.Errors)

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MP2021_LKLB.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210220163847_All")]
+    [Migration("20210222093026_All")]
     partial class All
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -212,9 +212,9 @@ namespace MP2021_LKLB.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "TOMAS123",
+                            Id = "TomasLKLB",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c87a7fd4-8a80-42c3-aff4-90395cabbf30",
+                            ConcurrencyStamp = "b7c32d08-ae99-4f55-bfad-ad25809d18c8",
                             Email = "tomas.kulhavy@pslib.cz",
                             EmailConfirmed = true,
                             FirstName = "Tomáš",
@@ -223,7 +223,7 @@ namespace MP2021_LKLB.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "TOMAS.KULHAVY@PSLIB.CZ",
                             NormalizedUserName = "TOMASLKLB",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPA+OHEBmwrmY7U5MkPWF7QKO+TCzaOpHrNaWt7Wbe41y6xCM8nUX76345/4ikq5pA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPwDDy9gzOJhGQKBNz5oosEhAUD5YvVRLVvxJ2OPqGXF7gmXuvcc4+fV0B2iucyztg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TimeInSec = 0.0,
@@ -232,9 +232,9 @@ namespace MP2021_LKLB.Migrations
                         },
                         new
                         {
-                            Id = "WOLF",
+                            Id = "Wolf",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3edc9bc6-a66e-4926-8377-6423b39e0a2a",
+                            ConcurrencyStamp = "32554a08-9310-4021-b403-3a1b5394d6df",
                             Email = "w.sluka@seznam.cz",
                             EmailConfirmed = true,
                             FirstName = "Wolfgang",
@@ -243,7 +243,7 @@ namespace MP2021_LKLB.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "W.SLUKA@SEZNAM.CZ",
                             NormalizedUserName = "WOLF",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHAexiVQgEe6SR6+bCuijka6//lgMyxFfgRooStOuv16/LYZuzANOdk07qp9TgkpUA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELyH6Fbp+ygGMCcFsKLRd2KT3zu745EFodwwlX+uGmbplXM26jpvMxEHk+MednBoGg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TimeInSec = 0.0,
@@ -252,9 +252,9 @@ namespace MP2021_LKLB.Migrations
                         },
                         new
                         {
-                            Id = "CICA",
+                            Id = "Cicvarek",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6fbee98c-3f11-4b1c-8dcf-ca3cce0771d9",
+                            ConcurrencyStamp = "f258037e-e9e9-4831-9dfd-bec8584a6770",
                             Email = "meta5@seznam.cz",
                             EmailConfirmed = true,
                             FirstName = "Martin",
@@ -262,19 +262,19 @@ namespace MP2021_LKLB.Migrations
                             LastName = "Cicvárek",
                             LockoutEnabled = false,
                             NormalizedEmail = "META5@SEZNAM.CZ",
-                            NormalizedUserName = "CÍCA",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDNqXzgjfMdIUUGrRnXNJVAKuFtge0GIcTZI6QwTgjPoF0vgOVJDmDvUiZHL/TNwqw==",
+                            NormalizedUserName = "CICVAREK",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKmD0i4Ll2FYDiF5wq7fXrAro6AuvDSF/fpqUpaaotggJCfWGoxMB/rRMB6gEeFJNQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TimeInSec = 0.0,
                             TwoFactorEnabled = false,
-                            UserName = "Cíca"
+                            UserName = "Cicvarek"
                         },
                         new
                         {
-                            Id = "LUKASZ",
+                            Id = "Lukasz",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3b3f1f8e-3c94-4904-afd9-550980125ce1",
+                            ConcurrencyStamp = "4f2a1564-089d-406c-a225-9cb53be6f754",
                             Email = "czajkolu@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Lukasz",
@@ -283,7 +283,7 @@ namespace MP2021_LKLB.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "CZAJKOLU@GMAIL.COM",
                             NormalizedUserName = "LUKASZ",
-                            PasswordHash = "AQAAAAEAACcQAAAAEI8HiWFBBv1dSeJodvrZ2Sayrfnl58OIPHKo5LFCEtenHK9Q1BxjwT7+ZO3ponYGDg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJJbCg1h99H6ALujz4hIruoHc687AswXaF3xC9U4nM+pqO5rBH7eVVoVCdeqI7ZQkg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TimeInSec = 0.0,
@@ -292,9 +292,9 @@ namespace MP2021_LKLB.Migrations
                         },
                         new
                         {
-                            Id = "JANHYB",
+                            Id = "HybnerJ",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d957876f-9128-4447-817c-8f7b52269d2c",
+                            ConcurrencyStamp = "7f7fcc35-e437-46a9-b92f-3243a4a93cdb",
                             Email = "jan.hyb@seznam.cz",
                             EmailConfirmed = true,
                             FirstName = "Jan",
@@ -302,19 +302,19 @@ namespace MP2021_LKLB.Migrations
                             LastName = "Hybner",
                             LockoutEnabled = false,
                             NormalizedEmail = "JAN.HYB@SEZNAM.CZ",
-                            NormalizedUserName = "HONZAHYB",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMp0Bu3Mclb5OCdX1D9Qy5vg4QQ0L4DP7+uKS4Ng/0UCKvHFS5y5AymV7/0qU37jdA==",
+                            NormalizedUserName = "HybnerJ",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDeFRmiixhbooDNR/0S7eAE4zUJ5RQCvSGO/lyeEcsAHqEfkBUtAA1AKN42tn0qP5w==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TimeInSec = 0.0,
                             TwoFactorEnabled = false,
-                            UserName = "HonzaHyb"
+                            UserName = "HybnerJ"
                         },
                         new
                         {
-                            Id = "ZDENEK",
+                            Id = "Zdenek",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "25de64fa-0aef-48e3-af83-441d5ae1df7a",
+                            ConcurrencyStamp = "6fff872d-747c-488d-8353-7d665141cc47",
                             Email = "Zdenek.Ulrych@seznam.cz",
                             EmailConfirmed = true,
                             FirstName = "Zdeněk",
@@ -323,7 +323,7 @@ namespace MP2021_LKLB.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ZDENEK.ULRYCH@SEZNAM.CZ",
                             NormalizedUserName = "ZDENEK",
-                            PasswordHash = "AQAAAAEAACcQAAAAEE9h/v+sc6CuHE2VIcOKPSoSWSM9XaVT59HdRWR8PJrQcWmKfuSZxr6GcH5zG2cHZw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJP4qOHC7z0lJV9ROXHStiSMK3YoHUjvpUn5UtLAkhGr7AjmYh2wdK9WLvTRtaX8kA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TimeInSec = 0.0,
@@ -332,9 +332,9 @@ namespace MP2021_LKLB.Migrations
                         },
                         new
                         {
-                            Id = "PETRZA",
+                            Id = "Zajda",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e11ab7ed-ed0e-449e-a24b-4cc45b43d72b",
+                            ConcurrencyStamp = "addc3021-5776-4d41-8e26-e4ba4f0a3f30",
                             Email = "petr-zajic@volny.cz",
                             EmailConfirmed = true,
                             FirstName = "Petr",
@@ -343,7 +343,7 @@ namespace MP2021_LKLB.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "PETR-ZAJIC@VOLNY.CZ",
                             NormalizedUserName = "ZAJDA",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKxjfncaCU780/nqcr4qGaNyhedf2WKN02aT+DTsqWyyRBZmQhvSauf6BuQn1cB5fA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHlPbfY6dMTursFs9e9M8qM2AmPgIUCmHFjqDzQbhzDb92D0TECJfFgOA7FYSZXtrQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TimeInSec = 0.0,
@@ -352,9 +352,9 @@ namespace MP2021_LKLB.Migrations
                         },
                         new
                         {
-                            Id = "PETRHYB",
+                            Id = "HybnerP",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "21b88aea-3644-4610-aa05-4ac57f910394",
+                            ConcurrencyStamp = "0dc92b3a-c784-4e54-a642-e156151f8a63",
                             Email = "petr-hybner@seznam.cz",
                             EmailConfirmed = true,
                             FirstName = "Petr",
@@ -362,19 +362,19 @@ namespace MP2021_LKLB.Migrations
                             LastName = "Hybner",
                             LockoutEnabled = false,
                             NormalizedEmail = "PETR-HYBNER@SEZNAM.CZ",
-                            NormalizedUserName = "PETRHYB",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDfkx/D8cwSMTFIVa0KSWVAH+P2PaW86N2hANq9LP9CGPgSNQBDEfSNkaRHI2dwUvQ==",
+                            NormalizedUserName = "HYBNERP",
+                            PasswordHash = "AQAAAAEAACcQAAAAEODPolZBXtwW/AKzbIDJ2izyf3fS40vR+KuVT9emFRdbf3HmZ/IvHWnnonYZ12PFRw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TimeInSec = 0.0,
                             TwoFactorEnabled = false,
-                            UserName = "PetrHyb"
+                            UserName = "HybnerP"
                         },
                         new
                         {
-                            Id = "RUDA",
+                            Id = "Ruda",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9f3d3978-bd4e-4e00-b6e2-d7245744b117",
+                            ConcurrencyStamp = "311c4a50-4781-44e3-b4b5-ae10a684a01c",
                             Email = "patrman.rudolf@seznam.cz",
                             EmailConfirmed = true,
                             FirstName = "Rudolf",
@@ -383,7 +383,7 @@ namespace MP2021_LKLB.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "PATRMAN.RUDOLF@SEZNAM.CZ",
                             NormalizedUserName = "RUDA",
-                            PasswordHash = "AQAAAAEAACcQAAAAENP98NtNRSPm951vmA+jhvyMKFp3rd44d50PGQBy5P1fhjPFAhnYd+WycPbdCYMLPw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELwXebDfimVGmUr0yqgfHoUmBuJ6Q54FDaCqHcDkNh62nei4dj56wmihInu8d8TSEQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TimeInSec = 0.0,
@@ -392,9 +392,9 @@ namespace MP2021_LKLB.Migrations
                         },
                         new
                         {
-                            Id = "MILAN",
+                            Id = "Milan",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9b8945d9-6adb-4dc4-a147-3621395f61a1",
+                            ConcurrencyStamp = "bb6532d8-6097-40c8-b639-acedfa1dd7c6",
                             Email = "milandvorak.gld@seznam.cz",
                             EmailConfirmed = true,
                             FirstName = "Milan",
@@ -403,7 +403,7 @@ namespace MP2021_LKLB.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "MILANDVORAK.GLD@SEZNAM.CZ",
                             NormalizedUserName = "MILAN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMpEJYL+PSoFAyvWjpCH6y47U24mkqT+9klJ6hGSCg1pzQg1CaJfJ52OKIesm/Xy1Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEL4tr85miz17MvPVC6nuH4KCMqjZPVWs3ofdFKOBjBcYnIFxW8LvWiUFsIz4IGjIdA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TimeInSec = 0.0,
@@ -844,57 +844,57 @@ namespace MP2021_LKLB.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "TOMAS123",
+                            UserId = "TomasLKLB",
                             RoleId = "ADMIN"
                         },
                         new
                         {
-                            UserId = "TOMAS123",
+                            UserId = "TomasLKLB",
                             RoleId = "PILOT"
                         },
                         new
                         {
-                            UserId = "MILAN",
+                            UserId = "Milan",
                             RoleId = "PILOT"
                         },
                         new
                         {
-                            UserId = "RUDA",
+                            UserId = "Ruda",
                             RoleId = "PILOT"
                         },
                         new
                         {
-                            UserId = "LUKASZ",
+                            UserId = "Lukasz",
                             RoleId = "PILOT"
                         },
                         new
                         {
-                            UserId = "CICA",
+                            UserId = "Cicvarek",
                             RoleId = "PILOT"
                         },
                         new
                         {
-                            UserId = "WOLF",
+                            UserId = "Wolf",
                             RoleId = "PILOT"
                         },
                         new
                         {
-                            UserId = "PETRZA",
+                            UserId = "Zajda",
                             RoleId = "PILOT"
                         },
                         new
                         {
-                            UserId = "PETRHYB",
+                            UserId = "HybnerP",
                             RoleId = "PILOT"
                         },
                         new
                         {
-                            UserId = "ZDENEK",
+                            UserId = "Zdenek",
                             RoleId = "PILOT"
                         },
                         new
                         {
-                            UserId = "JANHYB",
+                            UserId = "HybnerJ",
                             RoleId = "PILOT"
                         });
                 });
@@ -930,14 +930,14 @@ namespace MP2021_LKLB.Migrations
                         new
                         {
                             Id = "ADMIN",
-                            ConcurrencyStamp = "5380fb20-6406-41d7-b7d0-c5686e517542",
+                            ConcurrencyStamp = "f0c19339-1a1a-4b48-9a05-87fc403badca",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "PILOT",
-                            ConcurrencyStamp = "6c71e837-05bc-4074-ba17-3bdd4d85f5d8",
+                            ConcurrencyStamp = "a05834e0-af26-45f1-9e41-bfe64439ac38",
                             Name = "Pilot",
                             NormalizedName = "PILOT"
                         });

@@ -19,11 +19,6 @@ namespace MP2021_LKLB.Services.ViewService
 
         public async Task<ICollection<FlightFixesVM>> GetFlightFixes(int id)
         {
-            //ICollection<Fixes> fixes = await _db.Fixes
-            //    .Where(x => x.FlightLogId == id)
-            //    .OrderBy(x => x.Timestamp)
-            //    .ToListAsync();
-
             // Tahání Lat, Long přímo z DB
              var fixes = await _db.Fixes
                 .Where(x => x.FlightLogId == id)

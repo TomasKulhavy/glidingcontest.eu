@@ -77,43 +77,62 @@ namespace MP2021_LKLB.Services.FlightLogService
 
             ICollection<FlightLog> flights = flightsLog.OrderByDescending(f => f.FlightLogAnalyse.Score).Take(3).ToList();
 
-            foreach (var item in flights)
+            float? topScoreSum = 0;
+            if(flights.Count > 0)
             {
-                if (flightLog.FlightLogAnalyse.Score > item.FlightLogAnalyse.Score)
+                foreach (var item in flights)
                 {
-                    flightLog.FlightLogAnalyse.Topflight = true;
-                    item.FlightLogAnalyse.Topflight = false;
-                    if (flightLog.FlightLogAnalyse.Topflight == true)
+                    if (flights.Count > 2 && flightLog.FlightLogAnalyse.Score > item.FlightLogAnalyse.Score)
                     {
-                        if (Users.TopScore == null)
+                        flightLog.FlightLogAnalyse.Topflight = true;
+                        FlightLog lastFlight = flights.Last();
+                        lastFlight.FlightLogAnalyse.Topflight = false;
+                        topScoreSum = Users.TopScore;
+                        topScoreSum = topScoreSum - lastFlight.FlightLogAnalyse.Score;
+                        Users.TopScore = topScoreSum;
+                        await _db.SaveChangesAsync();
+                    
+
+                        if (flightLog.FlightLogAnalyse.Topflight == true)
                         {
-                            Users.TopScore = flightLog.FlightLogAnalyse.Score;
+                            topScoreSum = Users.TopScore;
+                            topScoreSum = topScoreSum + flightLog.FlightLogAnalyse.Score;
+                            Users.TopScore = topScoreSum;
+                            await _db.SaveChangesAsync();
+
                         }
-                        else if (Users.TopScore != null)
-                        {
-                            Users.TopScore = Users.TopScore + flightLog.FlightLogAnalyse.Score;
-                        }
+                        break;
                     }
+                    else if(flights.Count <= 2)
+                    {
+
+                        flightLog.FlightLogAnalyse.Topflight = true;
+                        topScoreSum = Users.TopScore;
+                        topScoreSum = topScoreSum + flightLog.FlightLogAnalyse.Score;
+                        Users.TopScore = topScoreSum;
+                        await _db.SaveChangesAsync();
+                        break;
+                    }
+                }
+            }
+            else if(flights.Count == 0)
+            {
+                flightLog.FlightLogAnalyse.Topflight = true;
+                await _db.SaveChangesAsync();
+                if (Users.TopScore == null)
+                {
+                    topScoreSum = 0;
                 }
                 else
                 {
-                    flightLog.FlightLogAnalyse.Topflight = false;
-                    item.FlightLogAnalyse.Topflight = true;
+                    topScoreSum = Users.TopScore;
                 }
-            }
-            if (flights == null)
-            {
-                flightLog.FlightLogAnalyse.Topflight = true;
 
-                if (Users.TopScore == null)
-                {
-                    Users.TopScore = flightLog.FlightLogAnalyse.Score;
-                }
-                else if (Users.TopScore != null)
-                {
-                    Users.TopScore = Users.TopScore + flightLog.FlightLogAnalyse.Score;
-                }
+                topScoreSum = topScoreSum + flightLog.FlightLogAnalyse.Score;
+                Users.TopScore = topScoreSum;
+                await _db.SaveChangesAsync();
             }
+
 
             if (Users.SumKilometers == null)
             {

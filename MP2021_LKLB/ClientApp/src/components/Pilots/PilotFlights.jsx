@@ -129,7 +129,7 @@ const PilotFlights = () => {
                     <Card className="card-box bg-dark border-0 text-light mb-5">
                         <CardBody>
                             <div className="d-flex align-items-start">
-                                <div className="font-weight-bold">
+                                <div className="font-weight-bold text-start">
                                     <small className="text-white-70 d-block mb-1 text-uppercase">{pilot.fullName}</small>
                                     <tr>
                                         <span className="font-size-xl mt-1"><FontAwesomeIcon icon={faStopwatch} className="font-size-l mr-3" />{secondsToHms()}</span>
