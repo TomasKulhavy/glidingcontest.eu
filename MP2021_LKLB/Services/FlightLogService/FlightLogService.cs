@@ -186,7 +186,10 @@ namespace MP2021_LKLB.Services.FlightLogService
                 stats.FlightsNo -= 1;
                 stats.Kilometers -= flight.FlightLogAnalyse.Kilometers;
                 stats.TimeInSeconds -= sec;
-                Users.TopScore -= flight.FlightLogAnalyse.Score;
+                if (flight.FlightLogAnalyse.Topflight == true)
+                {
+                    Users.TopScore -= flight.FlightLogAnalyse.Score;
+                }
 
                 _db.FlightLogs.Remove(flight);
 

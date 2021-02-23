@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Container, Table, Button, Card, CardBody, Col, Row } from "reactstrap";
+import { Container, Table, Button, Card, CardBody, Col, Row, Alert } from "reactstrap";
 import { useHistory, Link } from "react-router-dom";
 import NavMenu from "../Layout/NavMenu";
 import { FlightDataContext, ADD_FLIGHTID } from "../../providers/FlightDataContext";
@@ -18,6 +18,9 @@ const PilotFlights = () => {
     const [state, dispatch] = useContext(FlightDataContext);
     const [year, setYear] = useState(2021);
     const [loading, setLoading] = useState(false);
+    const [done, setDone] = useState(false);
+    const [visible, setVisible] = useState(true);
+    const onDismiss = () => setVisible(false);
     console.log(state.pilotId);
 
     useEffect(() => {
@@ -57,13 +60,20 @@ const PilotFlights = () => {
         return array;
     }
 
-    function deleteFlight(deleteFlightNo)
+    const removeItem = (index) => {
+        flights.splice(index, 1)
+        setFlights([...flights])
+    }
+
+    function deleteFlight(deleteFlightNo, index)
     {
+        setLoading(true)
         axios
         .delete(`https://localhost:44346/api/FlightLog/${deleteFlightNo}`)
-        .then((response) => {
-            setFlights(response.data)
-            console.log(response.data);
+        .then(() => {
+            removeItem(index);
+            setLoading(false);
+            setDone(true);
         })    
         return flights; 
     }
@@ -73,7 +83,7 @@ const PilotFlights = () => {
 
         if(state.pilotId === loggedPilot)
         {
-            const array = flights.map((item) => {
+            const array = flights.map((item, index) => {
                 return (
                   <tr key={item.id}>
                         <td>{moment(`${item.date}`).format('L')}</td>
@@ -87,7 +97,7 @@ const PilotFlights = () => {
                             Zobrazit let</Button></td>
                         <td>
                             <Button color="danger" refresh="true" onClick={() =>
-                                deleteFlight(item.id)}>
+                                deleteFlight(item.id, index)}>
                                 <FontAwesomeIcon icon={faTimes} className="font-size-xl" />
                             </Button>
                         </td>
@@ -156,6 +166,17 @@ const PilotFlights = () => {
             </>
         )
     }
+
+    function renderAlert()
+    {
+        if(done)
+        {
+            return (
+                <Alert color="success" isOpen={visible} toggle={onDismiss}>Let jsme úspěšně smazali</Alert>
+            );
+        }
+    }
+
     if (loading) {
         return (
           <>
@@ -169,29 +190,30 @@ const PilotFlights = () => {
             <>
                 <NavMenu />
                 <Container>
+                    {renderAlert()}
                     <Row>
-                    {renderPilotCard()}
-                    <div className="">
-                        <Table borderless>
-                                <tbody className="">
-                                    {renderYears()}
+                        {renderPilotCard()}
+                        <div className="">
+                            <Table borderless>
+                                    <tbody className="">
+                                        {renderYears()}
+                                    </tbody>
+                            </Table>
+                            <Table className="bg-dark text-white" striped>
+                                <thead>
+                                    <tr>
+                                        <th>Datum</th>
+                                        <th>Typ kluzáku</th>
+                                        <th>Registrace</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {renderFlights()}
                                 </tbody>
-                        </Table>
-                        <Table className="bg-dark text-white" striped>
-                            <thead>
-                                <tr>
-                                    <th>Datum</th>
-                                    <th>Typ kluzáku</th>
-                                    <th>Registrace</th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {renderFlights()}
-                            </tbody>
-                        </Table>
-                    </div>
+                            </Table>
+                        </div>
                     </Row>
                 </Container>
             </>

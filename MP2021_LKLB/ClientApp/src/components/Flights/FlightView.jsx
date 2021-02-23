@@ -67,7 +67,7 @@ const FlightView = () => {
         console.log(response.data[0]);
         setScore(Number((response.data[0].score).toFixed(1)));
         setFlightTime(response.data[0].flightTime.totalSeconds);
-        setKilometers(response.data[0].kilometers);
+        setKilometers(Number((response.data[0].kilometers).toFixed(1)));
         setSpeed(Number((response.data[0].avgSpeed).toFixed(2)));
       });
   }, []);
@@ -105,12 +105,12 @@ const FlightView = () => {
   }
 
   function renderFlights() {
-
+    moment.locale('cs'); 
     return (
       <>
         <td>
           <tr>
-            <b>Datum: </b>{flightLog.date}
+            <b>Datum: </b>{moment(`${flightLog.date}`).format('L')}
           </tr> 
           <tr>
             <b>Pilot: </b> <Button color="primary" outline onClick={() =>
