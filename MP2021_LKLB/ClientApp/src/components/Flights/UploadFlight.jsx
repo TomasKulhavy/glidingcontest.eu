@@ -28,7 +28,6 @@ const UploadFlight = () => {
             calculateDistance(result);
             let tisk = JSON.stringify(result);
             sendFile(tisk);
-            setDone(true);
             setError(false);
         };
         reader.readAsText(e.target.files[0]);
@@ -36,81 +35,77 @@ const UploadFlight = () => {
     function sendFile(data) {
         axios.post('https://localhost:44346/api/FlightLog', { payload: data })
         .then(() => {
+            setDone(true);
             setError(false);
         })
         .catch(() => { 
             setError(true) ;
         });
     }
-
+    
     function calculateDistance(result) {
         var dist = 0;
         var countTP = 0;
-
-        for (let index = 1; index < result.task.points.length - 2; index++) {
-            var distT = getDistance(
-                { latitude: result.task.points[index].latitude, longitude: result.task.points[index].longitude },
-                { latitude: result.task.points[index + 1].latitude, longitude: result.task.points[index + 1].longitude },
-            )
-            countTP += 1;
-            dist = dist + distT;
-        }
-
-        const center = {lat: result.task.points[1].latitude, lon: result.task.points[1].longitude};
-        const radius = 5000;
-
+        var taskT = 1;
+        const radius = 1000;
+        var distT = 0;
+        var lastDist = 0;
+        var indexOfFix = 1;
+        const storeOfStart = [];
         const storeOfFixes = [];
-        for (let index = 1; index < result.fixes.length - result.fixes.length / 2; index++) 
-        {
-            if(insideCircle({ lat: result.fixes[index].latitude, lon: result.fixes[index].longitude }, center, radius) === true)
+        
+        for (taskT; taskT < result.task.points.length - 2; taskT++) {
+            const center = {lat: result.task.points[taskT].latitude, lon: result.task.points[taskT].longitude};
+            distT = getDistance(
+                { latitude: result.task.points[taskT].latitude, longitude: result.task.points[taskT].longitude },
+                { latitude: result.task.points[taskT + 1].latitude, longitude: result.task.points[taskT + 1].longitude },
+            )
+            if (taskT === 1)
             {
-                storeOfFixes.push(result.fixes[index].time);
-                console.log({ lat: result.fixes[index].latitude, lon: result.fixes[index].longitude })
-            }
-        }
-        const taskStarted = storeOfFixes[storeOfFixes.length - 1];
-        console.log(taskStarted);
-
-        const centerF = {lat: result.task.points[countTP + 1].latitude, lon: result.task.points[countTP + 1].longitude};
-
-        const radiusF = 1000;
-        const storeOfFinish = [];
-        var state = false;
-        for (let index = Math.round(result.fixes.length / 2); index < result.fixes.length - 1; index++) 
-        {
-            if(insideCircle({ lat: result.fixes[index].latitude, lon: result.fixes[index].longitude }, centerF, radiusF) === true)
-            {
-                storeOfFinish.push(result.fixes[index].time);
-            }
-            else if(insideCircle({ lat: result.fixes[index].latitude, lon: result.fixes[index].longitude }, centerF, radiusF) === false)
-            {
-                const centerT = {lat: result.task.points[countTP].latitude, lon: result.task.points[countTP].longitude};
-
-                if (insideCircle({ lat: result.fixes[index].latitude, lon: result.fixes[index].longitude }, centerT, radiusF) === true)
+                for (let index = 1; index < result.fixes.length - result.fixes.length / 2; index++) 
                 {
-                    state = true;
-                    storeOfFinish.push({lat: result.fixes[index].latitude, lon: result.fixes[index].longitude, time: result.fixes[index].time});
+                    if(insideCircle({ lat: result.fixes[index].latitude, lon: result.fixes[index].longitude }, center, radius) === true)
+                    {
+                        storeOfStart.push(result.fixes[index].time);
+                    }
+                }
+                countTP += 1;
+                dist = dist + distT;
+            }
+            else if (taskT > 1)
+            {
+                for (indexOfFix; indexOfFix < result.fixes.length - 1; indexOfFix++) 
+                {
+                    if(insideCircle({ lat: result.fixes[indexOfFix].latitude, lon: result.fixes[indexOfFix].longitude }, center, radius) === true)
+                    {
+                        storeOfFixes.push(result.fixes[indexOfFix].time);
+                        countTP += 1;
+                        lastDist = distT;
+                        dist = dist + distT;
+                        indexOfFix = indexOfFix;
+                        break;
+                    }
                 }
             }
         }
-        console.log(storeOfFinish)
-        var distTFinished = getDistance(
-            { latitude: storeOfFinish[1].lat, longitude: storeOfFinish[1].lon },
-            { latitude: result.fixes[result.fixes.length - 1].latitude, longitude: result.fixes[result.fixes.length - 1].longitude },
-        )
-        var distLast = getDistance(
-            { latitude: result.task.points[countTP].latitude, longitude: result.task.points[countTP].longitude },
-            { latitude: result.task.points[countTP + 1].latitude, longitude: result.task.points[countTP + 1].longitude },
-        )
-        console.log(distTFinished);
-        const rightdist = dist - distLast + distTFinished;
-        console.log(rightdist)
-        const taskFinished = storeOfFinish[1].time;
 
+        if(countTP !== result.task.points.length - 3)
+        {
+            var distLast = getDistance(
+                { latitude: result.task.points[taskT - 2].latitude, longitude: result.task.points[taskT - 2].longitude },
+                { latitude: result.fixes[result.fixes.length - 1].latitude, longitude: result.fixes[result.fixes.length - 1].longitude },
+            )
+            dist = dist - lastDist;
+            dist = dist + distLast;
+        }
+        const storeOfFinish = [{time: result.fixes[result.fixes.length - 1].time}];
+        const taskStarted = storeOfStart[storeOfStart.length - 1];
 
-        console.log(taskFinished);
-
-        console.log(dist);
+        var taskFinished;
+        if(taskStarted !== undefined)
+        {
+            taskFinished = storeOfFinish[0].time;
+        }
 
         const flight = solver(result, scoring.XContest).next().value;
         delete result.closestPairs;
@@ -123,18 +118,15 @@ const UploadFlight = () => {
         // Flight time
         var firstFix = result.fixes[0].time;
         var lastFix = result.fixes[result.fixes.length-1].time;
-        //var taskStart = 
 
         //Task time comp
-        var timeSF = taskStarted;
-        if(state === false)
+        if(taskStarted !== undefined)
         {
-            var timeFF = taskFinished;
+            var timeSF = taskStarted;
         }
-        else if (state === true)
-        {
-            var timeFF = result.fixes[result.fixes.length-1].time;
-        }
+
+        var timeFF = taskFinished;
+
         if(timeSF !== undefined)
         {
             var s = timeSF.split(':');
@@ -163,10 +155,7 @@ const UploadFlight = () => {
 
         if(timeFF !== undefined && timeSF !== undefined)
         {
-            var speedTotal = rightdist / totalTimeInSecTask;
-            console.log(rightdist);
-            console.log(totalTimeInSecTask)
-            console.log(speedTotal*3.6)
+            var speedTotal = dist / totalTimeInSecTask;
         }
         else if (timeFF === undefined && timeSF === undefined)
         {
@@ -179,21 +168,15 @@ const UploadFlight = () => {
         {
             flight.score = 0;
         }
-        if(taskFinished === null)
-        {
-            flight.score = dist / 1000;
-        }
 
         const scoreFlight = { 
             "score": flight.score,
             "flightTime": time,
             "taskTime": timeTask,
-            "kilometers": rightdist / 1000,
+            "kilometers": dist / 1000,
             "avgSpeed": speedTotal*3.6,
         }
         result.flightLogAnalyse = scoreFlight;
-
-        console.log(result);
     };
     function renderAlert()
     {

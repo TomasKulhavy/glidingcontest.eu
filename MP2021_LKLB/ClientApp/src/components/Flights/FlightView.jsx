@@ -105,12 +105,12 @@ const FlightView = () => {
   }
 
   function renderFlights() {
-    moment.locale('cs'); 
+
     return (
       <>
         <td>
           <tr>
-            <b>Datum: </b>{moment(`${flightLog.date}`).format('L')}
+            <b>Datum: </b>{flightLog.date}
           </tr> 
           <tr>
             <b>Pilot: </b> <Button color="primary" outline onClick={() =>
