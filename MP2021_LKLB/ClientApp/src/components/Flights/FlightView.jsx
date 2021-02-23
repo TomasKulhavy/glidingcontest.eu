@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import axios from "axios";
 import { Container, Table, Card, CardBody, CardHeader, CardFooter, Button } from "reactstrap";
 import NavMenu from "../Layout/NavMenu";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { MapContainer, TileLayer, Polyline } from "react-leaflet";
 import CanvasJSReact from '../../assets/canvasjs.react';
 import { FlightDataContext, ADD_PILOTID } from "../../providers/FlightDataContext";
@@ -14,6 +14,7 @@ import './Flight.css'
 
 const FlightView = () => {
   var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+  const history = useHistory();
   const [fixes, setFixes] = useState([]);
   const [flightLog, setFlightLog] = useState([]);
   const [task, setTask] = useState([]);
@@ -25,6 +26,7 @@ const FlightView = () => {
   const [fixesToGraph, setFixesToGraph] = useState([]);
   const [state, dispatch] = useContext(FlightDataContext);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   let center;
   
 
@@ -43,6 +45,10 @@ const FlightView = () => {
       .get(`https://localhost:44346/api/View/graph/${state.currentFlightId}`, {params: {fixesToGraph: fixesToGraph}})
       .then((response) => {
         setFixesToGraph(response.data)
+      })
+      .catch(() => {
+        setError(true)
+        history.push("/pilot/flights")
       });
     axios
       .get(`https://localhost:44346/api/FlightLog/getDetails/${state.currentFlightId}`)
