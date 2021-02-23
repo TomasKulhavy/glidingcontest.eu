@@ -25,6 +25,8 @@ const FlightView = () => {
   const [fixesToGraph, setFixesToGraph] = useState([]);
   const [state, dispatch] = useContext(FlightDataContext);
   const [loading, setLoading] = useState(false);
+  let center;
+  
 
   useEffect(() => {
     setLoading(true);
@@ -33,27 +35,24 @@ const FlightView = () => {
       .then((response) => {
         setFixes(response.data)
         console.log(fixes);
+      }).
+      then(() => {
+        setLoading(false);
       });
     axios
       .get(`https://localhost:44346/api/View/graph/${state.currentFlightId}`, {params: {fixesToGraph: fixesToGraph}})
       .then((response) => {
         setFixesToGraph(response.data)
-        console.log(fixesToGraph);
       });
     axios
       .get(`https://localhost:44346/api/FlightLog/getDetails/${state.currentFlightId}`)
       .then((response) => {
         setFlightLog(response.data)
-        console.log(response.data)
       });
     axios
       .get(`https://localhost:44346/api/View/getTask/${state.currentFlightId}`)
       .then((response) => {
         setTask(response.data)
-        console.log(response.data)
-      }).
-      then(() => {
-        setLoading(false);
       });
     axios
       .get(`https://localhost:44346/api/Analyse/${state.currentFlightId}`, {params: {analyse: analyse}})
@@ -72,17 +71,18 @@ const FlightView = () => {
     fixes.map((item) => {
       array.push([item.latitude, item.longitude]);
     });
-    console.log(array);
     return array;
   }
 
   function renderTask() {
+    const center2 = ([]);
     const array = ([]);
     task.map((item) => {
+      center2.push([Number((item.latitude).toFixed(1)), Number((item.longitude).toFixed(1))])
       array.push([item.latitude, item.longitude]);
     });
     const res = [...array.slice(1, array.length - 1)];
-    console.log(res);
+    center = center2[1];
     return res;
   }
 
@@ -210,7 +210,6 @@ const FlightView = () => {
 			<span className="graph"></span>
 		</div>
 		);
-    
   }
 
   const flightLine = [
@@ -221,11 +220,8 @@ const FlightView = () => {
     renderTask()
   ]
 
-  const center = [50.2, 15.8]
-
   const blueOptions = { color: 'blue' }
   const limeOptions = { color: 'lime' }
-  console.log(loading)
 
   if (loading) {
     return (
