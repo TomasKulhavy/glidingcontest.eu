@@ -8,9 +8,9 @@ import moment from 'moment-with-locales-es6';
 import Loading from "../Pages/Loading";
 
 const FlightList = () => {
-    const history = useHistory();
+    const yearNow = new Date().getFullYear();
     const [flights, setFlights] = useState([]);
-    const [year, setYear] = useState(2021);
+    const [year, setYear] = useState(yearNow);
     const [loading, setLoading] = useState(false);
     const [state, dispatch] = useContext(FlightDataContext);
 
@@ -50,14 +50,18 @@ const FlightList = () => {
     }
 
     function renderYears() {
-        const years = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021];
-        const array = years.map((item) => {
+        const array = [];
+        for (let index = 2014; index <= yearNow; index++) {
+            array.push(index);
+            console.log(array);
+        }
+        const rendered = array.map((item) => {
             return (
                 <Button className="mr-2 mt-1" key={item} color="primary" onClick={e => {setYear(item);}}>{item}</Button>
             );
           });
           console.log(year);
-        return array;
+        return rendered;
     }
 
     if (loading) {
