@@ -5,6 +5,7 @@ import NavMenu from "../Layout/NavMenu";
 import axios from "axios";
 import { FlightDataContext, ADD_PILOTID } from "../../providers/FlightDataContext";
 import Loading from "../Pages/Loading";
+import { BACKEND_URL } from "../../configuration/backend";
 
 const PilotsList = () => {
     const history = useHistory();
@@ -15,7 +16,7 @@ const PilotsList = () => {
     useEffect(() => {
         setLoading(true);
         axios
-            .get(`https://localhost:44346/api/User`)
+            .get(BACKEND_URL + `/User`)
             .then((response) => {
                 setPilots(response.data);
                 console.log(response.data);

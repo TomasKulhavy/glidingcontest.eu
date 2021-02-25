@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Container, Card, CardBody, Row, Table, Col } from "reactstrap";
 import { faStopwatch, faMapMarkedAlt, faSortAmountDown, faRulerHorizontal } from '@fortawesome/free-solid-svg-icons';
 import Loading from "./Pages/Loading";
+import { BACKEND_URL } from "../../configuration/backend";
 
 const Home = () => {
   const [top, setTop] = useState([]);
@@ -15,19 +16,19 @@ const Home = () => {
   useEffect(() => {
     setLoading(true);
     axios
-        .post(`https://localhost:44346/api/User`)
+        .post(BACKEND_URL + `/User`)
         .then((response) => {
             setTop(response.data);
             console.log(response.data);
         })
     axios
-        .get(`https://localhost:44346/api/User/hours`)
+        .get(BACKEND_URL + `/User/hours`)
         .then((response) => {
             setTopHours(response.data);
             console.log(response.data);
         })
       axios
-        .get(`https://localhost:44346/api/User/kilometers`)
+        .get(BACKEND_URL + `/User/kilometers`)
         .then((response) => {
             setTopKm(response.data);
             console.log(response.data);

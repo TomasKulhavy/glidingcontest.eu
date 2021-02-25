@@ -11,6 +11,7 @@ import moment from 'moment-with-locales-es6';
 import Loading from "../Pages/Loading";
 
 import './Flight.css'
+import { BACKEND_URL } from '../../configuration/backend';
 
 const FlightView = () => {
   var CanvasJSChart = CanvasJSReact.CanvasJSChart;
@@ -33,7 +34,7 @@ const FlightView = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`https://localhost:44346/api/View/${state.currentFlightId}`)
+      .get(BACKEND_URL + `/View/${state.currentFlightId}`)
       .then((response) => {
         setFixes(response.data)
         console.log(fixes);
@@ -42,7 +43,7 @@ const FlightView = () => {
         setLoading(false);
       });
     axios
-      .get(`https://localhost:44346/api/View/graph/${state.currentFlightId}`, {params: {fixesToGraph: fixesToGraph}})
+      .get(BACKEND_URL + `/View/graph/${state.currentFlightId}`, {params: {fixesToGraph: fixesToGraph}})
       .then((response) => {
         setFixesToGraph(response.data)
       })
@@ -51,17 +52,17 @@ const FlightView = () => {
         history.push("/pilot/flights")
       });
     axios
-      .get(`https://localhost:44346/api/FlightLog/getDetails/${state.currentFlightId}`)
+      .get(BACKEND_URL + `/FlightLog/getDetails/${state.currentFlightId}`)
       .then((response) => {
         setFlightLog(response.data)
       });
     axios
-      .get(`https://localhost:44346/api/View/getTask/${state.currentFlightId}`)
+      .get(BACKEND_URL + `/View/getTask/${state.currentFlightId}`)
       .then((response) => {
         setTask(response.data)
       });
     axios
-      .get(`https://localhost:44346/api/Analyse/${state.currentFlightId}`, {params: {analyse: analyse}})
+      .get(BACKEND_URL + `/Analyse/${state.currentFlightId}`, {params: {analyse: analyse}})
       .then((response) => {
         setAnalyse(response.data[0]);
         console.log(response.data[0]);

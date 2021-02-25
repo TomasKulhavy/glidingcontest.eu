@@ -8,6 +8,7 @@ import NavMenu from "../Layout/NavMenu";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload, faShareSquare } from "@fortawesome/free-solid-svg-icons";
 import { insideCircle } from "geolocation-utils";
+import { BACKEND_URL } from "../../configuration/backend";
 
 import './Flight.css'
 
@@ -16,7 +17,7 @@ const UploadFlight = () => {
     const [done, setDone] = useState(false);
     const [visible, setVisible] = useState(true);
     const onDismiss = () => setVisible(false);
-  
+    console.log(BACKEND_URL);
     const showFile = async (e) => {
         e.preventDefault()
         const reader = new FileReader()
@@ -33,7 +34,7 @@ const UploadFlight = () => {
         reader.readAsText(e.target.files[0]);
     }
     function sendFile(data) {
-        axios.post('https://localhost:44346/api/FlightLog', { payload: data })
+        axios.post(BACKEND_URL + '/FlightLog', { payload: data })
         .then(() => {
             setDone(true);
             setError(false);

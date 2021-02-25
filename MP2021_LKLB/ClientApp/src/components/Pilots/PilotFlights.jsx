@@ -8,6 +8,7 @@ import axios from "axios";
 import { faRulerVertical, faStopwatch, faUser, faTimes } from "@fortawesome/free-solid-svg-icons";
 import moment from 'moment-with-locales-es6';
 import Loading from "../Pages/Loading";
+import { BACKEND_URL } from "../../configuration/backend";
 
 const PilotFlights = () => {
     const yearNow = new Date().getFullYear();
@@ -26,7 +27,7 @@ const PilotFlights = () => {
     useEffect(() => {
         setLoading(true);
         axios
-            .get(`https://localhost:44346/api/User/pilotFlights/${state.pilotId}/${year}`)
+            .get(BACKEND_URL + `/User/pilotFlights/${state.pilotId}/${year}`)
             .then((response) => {
                 setFlights(response.data);
                 console.log(response.data);
@@ -35,14 +36,14 @@ const PilotFlights = () => {
                 setLoading(false);
             });
         axios
-            .get(`https://localhost:44346/api/User/pilotStats/${state.pilotId}`)
+            .get(BACKEND_URL + `/User/pilotStats/${state.pilotId}`)
             .then((response) => {
                 setPilot(response.data);
                 console.log(response.data)
                 setFlightTime(response.data.timeInSec);
             });
         axios
-            .get(`https://localhost:44346/api/User/pilot`)
+            .get(BACKEND_URL + `/User/pilot`)
             .then((response) => {
                 setLoggedPilot(response.data);
                 console.log(response.data);
@@ -73,7 +74,7 @@ const PilotFlights = () => {
     {
         setLoading(true)
         axios
-        .delete(`https://localhost:44346/api/FlightLog/${deleteFlightNo}`)
+        .delete(BACKEND_URL + `/FlightLog/${deleteFlightNo}`)
         .then(() => {
             removeItem(index);
             setLoading(false);
