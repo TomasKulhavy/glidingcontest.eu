@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Container, Card, CardBody, Row, Table, Col } from "reactstrap";
 import { faStopwatch, faMapMarkedAlt, faSortAmountDown, faRulerHorizontal } from '@fortawesome/free-solid-svg-icons';
 import Loading from "./Pages/Loading";
-import { BACKEND_URL } from "../../configuration/backend";
+import { BACKEND_URL } from "../configuration/backend";
 
 const Home = () => {
   const [top, setTop] = useState([]);

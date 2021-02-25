@@ -12,6 +12,33 @@ import { BACKEND_URL } from "../../configuration/backend";
 
 import './Flight.css'
 
+function parseL(str) {
+    var RE_L = /^L.*(?=R1)R1(.*?)(\d{2}|\d{1})(.*?)(\d{4}|\d{3}|\d{2})(.*?).*$/;
+    var radiusArray = [];
+
+    function processLine (line) {
+        var recordType = line[0];
+        if (recordType === "L") 
+        {
+            var radius = line.match(RE_L);
+            radiusArray.push(radius);
+        }
+    }
+   
+    for (var _i = 0, _a = str.split('\n'); _i < _a.length; _i++) {
+        var line = _a[_i];
+        processLine(line.trim());
+    }
+    var filtered = radiusArray.filter(function (el) {
+        return el != null;
+    });
+    var radiusDone = [];
+    for (let index = 0; index < filtered.length; index++) {
+        radiusDone.push(filtered[index][2] + filtered[index][4])
+    }
+    return radiusDone;
+}
+
 const UploadFlight = () => {
     const [error, setError] = useState(false);
     const [done, setDone] = useState(false);
@@ -26,6 +53,13 @@ const UploadFlight = () => {
             output.textContent = reader.result;
             // Rozparsování souboru
             let result = IGCParser.parse(reader.result);
+            let taskRad = parseL(reader.result);
+            console.log(taskRad);
+            const tpRadius = { 
+                taskRad,
+            }
+            result.radiusTP = tpRadius;
+            console.log(result);
             calculateDistance(result);
             let tisk = JSON.stringify(result);
             sendFile(tisk);
@@ -48,7 +82,6 @@ const UploadFlight = () => {
         var dist = 0;
         var countTP = 0;
         var taskT = 1;
-        const radius = 1000;
         var distT = 0;
         var lastDist = 0;
         var indexOfFix = 1;
@@ -56,6 +89,8 @@ const UploadFlight = () => {
         const storeOfFixes = [];
         
         for (taskT; taskT < result.task.points.length - 2; taskT++) {
+            const radius = result.radiusTP.taskRad[taskT - 1];
+            console.log(radius);
             const center = {lat: result.task.points[taskT].latitude, lon: result.task.points[taskT].longitude};
             distT = getDistance(
                 { latitude: result.task.points[taskT].latitude, longitude: result.task.points[taskT].longitude },
