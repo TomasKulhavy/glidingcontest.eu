@@ -6,7 +6,7 @@ import { Link, useHistory } from "react-router-dom";
 import { MapContainer, TileLayer, Polyline } from "react-leaflet";
 import CanvasJSReact from '../../assets/canvasjs.react';
 import { FlightDataContext, ADD_PILOTID } from "../../providers/FlightDataContext";
-import Chart from 'react-apexcharts';
+//import Chart from 'react-apexcharts';
 import moment from 'moment-with-locales-es6';
 import Loading from "../Pages/Loading";
 
@@ -37,7 +37,6 @@ const FlightView = () => {
       .get(BACKEND_URL + `/View/${state.currentFlightId}`)
       .then((response) => {
         setFixes(response.data)
-        console.log(fixes);
       }).
       then(() => {
         setLoading(false);
@@ -65,7 +64,6 @@ const FlightView = () => {
       .get(BACKEND_URL + `/Analyse/${state.currentFlightId}`, {params: {analyse: analyse}})
       .then((response) => {
         setAnalyse(response.data[0]);
-        console.log(response.data[0]);
         setScore(Number((response.data[0].score).toFixed(1)));
         setFlightTime(response.data[0].flightTime.totalSeconds);
         setKilometers(Number((response.data[0].kilometers).toFixed(1)));

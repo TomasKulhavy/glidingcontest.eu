@@ -21,38 +21,13 @@ const StatsOverall = () => {
                 setFlightsNo(response.data.flightsNo);
                 setTime(response.data.timeInSeconds);
                 setKm(response.data.kilometers);
-                console.log(response.data);
             });
         axios
             .get(BACKEND_URL + `/User/kilometers`)
             .then((response) => {
                 setUsers(response.data);
-                console.log(response.data);
             });
     }, []);
-
-    function renderBarPlanes()
-    {
-        const options = {
-            dataLabels: {
-                enabled: false
-            },
-            plotOptions: {
-                bar: {
-                    horizontal: true
-                }
-            },
-            xaxis: {
-                categories: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-            }
-        }
-        const series = [{
-            data: [30, 40, 25, 50, 49, 21, 70, 51]
-        }]
-        return (
-            <Chart options={options} series={series} type="bar" />
-        );
-    }
 
     function renderPie()
     {

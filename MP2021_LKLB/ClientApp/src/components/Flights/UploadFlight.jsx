@@ -44,7 +44,6 @@ const UploadFlight = () => {
     const [done, setDone] = useState(false);
     const [visible, setVisible] = useState(true);
     const onDismiss = () => setVisible(false);
-    console.log(BACKEND_URL);
     const showFile = async (e) => {
         e.preventDefault()
         const reader = new FileReader()
@@ -54,12 +53,10 @@ const UploadFlight = () => {
             // Rozparsování souboru
             let result = IGCParser.parse(reader.result);
             let taskRad = parseL(reader.result);
-            console.log(taskRad);
             const tpRadius = { 
                 taskRad,
             }
             result.radiusTP = tpRadius;
-            console.log(result);
             calculateDistance(result);
             let tisk = JSON.stringify(result);
             sendFile(tisk);
@@ -90,7 +87,6 @@ const UploadFlight = () => {
         
         for (taskT; taskT < result.task.points.length - 2; taskT++) {
             const radius = result.radiusTP.taskRad[taskT - 1];
-            console.log(radius);
             const center = {lat: result.task.points[taskT].latitude, lon: result.task.points[taskT].longitude};
             distT = getDistance(
                 { latitude: result.task.points[taskT].latitude, longitude: result.task.points[taskT].longitude },
@@ -198,10 +194,6 @@ const UploadFlight = () => {
             var speedTotal = 0;
             dist = 0;
             timeTask = 0;
-        }
-
-        if(taskStarted === null)
-        {
             flight.score = 0;
         }
 

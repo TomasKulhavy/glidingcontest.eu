@@ -19,19 +19,16 @@ const Home = () => {
         .post(BACKEND_URL + `/User`)
         .then((response) => {
             setTop(response.data);
-            console.log(response.data);
         })
     axios
         .get(BACKEND_URL + `/User/hours`)
         .then((response) => {
             setTopHours(response.data);
-            console.log(response.data);
         })
       axios
         .get(BACKEND_URL + `/User/kilometers`)
         .then((response) => {
             setTopKm(response.data);
-            console.log(response.data);
         }).
         then(() => {
           setLoading(false);

@@ -15,11 +15,10 @@ import Feedback from "./components/Feedback/Feedback";
 import FeedbackReview from "./components/Feedback/FeedbackReview";
 import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
 import FlightList from "./components/Flights/FlightList";
-import NotFound from "./components/Pages/NotFound";
+//import NotFound from "./components/Pages/NotFound";
 import { FlightDataProvider } from "./providers/FlightDataContext";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
-import FileParser from "./components/Parser/FileParser";
 
 import './custom.css'
 
@@ -44,7 +43,6 @@ function App() {
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
-            <Route path="/parser" component={FileParser} />
           </Switch>
         </Router>
       </FlightDataProvider>

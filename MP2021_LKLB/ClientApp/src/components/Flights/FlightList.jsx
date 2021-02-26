@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Container, Table, Button } from "reactstrap";
-import { useHistory, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import NavMenu from "../Layout/NavMenu";
 import { FlightDataContext, ADD_FLIGHTID } from "../../providers/FlightDataContext";
 import axios from "axios";
@@ -21,7 +21,6 @@ const FlightList = () => {
             .get(BACKEND_URL + `/FlightLog/${year}`)
             .then((response) => {
                 setFlights(response.data)
-                console.log(response.data);
             })
             .then(() => {
                 setLoading(false);
@@ -54,14 +53,12 @@ const FlightList = () => {
         const array = [];
         for (let index = 2014; index <= yearNow; index++) {
             array.push(index);
-            console.log(array);
         }
         const rendered = array.map((item) => {
             return (
                 <Button className="mr-2 mt-1" key={item} color="primary" onClick={e => {setYear(item);}}>{item}</Button>
             );
           });
-          console.log(year);
         return rendered;
     }
 

@@ -47,7 +47,6 @@ namespace MP2021_LKLB
 
             services.AddScoped<Identity>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddTransient<IFlight, FlightService>();
             services.AddTransient<IFlightLogService, FlightLogService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IViewService, ViewService>();

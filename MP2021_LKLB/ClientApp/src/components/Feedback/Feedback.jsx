@@ -43,7 +43,6 @@ const Feedback = () => {
         validate: validate,
         onSubmit: values => {
             let tisk = JSON.stringify(values);
-            console.log(tisk);
             axios.post(BACKEND_URL + '/Feedback', { payload: tisk })
             .then(() => {
                 history.push("/");
@@ -51,7 +50,6 @@ const Feedback = () => {
         },
     });
 
-    console.log(formik);
     return (
         <Container>
             <Button className="btn-dark mt-5 mb-3" tag={Link} to="/">

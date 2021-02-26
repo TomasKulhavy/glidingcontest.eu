@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Container, Table, Button, Card, CardBody, Col, Row, Alert } from "reactstrap";
-import { useHistory, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import NavMenu from "../Layout/NavMenu";
 import { FlightDataContext, ADD_FLIGHTID } from "../../providers/FlightDataContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -22,7 +22,6 @@ const PilotFlights = () => {
     const [done, setDone] = useState(false);
     const [visible, setVisible] = useState(true);
     const onDismiss = () => setVisible(false);
-    console.log(state.pilotId);
 
     useEffect(() => {
         setLoading(true);
@@ -30,7 +29,6 @@ const PilotFlights = () => {
             .get(BACKEND_URL + `/User/pilotFlights/${state.pilotId}/${year}`)
             .then((response) => {
                 setFlights(response.data);
-                console.log(response.data);
             }).
             then(() => {
                 setLoading(false);
@@ -39,14 +37,12 @@ const PilotFlights = () => {
             .get(BACKEND_URL + `/User/pilotStats/${state.pilotId}`)
             .then((response) => {
                 setPilot(response.data);
-                console.log(response.data)
                 setFlightTime(response.data.timeInSec);
             });
         axios
             .get(BACKEND_URL + `/User/pilot`)
             .then((response) => {
                 setLoggedPilot(response.data);
-                console.log(response.data);
             });
     }, [year]);
 
@@ -61,7 +57,6 @@ const PilotFlights = () => {
                 <Button className="mr-2 mt-1" key={item} color="primary" onClick={e => {setYear(item);}}>{item}</Button>
             );
           });
-          console.log(year);
         return rendered;
     }
 
@@ -124,7 +119,7 @@ const PilotFlights = () => {
                                 type: ADD_FLIGHTID,
                                 currentFlightId: item.id
                             })} tag={Link} to="/flight/viewer">
-                        Zobrazit let</Button></td>
+                            Zobrazit let</Button></td>
                         <td></td>
                   </tr> 
                 );

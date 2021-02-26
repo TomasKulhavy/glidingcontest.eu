@@ -12,7 +12,6 @@ const FeedbackReview = () => {
             .get(BACKEND_URL + `/Feedback`)
             .then((response) => {
                 setFeedback(response.data);
-                console.log(response.data);
             });
     }, []);
 

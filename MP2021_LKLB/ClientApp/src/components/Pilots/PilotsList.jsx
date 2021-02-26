@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Container, Table, Button } from "reactstrap";
-import { useHistory, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import NavMenu from "../Layout/NavMenu";
 import axios from "axios";
 import { FlightDataContext, ADD_PILOTID } from "../../providers/FlightDataContext";
@@ -8,7 +8,6 @@ import Loading from "../Pages/Loading";
 import { BACKEND_URL } from "../../configuration/backend";
 
 const PilotsList = () => {
-    const history = useHistory();
     const [pilots, setPilots] = useState([]);
     const [state, dispatch] = useContext(FlightDataContext);
     const [loading, setLoading] = useState(false);
@@ -19,7 +18,6 @@ const PilotsList = () => {
             .get(BACKEND_URL + `/User`)
             .then((response) => {
                 setPilots(response.data);
-                console.log(response.data);
             }).
             then(() => {
                 setLoading(false);
@@ -37,7 +35,7 @@ const PilotsList = () => {
                         type: ADD_PILOTID,
                         pilotId: item.id
                     })} tag={Link} to="/pilot/flights">
-                Lety pilota</Button></td>
+                    Lety pilota</Button></td>
             </tr> 
           );
         });
