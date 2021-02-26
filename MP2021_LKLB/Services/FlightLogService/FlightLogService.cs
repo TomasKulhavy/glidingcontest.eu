@@ -15,17 +15,14 @@ namespace MP2021_LKLB.Services.FlightLogService
     public class FlightLogService : IFlightLogService
     {
         private ApplicationDbContext _db;
-        private IStatisticsService _stats;
-        public string _user;
         public class InputModel
         {
             public string Payload { get; set; }
         }
 
-        public FlightLogService(ApplicationDbContext db, IStatisticsService stats)
+        public FlightLogService(ApplicationDbContext db)
         {
             _db = db;
-            _stats = stats;
         }
         // GET
         public async Task<ICollection<FlightLog>> GetAllFlightLogs()
@@ -99,7 +96,6 @@ namespace MP2021_LKLB.Services.FlightLogService
                             topScoreSum = topScoreSum + flightLog.FlightLogAnalyse.Score;
                             Users.TopScore = topScoreSum;
                             await _db.SaveChangesAsync();
-
                         }
                         break;
                     }
