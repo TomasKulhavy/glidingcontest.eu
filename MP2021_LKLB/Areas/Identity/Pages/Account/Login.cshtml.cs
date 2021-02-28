@@ -22,17 +22,14 @@ namespace MP2021_LKLB.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
-        private IFlight _flight;
 
         public LoginModel(SignInManager<ApplicationUser> signInManager,
             ILogger<LoginModel> logger,
-            UserManager<ApplicationUser> userManager,
-            IFlight flight)
+            UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
-            _flight = flight;
         }
 
         [BindProperty]
@@ -88,7 +85,6 @@ namespace MP2021_LKLB.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    _flight.GetActiveUserId(Input.UserName);
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
