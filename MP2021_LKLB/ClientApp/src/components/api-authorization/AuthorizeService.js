@@ -2,6 +2,7 @@ import React from 'react'
 import axios from "axios";
 import { UserManager, WebStorageStateStore } from 'oidc-client';
 import { ApplicationPaths, ApplicationName } from './ApiAuthorizationConstants';
+import { BACKEND_URL } from "../../configuration/backend";
 
 export class AuthorizeService {
     constructor() {
@@ -24,7 +25,7 @@ export class AuthorizeService {
         const user = await this.getUser();
         if(user != null)
         {
-            axios.post(`https://localhost:44346/api/User/${user.sub}`);
+            axios.post(BACKEND_URL + `/User/${user.sub}`);
         }
         return !!user;
     }

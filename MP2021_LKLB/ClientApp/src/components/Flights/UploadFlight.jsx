@@ -71,7 +71,7 @@ const UploadFlight = () => {
             setError(false);
         })
         .catch(() => { 
-            setError(true) ;
+            setError(true);
         });
     }
     
