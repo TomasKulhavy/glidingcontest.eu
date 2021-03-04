@@ -29,8 +29,8 @@ const Home = () => {
         .get(BACKEND_URL + `/User/kilometers`)
         .then((response) => {
             setTopKm(response.data);
-        }).
-        then(() => {
+        })
+        .then(() => {
           setLoading(false);
         })
   }, []);

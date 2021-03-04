@@ -30,15 +30,14 @@ const FlightView = () => {
   const [error, setError] = useState(false);
   let center;
   
-
   useEffect(() => {
     setLoading(true);
     axios
       .get(BACKEND_URL + `/View/${state.currentFlightId}`)
       .then((response) => {
         setFixes(response.data)
-      }).
-      then(() => {
+      })
+      .then(() => {
         setLoading(false);
       });
     axios

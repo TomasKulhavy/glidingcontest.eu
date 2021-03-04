@@ -184,14 +184,14 @@ const UploadFlight = () => {
         var timetwo = (+b[0]) * 60 * 60 + (+b[1]) * 60 + (+b[2]); 
         var totalTimeInSec = timetwo - timeone;
         var time = new Date(totalTimeInSec * 1000).toISOString().substr(11, 8);
-
+        var speedTotal;
         if(timeFF !== undefined && timeSF !== undefined)
         {
-            var speedTotal = dist / totalTimeInSecTask;
+            speedTotal = dist / totalTimeInSecTask;
         }
         else if (timeFF === undefined && timeSF === undefined)
         {
-            var speedTotal = 0;
+            speedTotal = 0;
             dist = 0;
             timeTask = 0;
             flight.score = 0;

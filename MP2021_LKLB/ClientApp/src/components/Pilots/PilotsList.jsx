@@ -18,8 +18,8 @@ const PilotsList = () => {
             .get(BACKEND_URL + `/User`)
             .then((response) => {
                 setPilots(response.data);
-            }).
-            then(() => {
+            })
+            .then(() => {
                 setLoading(false);
             });
     }, []);

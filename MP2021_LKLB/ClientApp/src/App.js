@@ -17,8 +17,8 @@ import { ApplicationPaths } from './components/api-authorization/ApiAuthorizatio
 import FlightList from "./components/Flights/FlightList";
 //import NotFound from "./components/Pages/NotFound";
 import { FlightDataProvider } from "./providers/FlightDataContext";
-import Login from "./components/Auth/Login";
-import Register from "./components/Auth/Register";
+//import Login from "./components/Auth/Login";
+//import Register from "./components/Auth/Register";
 
 import './custom.css'
 
@@ -28,23 +28,23 @@ function App() {
   return (
     <div className="App">
       <FlightDataProvider>
-        <Router history={history}>
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/flight/list" component={FlightList} />
-            <Route exact path="/flight/viewer" component={FlightView} />
-            <AuthorizeRoute exact path="/flight/upload" component={UploadFlight} />
-            <Route exact path="/pilot/list" component={PilotsList} />
-            <Route exact path="/pilot/order" component={PilotOrder} />
-            <Route exact path="/pilot/flights" component={PilotFlights} />
-            <Route exact path="/statistics" component={Stats} />
-            <Route exact path="/feedback" component={Feedback} />
-            <AuthorizeRoute exact path="/feedback/review" component={FeedbackReview} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/register" component={Register} />
-            <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
-          </Switch>
-        </Router>
+        <>
+          <Router history={history}>
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/flight/list" component={FlightList} />
+              <Route exact path="/flight/viewer" component={FlightView} />
+              <AuthorizeRoute exact path="/flight/upload" component={UploadFlight} />
+              <Route exact path="/pilot/list" component={PilotsList} />
+              <Route exact path="/pilot/order" component={PilotOrder} />
+              <Route exact path="/pilot/flights" component={PilotFlights} />
+              <Route exact path="/statistics" component={Stats} />
+              <Route exact path="/feedback" component={Feedback} />
+              <AuthorizeRoute exact path="/feedback/review" component={FeedbackReview} />
+              <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
+            </Switch>
+          </Router>
+        </>
       </FlightDataProvider>
     </div>
   );

@@ -1,4 +1,3 @@
-import React from 'react'
 import axios from "axios";
 import { UserManager, WebStorageStateStore } from 'oidc-client';
 import { ApplicationPaths, ApplicationName } from './ApiAuthorizationConstants';

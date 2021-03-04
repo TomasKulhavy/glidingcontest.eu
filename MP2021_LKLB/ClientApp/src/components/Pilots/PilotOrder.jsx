@@ -15,8 +15,8 @@ const PilotOrder = () => {
             .get(BACKEND_URL + `/User/order`)
             .then((response) => {
                 setPilots(response.data);
-            }).
-            then(() => {
+            })
+            .then(() => {
                 setLoading(false);
             });
     }, []);

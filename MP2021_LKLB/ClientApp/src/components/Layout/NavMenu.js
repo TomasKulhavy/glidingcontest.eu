@@ -10,10 +10,10 @@ const NavMenu = () => {
   const toggle = () => setIsOpen(!isOpen);
   return (
     <header>
-      <Navbar className="navbar-expand-sm navbar-toggleable-sm bg-dark border-bottom box-shadow mb-3">
+      <Navbar className="navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
         <Container>
           <NavbarBrand tag={Link} className="text-light text-uppercase" to="/">Databáze letů</NavbarBrand>
-          <NavbarToggler onClick={toggle} color="primary" />
+          <NavbarToggler onClick={toggle} />
           <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={isOpen} navbar>
             <ul className="navbar-nav flex-grow">
               <NavItem>
