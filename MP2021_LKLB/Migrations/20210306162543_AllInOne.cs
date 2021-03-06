@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MP2021_LKLB.Migrations
 {
-    public partial class All : Migration
+    public partial class AllInOne : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -420,46 +420,27 @@ namespace MP2021_LKLB.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName" },
-                values: new object[,]
-                {
-                    { "ADMIN", "f0c19339-1a1a-4b48-9a05-87fc403badca", "PilotRole", "Administrator", "ADMINISTRATOR" },
-                    { "PILOT", "a05834e0-af26-45f1-9e41-bfe64439ac38", "PilotRole", "Pilot", "PILOT" }
-                });
+                values: new object[] { "ADMIN", "10d6689e-3a9f-44bd-a013-daa736894003", "PilotRole", "Administrator", "ADMINISTRATOR" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName" },
+                values: new object[] { "PILOT", "18b51e12-4a0f-4d14-a5d1-e30b2a4ce6b9", "PilotRole", "Pilot", "PILOT" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "FlightsNo", "Gender", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "SumKilometers", "TimeInSec", "TopScore", "TwoFactorEnabled", "UserName" },
-                values: new object[,]
-                {
-                    { "TomasLKLB", 0, "b7c32d08-ae99-4f55-bfad-ad25809d18c8", "tomas.kulhavy@pslib.cz", true, "Tomáš", null, 0, "Kulhavý", false, null, "TOMAS.KULHAVY@PSLIB.CZ", "TOMASLKLB", "AQAAAAEAACcQAAAAEPwDDy9gzOJhGQKBNz5oosEhAUD5YvVRLVvxJ2OPqGXF7gmXuvcc4+fV0B2iucyztg==", null, false, "", null, 0.0, null, false, "TomasLKLB" },
-                    { "Wolf", 0, "32554a08-9310-4021-b403-3a1b5394d6df", "w.sluka@seznam.cz", true, "Wolfgang", null, 0, "Sluka", false, null, "W.SLUKA@SEZNAM.CZ", "WOLF", "AQAAAAEAACcQAAAAELyH6Fbp+ygGMCcFsKLRd2KT3zu745EFodwwlX+uGmbplXM26jpvMxEHk+MednBoGg==", null, false, "", null, 0.0, null, false, "Wolf" },
-                    { "Cicvarek", 0, "f258037e-e9e9-4831-9dfd-bec8584a6770", "meta5@seznam.cz", true, "Martin", null, 0, "Cicvárek", false, null, "META5@SEZNAM.CZ", "CICVAREK", "AQAAAAEAACcQAAAAEKmD0i4Ll2FYDiF5wq7fXrAro6AuvDSF/fpqUpaaotggJCfWGoxMB/rRMB6gEeFJNQ==", null, false, "", null, 0.0, null, false, "Cicvarek" },
-                    { "Lukasz", 0, "4f2a1564-089d-406c-a225-9cb53be6f754", "czajkolu@gmail.com", true, "Lukasz", null, 0, "Czaikowski", false, null, "CZAJKOLU@GMAIL.COM", "LUKASZ", "AQAAAAEAACcQAAAAEJJbCg1h99H6ALujz4hIruoHc687AswXaF3xC9U4nM+pqO5rBH7eVVoVCdeqI7ZQkg==", null, false, "", null, 0.0, null, false, "Lukasz" },
-                    { "HybnerJ", 0, "7f7fcc35-e437-46a9-b92f-3243a4a93cdb", "jan.hyb@seznam.cz", true, "Jan", null, 0, "Hybner", false, null, "JAN.HYB@SEZNAM.CZ", "HybnerJ", "AQAAAAEAACcQAAAAEDeFRmiixhbooDNR/0S7eAE4zUJ5RQCvSGO/lyeEcsAHqEfkBUtAA1AKN42tn0qP5w==", null, false, "", null, 0.0, null, false, "HybnerJ" },
-                    { "Zdenek", 0, "6fff872d-747c-488d-8353-7d665141cc47", "Zdenek.Ulrych@seznam.cz", true, "Zdeněk", null, 0, "Ulrych", false, null, "ZDENEK.ULRYCH@SEZNAM.CZ", "ZDENEK", "AQAAAAEAACcQAAAAEJP4qOHC7z0lJV9ROXHStiSMK3YoHUjvpUn5UtLAkhGr7AjmYh2wdK9WLvTRtaX8kA==", null, false, "", null, 0.0, null, false, "Zdenek" },
-                    { "Zajda", 0, "addc3021-5776-4d41-8e26-e4ba4f0a3f30", "petr-zajic@volny.cz", true, "Petr", null, 0, "Zajíc", false, null, "PETR-ZAJIC@VOLNY.CZ", "ZAJDA", "AQAAAAEAACcQAAAAEHlPbfY6dMTursFs9e9M8qM2AmPgIUCmHFjqDzQbhzDb92D0TECJfFgOA7FYSZXtrQ==", null, false, "", null, 0.0, null, false, "Zajda" },
-                    { "HybnerP", 0, "0dc92b3a-c784-4e54-a642-e156151f8a63", "petr-hybner@seznam.cz", true, "Petr", null, 0, "Hybner", false, null, "PETR-HYBNER@SEZNAM.CZ", "HYBNERP", "AQAAAAEAACcQAAAAEODPolZBXtwW/AKzbIDJ2izyf3fS40vR+KuVT9emFRdbf3HmZ/IvHWnnonYZ12PFRw==", null, false, "", null, 0.0, null, false, "HybnerP" },
-                    { "Ruda", 0, "311c4a50-4781-44e3-b4b5-ae10a684a01c", "patrman.rudolf@seznam.cz", true, "Rudolf", null, 0, "Patrman", false, null, "PATRMAN.RUDOLF@SEZNAM.CZ", "RUDA", "AQAAAAEAACcQAAAAELwXebDfimVGmUr0yqgfHoUmBuJ6Q54FDaCqHcDkNh62nei4dj56wmihInu8d8TSEQ==", null, false, "", null, 0.0, null, false, "Ruda" },
-                    { "Milan", 0, "bb6532d8-6097-40c8-b639-acedfa1dd7c6", "milandvorak.gld@seznam.cz", true, "Milan", null, 0, "Dvořák", false, null, "MILANDVORAK.GLD@SEZNAM.CZ", "MILAN", "AQAAAAEAACcQAAAAEL4tr85miz17MvPVC6nuH4KCMqjZPVWs3ofdFKOBjBcYnIFxW8LvWiUFsIz4IGjIdA==", null, false, "", null, 0.0, null, false, "Milan" }
-                });
+                values: new object[] { "TomasLKLB", 0, "203a70d8-c778-4aa2-98df-01cd63d046bc", "tomas.kulhavy@pslib.cz", true, "Tomáš", null, 0, "Kulhavý", false, null, "TOMAS.KULHAVY@PSLIB.CZ", "TOMASLKLB", "AQAAAAEAACcQAAAAEMhh1MmMNfUYND5F2jAIVM1C0LSjLN9SWzPw5i/ybdboeukF7PXRa24dJC+b3WARLQ==", null, false, "", null, 0.0, null, false, "TomasLKLB" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[,]
-                {
-                    { "ADMIN", "TomasLKLB" },
-                    { "PILOT", "TomasLKLB" },
-                    { "PILOT", "Milan" },
-                    { "PILOT", "Ruda" },
-                    { "PILOT", "Lukasz" },
-                    { "PILOT", "Cicvarek" },
-                    { "PILOT", "Wolf" },
-                    { "PILOT", "Zajda" },
-                    { "PILOT", "HybnerP" },
-                    { "PILOT", "Zdenek" },
-                    { "PILOT", "HybnerJ" }
-                });
+                values: new object[] { "ADMIN", "TomasLKLB" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "PILOT", "TomasLKLB" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
