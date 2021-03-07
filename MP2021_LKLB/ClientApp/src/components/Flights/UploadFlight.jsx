@@ -210,7 +210,7 @@ const UploadFlight = () => {
         if(error)
         {
             return (
-                <Alert color="danger" isOpen={visible} toggle={onDismiss}>Tento let je již nahraný v naší databázi!</Alert>
+                <Alert color="danger" isOpen={visible} toggle={onDismiss}>Někde se vyskytla chyba</Alert>
             );
         }
         if(done)

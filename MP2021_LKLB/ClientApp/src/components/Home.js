@@ -11,7 +11,6 @@ const Home = () => {
   const [topHours, setTopHours] = useState([]);
   const [topKm, setTopKm] = useState([]);
   const [loading, setLoading] = useState(false);
-  console.log(process.env.REACT_APP_BACKEND_URL)
   useEffect(() => {
     setLoading(true);
     axios
