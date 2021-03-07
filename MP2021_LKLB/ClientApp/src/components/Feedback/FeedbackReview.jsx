@@ -2,14 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Container, Table } from "reactstrap";
 import NavMenu from "../Layout/NavMenu";
 import axios from "axios";
-import { BACKEND_URL } from "../../configuration/backend";
 
 const FeedbackReview = () => {
     const [feedback, setFeedback] = useState([]);
 
     useEffect(() => {
         axios
-            .get(BACKEND_URL + `/Feedback`)
+            .get(`${process.env.REACT_APP_BACKEND_URL}/api/Feedback`)
             .then((response) => {
                 setFeedback(response.data);
             });

@@ -5,7 +5,6 @@ import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCommentDots, faHome } from "@fortawesome/free-solid-svg-icons";
-import { BACKEND_URL } from "../../configuration/backend";
 
 const validate = values => {
     const errors = {};
@@ -43,7 +42,7 @@ const Feedback = () => {
         validate: validate,
         onSubmit: values => {
             let tisk = JSON.stringify(values);
-            axios.post(BACKEND_URL + '/Feedback', { payload: tisk })
+            axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/Feedback`, { payload: tisk })
             .then(() => {
                 history.push("/");
             });           

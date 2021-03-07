@@ -5,7 +5,6 @@ import NavMenu from "../Layout/NavMenu";
 import axios from "axios";
 import { FlightDataContext, ADD_PILOTID } from "../../providers/FlightDataContext";
 import Loading from "../Pages/Loading";
-import { BACKEND_URL } from "../../configuration/backend";
 
 const PilotsList = () => {
     const [pilots, setPilots] = useState([]);
@@ -15,7 +14,7 @@ const PilotsList = () => {
     useEffect(() => {
         setLoading(true);
         axios
-            .get(BACKEND_URL + `/User`)
+            .get(`${process.env.REACT_APP_BACKEND_URL}/api/User`)
             .then((response) => {
                 setPilots(response.data);
             })

@@ -3,7 +3,6 @@ import { Container, Table } from "reactstrap";
 import NavMenu from "../Layout/NavMenu";
 import axios from "axios";
 import Loading from "../Pages/Loading";
-import { BACKEND_URL } from "../../configuration/backend";
 
 const PilotOrder = () => {
     const [pilots, setPilots] = useState([]);
@@ -12,7 +11,7 @@ const PilotOrder = () => {
     useEffect(() => {
         setLoading(true);
         axios
-            .get(BACKEND_URL + `/User/order`)
+            .get(`${process.env.REACT_APP_BACKEND_URL}/api/User/order`)
             .then((response) => {
                 setPilots(response.data);
             })

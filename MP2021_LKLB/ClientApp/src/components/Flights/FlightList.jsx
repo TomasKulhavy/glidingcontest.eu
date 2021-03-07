@@ -6,7 +6,6 @@ import { FlightDataContext, ADD_FLIGHTID } from "../../providers/FlightDataConte
 import axios from "axios";
 import moment from 'moment-with-locales-es6';
 import Loading from "../Pages/Loading";
-import { BACKEND_URL } from "../../configuration/backend";
 
 const FlightList = () => {
     const yearNow = new Date().getFullYear();
@@ -18,7 +17,7 @@ const FlightList = () => {
     useEffect(() => {
         setLoading(true);
         axios
-            .get(BACKEND_URL + `/FlightLog/${year}`)
+            .get(`${process.env.REACT_APP_BACKEND_URL}/api/FlightLog/${year}`)
             .then((response) => {
                 setFlights(response.data)
             })

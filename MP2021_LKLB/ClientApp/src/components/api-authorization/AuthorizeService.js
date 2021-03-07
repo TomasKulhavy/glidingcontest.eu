@@ -1,7 +1,6 @@
 import axios from "axios";
 import { UserManager, WebStorageStateStore } from 'oidc-client';
 import { ApplicationPaths, ApplicationName } from './ApiAuthorizationConstants';
-import { BACKEND_URL } from "../../configuration/backend";
 
 export class AuthorizeService {
     constructor() {
@@ -24,7 +23,7 @@ export class AuthorizeService {
         const user = await this.getUser();
         if(user != null)
         {
-            axios.post(BACKEND_URL + `/User/${user.sub}`);
+            axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/User/${user.sub}`);
         }
         return !!user;
     }

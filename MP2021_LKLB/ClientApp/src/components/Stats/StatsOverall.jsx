@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlaneDeparture, faClock, faRulerHorizontal, faPercentage } from "@fortawesome/free-solid-svg-icons";
 import Chart from 'react-apexcharts';
 import "./style.css";
-import { BACKEND_URL } from "../../configuration/backend";
 
 const StatsOverall = () => {
     const [flightsNo, setFlightsNo] = useState();
@@ -16,14 +15,14 @@ const StatsOverall = () => {
 
     useEffect(() => {
         axios
-            .get(BACKEND_URL + `/Statistics`)
+            .get(`${process.env.REACT_APP_BACKEND_URL}/api/Statistics`)
             .then((response) => {
                 setFlightsNo(response.data.flightsNo);
                 setTime(response.data.timeInSeconds);
                 setKm(response.data.kilometers);
             });
         axios
-            .get(BACKEND_URL + `/User/kilometers`)
+            .get(`${process.env.REACT_APP_BACKEND_URL}/api/User/kilometers`)
             .then((response) => {
                 setUsers(response.data);
             });

@@ -5,28 +5,27 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Container, Card, CardBody, Row, Table, Col } from "reactstrap";
 import { faStopwatch, faMapMarkedAlt, faSortAmountDown, faRulerHorizontal } from '@fortawesome/free-solid-svg-icons';
 import Loading from "./Pages/Loading";
-import { BACKEND_URL } from "../configuration/backend";
 
 const Home = () => {
   const [top, setTop] = useState([]);
   const [topHours, setTopHours] = useState([]);
   const [topKm, setTopKm] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  console.log(process.env.REACT_APP_BACKEND_URL)
   useEffect(() => {
     setLoading(true);
     axios
-        .post(BACKEND_URL + `/User`)
+        .post(`${process.env.REACT_APP_BACKEND_URL}/api/User`)
         .then((response) => {
             setTop(response.data);
         })
     axios
-        .get(BACKEND_URL + `/User/hours`)
+        .get(`${process.env.REACT_APP_BACKEND_URL}/api/User/hours`)
         .then((response) => {
             setTopHours(response.data);
         })
       axios
-        .get(BACKEND_URL + `/User/kilometers`)
+        .get(`${process.env.REACT_APP_BACKEND_URL}/api/User/kilometers`)
         .then((response) => {
             setTopKm(response.data);
         })

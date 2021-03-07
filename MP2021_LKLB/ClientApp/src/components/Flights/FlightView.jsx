@@ -11,7 +11,6 @@ import moment from 'moment-with-locales-es6';
 import Loading from "../Pages/Loading";
 
 import './Flight.css'
-import { BACKEND_URL } from '../../configuration/backend';
 
 const FlightView = () => {
   var CanvasJSChart = CanvasJSReact.CanvasJSChart;
@@ -33,7 +32,7 @@ const FlightView = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(BACKEND_URL + `/View/${state.currentFlightId}`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/View/${state.currentFlightId}`)
       .then((response) => {
         setFixes(response.data)
       })
@@ -41,7 +40,7 @@ const FlightView = () => {
         setLoading(false);
       });
     axios
-      .get(BACKEND_URL + `/View/graph/${state.currentFlightId}`, {params: {fixesToGraph: fixesToGraph}})
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/View/graph/${state.currentFlightId}`, {params: {fixesToGraph: fixesToGraph}})
       .then((response) => {
         setFixesToGraph(response.data)
       })
@@ -50,17 +49,17 @@ const FlightView = () => {
         history.push("/pilot/flights")
       });
     axios
-      .get(BACKEND_URL + `/FlightLog/getDetails/${state.currentFlightId}`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/FlightLog/getDetails/${state.currentFlightId}`)
       .then((response) => {
         setFlightLog(response.data)
       });
     axios
-      .get(BACKEND_URL + `/View/getTask/${state.currentFlightId}`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/View/getTask/${state.currentFlightId}`)
       .then((response) => {
         setTask(response.data)
       });
     axios
-      .get(BACKEND_URL + `/Analyse/${state.currentFlightId}`, {params: {analyse: analyse}})
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/Analyse/${state.currentFlightId}`, {params: {analyse: analyse}})
       .then((response) => {
         setAnalyse(response.data[0]);
         setScore(Number((response.data[0].score).toFixed(1)));

@@ -8,7 +8,6 @@ import NavMenu from "../Layout/NavMenu";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload, faShareSquare } from "@fortawesome/free-solid-svg-icons";
 import { insideCircle } from "geolocation-utils";
-import { BACKEND_URL } from "../../configuration/backend";
 
 import './Flight.css'
 
@@ -65,7 +64,7 @@ const UploadFlight = () => {
         reader.readAsText(e.target.files[0]);
     }
     function sendFile(data) {
-        axios.post(BACKEND_URL + '/FlightLog', { payload: data })
+        axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/FlightLog`, { payload: data })
         .then(() => {
             setDone(true);
             setError(false);
