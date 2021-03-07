@@ -1,7 +1,7 @@
 # MP2021 databáze letů pro Aeroklub Liberec
-##IGC složka
+## IGC složka
  - Ve složce IGC jsou přiložené IGC soubory na testování nebo prohlédnutí jejich struktury. Většina letů je přidána v aplikaci.
-##SQL
+## SQL
  - Zde je vyexportovaná SQL databáze
 ## Popis námětu
 ### Téma
