@@ -2,7 +2,7 @@
 ## IGC složka
  - Ve složce IGC jsou přiložené IGC soubory na testování nebo prohlédnutí jejich struktury. Většina letů je přidána v aplikaci.
 ## SQL
- - Zde je vyexportovaná SQL databáze
+ - Zde je vyexportovaná SQL databáze v 7zipu (jelikož export byl moc velký)
 ## Popis námětu
 ### Téma
  - Práce bude sloužit jako databáze pro přelety pro AK Liberec. Piloti budou nahrávat své lety a poté budou vyhodnoceny a bodovány. Poslouží jako žebříček pilotů v klubu se statistikami.
