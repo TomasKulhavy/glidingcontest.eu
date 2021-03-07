@@ -1,4 +1,8 @@
 # MP2021 databáze letů pro Aeroklub Liberec
+##IGC složka
+ - Ve složce IGC jsou přiložené IGC soubory na testování nebo prohlédnutí jejich struktury. Většina letů je přidána v aplikaci.
+##SQL
+ - Zde je vyexportovaná SQL databáze
 ## Popis námětu
 ### Téma
  - Práce bude sloužit jako databáze pro přelety pro AK Liberec. Piloti budou nahrávat své lety a poté budou vyhodnoceny a bodovány. Poslouží jako žebříček pilotů v klubu se statistikami.
