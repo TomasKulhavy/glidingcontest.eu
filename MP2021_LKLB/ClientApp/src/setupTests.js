@@ -12,10 +12,10 @@ window.fetch = () => {
     {
       ok: true,
       json: () => Promise.resolve({
-        "authority": "https://localhost:5001",
+        "authority": `${process.env.REACT_APP_BACKEND_URL}`,
         "client_id": "MP2021_LKLB",
-        "redirect_uri": "https://localhost:5001/authentication/login-callback",
-        "post_logout_redirect_uri": "https://localhost:5001/authentication/logout-callback",
+        "redirect_uri": `${process.env.REACT_APP_BACKEND_URL}/authentication/login-callback`,
+        "post_logout_redirect_uri": `${process.env.REACT_APP_BACKEND_URL}/authentication/logout-callback`,
         "response_type": "id_token token",
         "scope": "MP2021_LKLB openid profile"
      })
