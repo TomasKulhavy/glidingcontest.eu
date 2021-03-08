@@ -1,19 +1,30 @@
 # MP2021 databáze letů pro Aeroklub Liberec
-## IGC složka
+## Spouštění aplikace
+ - BACKEND URL je nastavené na https://localhost:44346. Při spuštění aplikace přes IIS Express by mělo vše fungovat.
+
+## Přiložené složky a soubory
+### Dokumentace
+ - Zde jsou složky s písemnou prací na MP a písemnou prací pro SOČa kopie přihlášky k MP2021
+### Diagram databáze
+ - Obrázek návrhu databáze celé aplikace
+### IGC
  - Ve složce IGC jsou přiložené IGC soubory na testování nebo prohlédnutí jejich struktury. Většina letů je přidána v aplikaci.
-## SQL
+### SQL
  - Zde je vyexportovaná SQL databáze v 7zipu (jelikož export byl moc velký)
+### Návrh stránek
+ - V této složce jsou jednotlivé screenshoty stránek z webu.
+
 ## Popis námětu
 ### Téma
  - Práce bude sloužit jako databáze pro přelety pro AK Liberec. Piloti budou nahrávat své lety a poté budou vyhodnoceny a bodovány. Poslouží jako žebříček pilotů v klubu se statistikami.
- ### Vyučovací předmět 
+### Vyučovací předmět 
  - WEB
- ### Prostředky
+### Prostředky
  - ASP.NET, počítač, databáze, API, React, IGC záznamy
- ### Autor
+### Autor
  - Tomáš Kulhavý
  
- ## Cíle
+## Cíle
  - Cíle popisují vše, co v práci v době jejího odevzdání má být hotovo a odevzdáno.
 
 1. Vyhodnocení IGC záznamu z letu

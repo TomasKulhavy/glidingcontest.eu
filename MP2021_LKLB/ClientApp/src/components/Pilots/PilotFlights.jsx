@@ -49,7 +49,6 @@ const PilotFlights = () => {
         const array = [];
         for (let index = 2014; index <= yearNow; index++) {
             array.push(index);
-            console.log(array);
         }
         const rendered = array.map((item) => {
             return (

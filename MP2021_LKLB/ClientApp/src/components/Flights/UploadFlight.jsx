@@ -210,7 +210,7 @@ const UploadFlight = () => {
         if(error)
         {
             return (
-                <Alert color="danger" isOpen={visible} toggle={onDismiss}>Někde se vyskytla chyba</Alert>
+                <Alert color="danger" isOpen={visible} toggle={onDismiss}>Někde se vyskytla chyba, zkuste to znovu (Nebo zkuste nahrát jiný let)</Alert>
             );
         }
         if(done)
