@@ -8,22 +8,8 @@ import { faCommentDots, faHome } from "@fortawesome/free-solid-svg-icons";
 
 const validate = values => {
     const errors = {};
-    if (!values.firstname)
-        errors.firstname = "Jméno musí být vyplněno";
-    if (!values.lastname)
-        errors.lastname = "Příjmení musí být vyplněno";
-    if (!values.email) {
-        errors.email = "E-mail musí být vyplněn";
-    } 
-    else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = "Neplatná e-mailová adresa!";
-    }
-    if (!values.club)
-        errors.club = "Napište svůj domovský aeroklub";
     if (!values.feedback)
         errors.feedback = "Sdělte nám svůj názor";
-    if (values.GDPR === false)
-        errors.GDPR = "Potvrďte zpracování údajů";
     return errors;
 }  
 
@@ -71,7 +57,7 @@ const Feedback = () => {
                     </div>
                     <Form onSubmit={formik.handleSubmit}>
                         <FormGroup className="m-2">
-                            <Label for="firstname">Jméno</Label>
+                            <Label for="firstname">Jméno (nepovinné)</Label>
                             <Input 
                                 name="firstname" 
                                 id="firstname" 
@@ -82,10 +68,9 @@ const Feedback = () => {
                                 invalid={Boolean(formik.errors.firstname)} 
                                 valid={formik.touched.firstname} 
                             />
-                            {formik.errors.firstname ? <FormFeedback invalid>{formik.errors.firstname}</FormFeedback> : null}
                         </FormGroup>
                         <FormGroup className="m-2">
-                            <Label for="lastname">Přijmení</Label>
+                            <Label for="lastname">Přijmení (nepovinné)</Label>
                             <Input 
                                 name="lastname" 
                                 id="lastname" 
@@ -96,10 +81,9 @@ const Feedback = () => {
                                 invalid={Boolean(formik.errors.lastname)} 
                                 valid={formik.touched.lastname} 
                             />
-                            {formik.errors.lastname ? <FormFeedback invalid>{formik.errors.lastname}</FormFeedback> : null}
                         </FormGroup>
                         <FormGroup className="m-2">
-                            <Label for="email">E-mail</Label>
+                            <Label for="email">E-mail (nepovinné)</Label>
                             <Input 
                                 type="email" 
                                 name="email" 
@@ -111,10 +95,9 @@ const Feedback = () => {
                                 invalid={Boolean(formik.errors.email)} 
                                 valid={formik.touched.email}
                             />
-                            {formik.errors.email ? <FormFeedback invalid>{formik.errors.email}</FormFeedback> : null}
                         </FormGroup>
                         <FormGroup className="m-2">
-                            <Label for="club">Domovský aeroklub</Label>
+                            <Label for="club">Domovský aeroklub (nepovinné)</Label>
                             <Input 
                                 name="club" 
                                 id="club" 
@@ -125,7 +108,6 @@ const Feedback = () => {
                                 invalid={Boolean(formik.errors.club)} 
                                 valid={formik.touched.club}
                             />
-                            {formik.errors.club ? <FormFeedback invalid>{formik.errors.club}</FormFeedback> : null}
                         </FormGroup>
                         <FormGroup className="m-2">
                             <Label for="feedback">Feedback</Label>
@@ -141,22 +123,6 @@ const Feedback = () => {
                                 valid={formik.touched.feedback}
                             />
                             {formik.errors.feedback ? <FormFeedback invalid>{formik.errors.feedback}</FormFeedback> : null}
-                        </FormGroup>
-                        <FormGroup className="m-2" check>
-                            <Label check>
-                                <Input 
-                                    id="GDPR"
-                                    name="GDPR"
-                                    type="checkbox" 
-                                    onChange={formik.handleChange} 
-                                    onBlur={formik.handleBlur}
-                                    checked={formik.values.GDPR} 
-                                    invalid={Boolean(formik.errors.GDPR)} 
-                                    valid={formik.touched.GDPR}
-                                />{' '}
-                                GDPR
-                                {formik.errors.GDPR ? <FormFeedback invalid>{formik.errors.GDPR}</FormFeedback> : null}
-                            </Label>
                         </FormGroup>
                         <div>
                             <Button type="submit" className="m-2" color="success">Odeslat</Button>

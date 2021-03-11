@@ -15,6 +15,5 @@ namespace MP2021_LKLB.Models
         public string Email { get; set; }
         public string Club { get; set; }
         public string Feedback { get; set; }
-        public bool GDPR { get; set; }
     }
 }
