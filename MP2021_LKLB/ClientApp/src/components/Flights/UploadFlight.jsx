@@ -63,6 +63,7 @@ const UploadFlight = () => {
         };
         reader.readAsText(e.target.files[0]);
     }
+    
     function sendFile(data) {
         axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/FlightLog`, { payload: data })
         .then(() => {
@@ -220,7 +221,6 @@ const UploadFlight = () => {
             );
         }
     }
-
 
     return (
         <>

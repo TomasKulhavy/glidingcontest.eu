@@ -20,19 +20,16 @@ export const flightReducer = (state, action) => {
         case ADD_FLIGHTID: {
             let temp = copyMultidimensionalArray(state);
             temp.currentFlightId = action.currentFlightId;
-            console.log(temp);
             return temp
         }
         case ADD_PILOTID: {
             let temp = copyMultidimensionalArray(state);
             temp.pilotId = action.pilotId;
-            console.log(temp);
             return temp
         }
         case ADD_ACTIVE_PILOT_ID: {
             let temp = copyMultidimensionalArray(state);
             temp.activePilotId = action.activePilotId;
-            console.log(temp);
             return temp
         }
         default: return state;

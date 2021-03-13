@@ -40,7 +40,7 @@ const FlightView = () => {
         setLoading(false);
       });
     axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/api/View/graph/${state.currentFlightId}`, {params: {fixesToGraph: fixesToGraph}})
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/View/graph/${state.currentFlightId}`)
       .then((response) => {
         setFixesToGraph(response.data)
       })
@@ -59,7 +59,7 @@ const FlightView = () => {
         setTask(response.data)
       });
     axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/api/Analyse/${state.currentFlightId}`, {params: {analyse: analyse}})
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/Analyse/${state.currentFlightId}`)
       .then((response) => {
         setAnalyse(response.data[0]);
         setScore(Number((response.data[0].score).toFixed(1)));
