@@ -12,7 +12,7 @@
 ### IGC
  - Ve složce IGC jsou přiložené IGC soubory na testování nebo prohlédnutí jejich struktury. Většina letů je přidána v aplikaci.
 ### SQL
- - Zde je vyexportovaná SQL databáze v 7zipu (jelikož export byl moc velký)
+ - Zde je vyexportovaná SQL databáze v 7zipu (jelikož export byl moc velký), pro testování importuje tento soubor do databáze.
 ### Návrh stránek
  - V této složce jsou jednotlivé screenshoty stránek z webu.
 
