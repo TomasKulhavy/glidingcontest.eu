@@ -2,6 +2,7 @@
 ## Spouštění aplikace
  - BACKEND URL je nastavené na https://localhost:44346. Při spuštění aplikace přes IIS Express by mělo vše fungovat.
  - Aplikace bude dostupná na doméně ***http://glidingcontest.eu/***
+ - Pro instalaci node modules, => **npm install**
 
 ## Přiložené složky a soubory
 ### Dokumentace
