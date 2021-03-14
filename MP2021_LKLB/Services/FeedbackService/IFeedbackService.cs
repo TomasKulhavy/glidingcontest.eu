@@ -9,5 +9,6 @@ namespace MP2021_LKLB.Services.FeedbackService
     public interface IFeedbackService
     {
         Task<ICollection<FeedbackUser>> GetAllReviews();
+        Task<FeedbackUser> Create(FeedbackUser input);
     }
 }

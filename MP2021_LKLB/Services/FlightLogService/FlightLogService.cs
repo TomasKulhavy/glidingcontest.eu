@@ -34,9 +34,9 @@ namespace MP2021_LKLB.Services.FlightLogService
         public async Task<ICollection<FlightLog>> GetFlightLog(int id)
         {
             ICollection<FlightLog> flightLog = await _db.FlightLogs
-                //.Include(f => f.User)
                 .Where(x => x.Date.Year == id)
                 .OrderByDescending(f => f.Date)
+                //.Include(f => f.FlightLogAnalyse)
                 .ToListAsync();
 
             if (flightLog != null)

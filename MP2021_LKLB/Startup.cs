@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using MP2021_LKLB.Data;
 using MP2021_LKLB.Models;
 using MP2021_LKLB.Services;
@@ -60,6 +61,11 @@ namespace MP2021_LKLB
             services.AddAuthentication()
                 .AddIdentityServerJwt();
 
+            services.AddSwaggerGen(conf =>
+            {
+                conf.SwaggerDoc(name: "v1", new OpenApiInfo { Title = "Web API Demo", Version = "v1" });
+            });
+
             services.AddControllersWithViews();
             services.AddRazorPages();
 
@@ -95,6 +101,15 @@ namespace MP2021_LKLB
             app.UseIdentityServer();
             app.UseAuthorization();
             app.UseSession();
+
+            app.UseDeveloperExceptionPage();
+            app.UseSwagger();
+
+            app.UseSwaggerUI(conf =>
+            {
+                conf.SwaggerEndpoint(url: "/swagger/v1/swagger.json", name: "Web API Demo");
+            });
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

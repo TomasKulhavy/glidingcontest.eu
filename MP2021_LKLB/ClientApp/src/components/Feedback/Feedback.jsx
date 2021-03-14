@@ -27,8 +27,19 @@ const Feedback = () => {
         },
         validate: validate,
         onSubmit: values => {
-            let tisk = JSON.stringify(values);
-            axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/Feedback`, { payload: tisk })
+            axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/Feedback`,
+            {
+                FirstName: values.firstname,
+                LastName: values.lastname,
+                Email: values.email,
+                Club: values.club,
+                Feedback: values.feedback,
+            },
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            })
             .then(() => {
                 history.push("/");
             });           

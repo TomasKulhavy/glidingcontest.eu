@@ -25,11 +25,6 @@ namespace MP2021_LKLB.Controllers
             _feedback = feedback;
         }
 
-        public class InputModel
-        {
-            public string Payload { get; set; }
-        }
-
         // GET: api/<FeedbackController>
         [HttpGet]
         public async Task<IEnumerable<FeedbackUser>> Get()
@@ -46,18 +41,9 @@ namespace MP2021_LKLB.Controllers
 
         // POST api/<FeedbackController>
         [HttpPost]
-        public async Task<ActionResult<FeedbackUser>> Post([FromBody] InputModel Data)
+        public async Task<ActionResult<FeedbackUser>> Post([FromBody] FeedbackUser feedback)
         {
-            string message = "started";
-            string data = Data.Payload;
-            if (data != null)
-            {
-                var returnDataObj = JsonConvert.DeserializeObject<FeedbackUser>(data);
-                _db.Feedbacks.Add(returnDataObj);
-                await _db.SaveChangesAsync();
-            }
-
-            return Ok(message);
+            return await _feedback.Create(feedback);
         }
 
         // PUT api/<FeedbackController>/5

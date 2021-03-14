@@ -21,5 +21,20 @@ namespace MP2021_LKLB.Services.FeedbackService
         {
             return await _db.Feedbacks.ToListAsync();
         }
+        public async Task<FeedbackUser> Create(FeedbackUser input)
+        {
+            FeedbackUser feedback = new FeedbackUser
+            {
+                FirstName = input.FirstName,
+                LastName = input.LastName,
+                Email = input.Email,
+                Club = input.Club,
+                Feedback = input.Feedback,
+            };
+            _db.Feedbacks.Add(feedback);
+            await _db.SaveChangesAsync();
+
+            return feedback;
+        }
     }
 }
