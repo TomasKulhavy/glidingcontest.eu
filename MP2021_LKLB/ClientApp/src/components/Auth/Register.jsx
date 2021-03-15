@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Container from '@material-ui/core/Container';
-import { Card, Button, Form, FormGroup, FormFeedback, Input, Label, CardBody } from "reactstrap";
+import { Card, Button, Form, FormGroup, FormFeedback, Input, Label, CardBody, Alert } from "reactstrap";
 import { Link, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faUserPlus } from "@fortawesome/free-solid-svg-icons";
@@ -39,6 +39,9 @@ const validate = values => {
 
 export default function SignUp() {
     const history = useHistory();
+    const [error, setError] = useState(false);
+    const [visible, setVisible] = useState(true);
+    const onDismiss = () => setVisible(false);
 
     const formik = useFormik({
         initialValues: {
@@ -51,7 +54,6 @@ export default function SignUp() {
         },
         validate: validate,
         onSubmit: values => {
-            console.log(values);
             axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/Account/register`,
                 {
                     FirstName: values.firstname,
@@ -67,11 +69,23 @@ export default function SignUp() {
                 })
                 .then(() => {
                     history.push("/");
+                    setError(false);
+                })
+                .catch((response) => {
+                    setError(true);
                 });
         },
     });
+    function renderAlert()
+    {
+        if(error === true)
+        {
+            return (<Alert color="danger" isOpen={visible} toggle={onDismiss} className="my-3">Uživatel s těmito údaji je již zaregistrovaný!</Alert>)
+        }
+    }
     return (
         <Container>
+            {renderAlert()}
             <Button className="btn-dark mt-5 mb-3" tag={Link} to="/">
                 <FontAwesomeIcon icon={faHome} className="font-size-xl mr-3" />
                 Zpět na domovskou obrazovku
