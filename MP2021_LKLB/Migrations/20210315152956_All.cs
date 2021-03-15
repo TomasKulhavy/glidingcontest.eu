@@ -419,17 +419,17 @@ namespace MP2021_LKLB.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName" },
-                values: new object[] { "ADMIN", "6b0bb41e-eff2-4aad-b02c-9922d7972089", "PilotRole", "Administrator", "ADMINISTRATOR" });
+                values: new object[] { "ADMIN", "2efa0128-43bb-4e0b-8f8c-09fe73c02beb", "PilotRole", "Administrator", "ADMINISTRATOR" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName" },
-                values: new object[] { "PILOT", "14b8b182-8fc1-469b-a0a3-8b49ff091954", "PilotRole", "Pilot", "PILOT" });
+                values: new object[] { "PILOT", "512bfedb-c994-4740-8ee1-3bf8068e4ef5", "PilotRole", "Pilot", "PILOT" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "FlightsNo", "Gender", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "SumKilometers", "TimeInSec", "TopScore", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "TomasLKLB", 0, "b6fb9295-5963-4671-a5fb-b793bc2efeae", "tomas.kulhavy@pslib.cz", true, "Tomáš", null, 0, "Kulhavý", false, null, "TOMAS.KULHAVY@PSLIB.CZ", "TOMASLKLB", "AQAAAAEAACcQAAAAEFPEdw/rp8RjJztUyuScbBj6Cb+PnOcF9uHQd4DQEZyBJjVLf1/0erGIEhVYRC2Vdw==", null, false, "", null, 0.0, null, false, "TomasLKLB" });
+                values: new object[] { "TomasLKLB", 0, "9327e4bb-560b-42b5-87f8-a5d238b44a3a", "tomas.kulhavy@pslib.cz", true, "Tomáš", null, 0, "Kulhavý", false, null, "TOMAS.KULHAVY@PSLIB.CZ", "TOMASLKLB", "AQAAAAEAACcQAAAAELVA5UM+QxCCmNpflVE7KqLXM5lM9es5+SKDU4IOyMlIQKmP36Zijpi2QWdDrUsnmw==", null, false, "", null, 0.0, null, false, "TomasLKLB" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",

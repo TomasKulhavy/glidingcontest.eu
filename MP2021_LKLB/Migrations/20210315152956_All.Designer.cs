@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MP2021_LKLB.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210315143712_All")]
+    [Migration("20210315152956_All")]
     partial class All
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -214,7 +214,7 @@ namespace MP2021_LKLB.Migrations
                         {
                             Id = "TomasLKLB",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b6fb9295-5963-4671-a5fb-b793bc2efeae",
+                            ConcurrencyStamp = "9327e4bb-560b-42b5-87f8-a5d238b44a3a",
                             Email = "tomas.kulhavy@pslib.cz",
                             EmailConfirmed = true,
                             FirstName = "Tomáš",
@@ -223,7 +223,7 @@ namespace MP2021_LKLB.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "TOMAS.KULHAVY@PSLIB.CZ",
                             NormalizedUserName = "TOMASLKLB",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFPEdw/rp8RjJztUyuScbBj6Cb+PnOcF9uHQd4DQEZyBJjVLf1/0erGIEhVYRC2Vdw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELVA5UM+QxCCmNpflVE7KqLXM5lM9es5+SKDU4IOyMlIQKmP36Zijpi2QWdDrUsnmw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TimeInSec = 0.0,
@@ -698,14 +698,14 @@ namespace MP2021_LKLB.Migrations
                         new
                         {
                             Id = "ADMIN",
-                            ConcurrencyStamp = "6b0bb41e-eff2-4aad-b02c-9922d7972089",
+                            ConcurrencyStamp = "2efa0128-43bb-4e0b-8f8c-09fe73c02beb",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "PILOT",
-                            ConcurrencyStamp = "14b8b182-8fc1-469b-a0a3-8b49ff091954",
+                            ConcurrencyStamp = "512bfedb-c994-4740-8ee1-3bf8068e4ef5",
                             Name = "Pilot",
                             NormalizedName = "PILOT"
                         });

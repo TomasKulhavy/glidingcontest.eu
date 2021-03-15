@@ -52,6 +52,7 @@ const UploadFlight = () => {
     const [done, setDone] = useState(false);
     const [visible, setVisible] = useState(true);
     const onDismiss = () => setVisible(false);
+
     const showFile = async (e) => {
         e.preventDefault()
         const reader = new FileReader()
@@ -202,7 +203,7 @@ const UploadFlight = () => {
         {
             speedTotal = 0;
             dist = 0;
-            timeTask = 0;
+            timeTask = new Date(0 * 1000).toISOString().substr(11, 8);
             flight.score = 0;
         }
 
@@ -213,9 +214,11 @@ const UploadFlight = () => {
             "kilometers": dist / 1000,
             "avgSpeed": speedTotal*3.6,
         }
-        result.flightLogAnalyse = scoreFlight;
         const tokenData = parseJwt(accessToken);
         result.userId = tokenData.sub;
+        result.flightLogAnalyse = scoreFlight;  
+        console.log(result)
+        
     };
     function renderAlert()
     {
