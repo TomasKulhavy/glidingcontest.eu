@@ -11,28 +11,12 @@ const NavMenu = () => {
   const [{accessToken}, dispatch] = useContext(FlightDataContext);
   const toggle = () => setIsOpen(!isOpen);
 
-  //console.log(accessToken)
-
   const parseJwt = (token) => {
     const base64Url = token.split(".")[1];
     const base64 = base64Url.replace("-", "+").replace("_", "/");
     return JSON.parse(window.atob(base64));
   };
-/*
-  useEffect(() => {
-    const data = localStorage.getItem("token");
-    console.log(data);
-    if(data !== null)
-    {
-      dispatch({ type: SET_ACCESS_TOKEN, accessToken: data });
-    }
-  }, [])
 
-  useEffect(() => {
-    localStorage.setItem("token", accessToken);
-    console.log(accessToken);
-  })
-*/
   function renderUser()
   {
     let tokenData;

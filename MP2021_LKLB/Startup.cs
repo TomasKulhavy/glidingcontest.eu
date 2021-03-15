@@ -46,7 +46,7 @@ namespace MP2021_LKLB
             services.AddIdentity<ApplicationUser, PilotRole>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
-                options.Password.RequiredLength = 6;
+                options.Password.RequiredLength = 8;
                 options.User.RequireUniqueEmail = true;
                 options.SignIn.RequireConfirmedEmail = false;
             }
@@ -128,7 +128,6 @@ namespace MP2021_LKLB
             app.UseRouting();
 
             app.UseAuthentication();
-            //app.UseIdentityServer();
             app.UseAuthorization();
 
             app.UseDeveloperExceptionPage();

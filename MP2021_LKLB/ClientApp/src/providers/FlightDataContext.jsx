@@ -19,7 +19,6 @@ const flightId = {
 export const FlightDataContext = createContext(flightId);
 
 export const flightReducer = (state, action) => {
-
     switch (action.type) {
         case ADD_FLIGHTID: {
             let temp = copyMultidimensionalArray(state);
