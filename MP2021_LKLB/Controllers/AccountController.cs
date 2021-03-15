@@ -80,7 +80,6 @@ namespace MP2021_LKLB.Controllers
             var hasher = new PasswordHasher<ApplicationUser>();
             var newUser = new ApplicationUser
             {
-                Id = userData.UserName,
                 UserName = userData.UserName,
                 Email = userData.Email,
                 FirstName = userData.FirstName,

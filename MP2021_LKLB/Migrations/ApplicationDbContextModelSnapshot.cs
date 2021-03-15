@@ -212,7 +212,7 @@ namespace MP2021_LKLB.Migrations
                         {
                             Id = "TomasLKLB",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "badfa6eb-7bb3-45ac-b3b0-305696f22cb9",
+                            ConcurrencyStamp = "b6fb9295-5963-4671-a5fb-b793bc2efeae",
                             Email = "tomas.kulhavy@pslib.cz",
                             EmailConfirmed = true,
                             FirstName = "Tomáš",
@@ -221,7 +221,7 @@ namespace MP2021_LKLB.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "TOMAS.KULHAVY@PSLIB.CZ",
                             NormalizedUserName = "TOMASLKLB",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDx5Q30E9lyZ64ST0+ZMoLl+jvxUMusokuH6XuJlWGKSRIP43uy9V/mOLn4NoAGyYQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFPEdw/rp8RjJztUyuScbBj6Cb+PnOcF9uHQd4DQEZyBJjVLf1/0erGIEhVYRC2Vdw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TimeInSec = 0.0,
@@ -696,14 +696,14 @@ namespace MP2021_LKLB.Migrations
                         new
                         {
                             Id = "ADMIN",
-                            ConcurrencyStamp = "352b7684-1dd3-4a85-8093-b3e01c057012",
+                            ConcurrencyStamp = "6b0bb41e-eff2-4aad-b02c-9922d7972089",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "PILOT",
-                            ConcurrencyStamp = "5b1f7e20-ee54-4cb0-a481-1647d6441a32",
+                            ConcurrencyStamp = "14b8b182-8fc1-469b-a0a3-8b49ff091954",
                             Name = "Pilot",
                             NormalizedName = "PILOT"
                         });
