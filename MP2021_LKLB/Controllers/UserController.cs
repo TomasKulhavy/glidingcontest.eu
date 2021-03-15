@@ -18,12 +18,10 @@ namespace MP2021_LKLB.Controllers
     public class UserController : ControllerBase
     {
         private IUserService _user;
-        private readonly ISession _session;
 
-        public UserController(IUserService user, IHttpContextAccessor httpContext)
+        public UserController(IUserService user)
         {
             _user = user;
-            _session = httpContext.HttpContext.Session;
         }
 
         // GET: api/<UserController>
@@ -62,13 +60,6 @@ namespace MP2021_LKLB.Controllers
         {
             return await _user.GetPilotsStats(id);
         }
-
-        [HttpGet("pilot")]
-        public string GetIdPilot()
-        {
-            string userId = _session.Get<string>("userId");
-            return userId;
-        }
         
         // GET api/<UserController>/5
         [HttpGet("{id}")]
@@ -83,12 +74,6 @@ namespace MP2021_LKLB.Controllers
         public async Task<ICollection<ApplicationUser>> GetTop()
         {
             return await _user.GetPilotTops();
-        }
-
-        [HttpPost("{id}")]
-        public void GetId(string id)
-        {
-            _session.Set("userId", id);
         }
 
         // PUT api/<UserController>/5

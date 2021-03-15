@@ -8,7 +8,7 @@ import Loading from "../Pages/Loading";
 
 const PilotsList = () => {
     const [pilots, setPilots] = useState([]);
-    const [dispatch] = useContext(FlightDataContext);
+    const [state, dispatch] = useContext(FlightDataContext);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {

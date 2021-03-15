@@ -55,14 +55,11 @@ namespace MP2021_LKLB
             .AddDefaultTokenProviders();
             
             services.AddScoped<Identity>();
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IFlightLogService, FlightLogService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IViewService, ViewService>();
             services.AddTransient<IFeedbackService, FeedbackService>();
             services.AddTransient<IStatisticsService, StatisticsService>();
-
-            services.AddSession();
 
             services.AddAuthorization();
 
@@ -133,7 +130,6 @@ namespace MP2021_LKLB
             app.UseAuthentication();
             //app.UseIdentityServer();
             app.UseAuthorization();
-            app.UseSession();
 
             app.UseDeveloperExceptionPage();
             app.UseSwagger();

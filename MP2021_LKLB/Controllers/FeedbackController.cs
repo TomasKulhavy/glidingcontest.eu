@@ -16,12 +16,10 @@ namespace MP2021_LKLB.Controllers
     [ApiController]
     public class FeedbackController : ControllerBase
     {
-        private ApplicationDbContext _db;
         private IFeedbackService _feedback;
 
-        public FeedbackController(ApplicationDbContext db, IFeedbackService feedback)
+        public FeedbackController(IFeedbackService feedback)
         {
-            _db = db;
             _feedback = feedback;
         }
 

@@ -25,13 +25,11 @@ namespace MP2021_LKLB.Controllers
         private ApplicationDbContext _db;
         private IFlightLogService _flightLog;
         private IStatisticsService _stats;
-        private readonly ISession _session;
 
-        public FlightLogController(ApplicationDbContext db, IFlightLogService flightLog, IHttpContextAccessor httpContext, IStatisticsService stats)
+        public FlightLogController(ApplicationDbContext db, IFlightLogService flightLog, IStatisticsService stats)
         {
             _db = db;
             _flightLog = flightLog;
-            _session = httpContext.HttpContext.Session;
             _stats = stats;
         }
 
@@ -61,7 +59,7 @@ namespace MP2021_LKLB.Controllers
         {
             string message = "started";
             string data = Data.Payload;
-            string userId = _session.Get<string>("userId");
+            string userId;
             if (data != null)
             {
                 var returnDataObj = JsonConvert.DeserializeObject<FlightLog>(data);
