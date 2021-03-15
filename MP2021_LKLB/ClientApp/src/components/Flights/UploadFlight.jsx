@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from "axios";
 import { Card, Input, Alert, Button } from "reactstrap";
 import IGCParser from "igc-parser";
@@ -8,6 +8,7 @@ import NavMenu from "../Layout/NavMenu";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload, faShareSquare } from "@fortawesome/free-solid-svg-icons";
 import { insideCircle } from "geolocation-utils";
+import { FlightDataContext } from "../../providers/FlightDataContext";
 
 import './Flight.css'
 
@@ -38,8 +39,15 @@ function parseL(str) {
     return radiusDone;
 }
 
+const parseJwt = (token) => {
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace("-", "+").replace("_", "/");
+    return JSON.parse(window.atob(base64));
+};
+
 const UploadFlight = () => {
     const [error, setError] = useState(false);
+    const [{accessToken}] = useContext(FlightDataContext);
     const [done, setDone] = useState(false);
     const [visible, setVisible] = useState(true);
     const onDismiss = () => setVisible(false);
@@ -61,7 +69,7 @@ const UploadFlight = () => {
             sendFile(tisk);
             setError(false);
         };
-        reader.readAsText(e.target.files[0]);
+    reader.readAsText(e.target.files[0]);
     }
     
     function sendFile(data) {
@@ -84,7 +92,7 @@ const UploadFlight = () => {
         var indexOfFix = 1;
         const storeOfStart = [];
         const storeOfFixes = [];
-        
+
         for (taskT; taskT < result.task.points.length - 2; taskT++) {
             const radius = result.radiusTP.taskRad[taskT - 1];
             const center = {lat: result.task.points[taskT].latitude, lon: result.task.points[taskT].longitude};
@@ -205,6 +213,9 @@ const UploadFlight = () => {
             "avgSpeed": speedTotal*3.6,
         }
         result.flightLogAnalyse = scoreFlight;
+        const tokenData = parseJwt(accessToken);
+        console.log(tokenData);
+        result.userId = tokenData.sub;
     };
     function renderAlert()
     {

@@ -212,7 +212,7 @@ namespace MP2021_LKLB.Migrations
                         {
                             Id = "TomasLKLB",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "69441070-0dcf-436e-b6ed-c7e952beae9d",
+                            ConcurrencyStamp = "badfa6eb-7bb3-45ac-b3b0-305696f22cb9",
                             Email = "tomas.kulhavy@pslib.cz",
                             EmailConfirmed = true,
                             FirstName = "Tomáš",
@@ -221,7 +221,7 @@ namespace MP2021_LKLB.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "TOMAS.KULHAVY@PSLIB.CZ",
                             NormalizedUserName = "TOMASLKLB",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPW4yYHinnR96N7ZDagmMWpHUyJMB66sB/jK7dEJBDiwOsOx6OBOej9Z4ql3fqFvXg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDx5Q30E9lyZ64ST0+ZMoLl+jvxUMusokuH6XuJlWGKSRIP43uy9V/mOLn4NoAGyYQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TimeInSec = 0.0,
@@ -621,12 +621,10 @@ namespace MP2021_LKLB.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -675,12 +673,10 @@ namespace MP2021_LKLB.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -700,14 +696,14 @@ namespace MP2021_LKLB.Migrations
                         new
                         {
                             Id = "ADMIN",
-                            ConcurrencyStamp = "86c8b145-d83c-415f-8487-74109764ab76",
+                            ConcurrencyStamp = "352b7684-1dd3-4a85-8093-b3e01c057012",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "PILOT",
-                            ConcurrencyStamp = "63204deb-0b5a-4238-aa92-078e68567a02",
+                            ConcurrencyStamp = "5b1f7e20-ee54-4cb0-a481-1647d6441a32",
                             Name = "Pilot",
                             NormalizedName = "PILOT"
                         });

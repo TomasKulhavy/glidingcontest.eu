@@ -18,7 +18,7 @@ namespace MP2021_LKLB.Controllers
     // https://www.c-sharpcorner.com/article/jwt-json-web-token-authentication-in-asp-net-core/
     // https://codeburst.io/jwt-auth-in-asp-net-core-148fb72bed03
 
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
     {
@@ -70,17 +70,21 @@ namespace MP2021_LKLB.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] UserIM userData)
+        public async Task<IActionResult> Register([FromBody] UserRegisterIM userData)
         {
             var user = await _userManager.FindByNameAsync(userData.Email);
             if (user != null)
             {
-                return BadRequest("Uživatel je již zaregistrovaný!");
+                return BadRequest("user already registered");
             }
             var hasher = new PasswordHasher<ApplicationUser>();
-            var newUser = new ApplicationUser { 
-                UserName = userData.Email, 
-                Email = userData.Email, 
+            var newUser = new ApplicationUser
+            {
+                Id = userData.UserName,
+                UserName = userData.Email,
+                Email = userData.Email,
+                FirstName = userData.FirstName,
+                LastName = userData.LastName,
                 EmailConfirmed = true,
                 PasswordHash = hasher.HashPassword(null, userData.Password)
             };
@@ -123,7 +127,7 @@ namespace MP2021_LKLB.Controllers
                 claims,
                 expires: expiration,
                 signingCredentials: credentials);
-            var accessToken =  new JwtSecurityTokenHandler().WriteToken(token);
+            var accessToken = new JwtSecurityTokenHandler().WriteToken(token);
             return new AuthorizationToken { AccessToken = accessToken };
         }
     }

@@ -11,50 +11,13 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { Card, Button, Form, FormGroup, FormFeedback, Input, Label } from "reactstrap";
+import { Card, Button, Form, FormGroup, FormFeedback, Input, Label, CardBody } from "reactstrap";
 import { Link, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { useFormik, FormikProvider } from 'formik';
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Databáze letů pro Aeroklub Liberec
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
-const useStyles = makeStyles((theme) => ({
-    paper: {
-        marginTop: theme.spacing(8),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
-    },
-    form: {
-        width: '100%', // Fix IE 11 issue.
-        marginTop: theme.spacing(3),
-    },
-    submit: {
-        margin: theme.spacing(3, 0, 2),
-    },
-}));
-
-function register()
-{
-    axios.post('https://localhost:44346/api/Account/register')
-}
+import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
 
 const validate = values => {
     const errors = {};
@@ -80,15 +43,11 @@ const validate = values => {
     if (values.repassword !== values.password) {
         errors.repassword = "Hesla se musí shodovat";
     }      
-    if (values.GDPR === false)
-        errors.GDPR = "Potvrďte zpracování údajů";
     return errors;
 }  
 
 export default function SignUp() {
-  const classes = useStyles();
-
-  const history = useHistory();
+    const history = useHistory();
 
     const formik = useFormik({
         initialValues: {
@@ -98,19 +57,142 @@ export default function SignUp() {
           username: '',
           password: '',
           repassword: '',
-          GDPR: false,
         },
         validate: validate,
         onSubmit: values => {
-            let tisk = JSON.stringify(values);
-            console.log(tisk);
-            axios.post('https://localhost:44346/api/Account/register', { userData: tisk })
+            console.log(values);
+            axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/Account/register`, 
+            { 
+                FirstName: values.firstname,
+                LastName: values.lastname,
+                Email: values.email,
+                UserName: values.username,
+                Password: values.password,
+            },
+            {
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
             .then(() => {
                 history.push("/");
             });
         },
     });
-
+    return (
+        <Container>
+            <Button className="btn-dark mt-5 mb-3" tag={Link} to="/">
+                <FontAwesomeIcon icon={faHome} className="font-size-xl mr-3" />
+                Zpět na domovskou obrazovku
+            </Button>
+            <FormikProvider value={formik}>
+                <Card className="m-2 text-center">
+                    <CardBody className="text-center bg-dark text-light">
+                    <div className="d-flex align-items-start">
+                        <div className="font-weight-bold">
+                            <small className="text-white-70 d-block font-size-xl mb-1 text-uppercase">Sdělte nám svůj názor na tuto aplikaci</small>
+                            <span className="font-size-xxl mt-1"></span>
+                        </div>
+                        <div className="ml-auto">
+                            <div className="text-center">
+                                <FontAwesomeIcon icon={faCommentDots} className="font-size-xl" />
+                            </div>
+                        </div>
+                    </div>
+                    <Form onSubmit={formik.handleSubmit}>
+                        <FormGroup className="m-2">
+                            <Label for="firstname">Jméno</Label>
+                            <Input 
+                                name="firstname" 
+                                id="firstname" 
+                                placeholder="Jan" 
+                                onChange={formik.handleChange} 
+                                onBlur={formik.handleBlur}
+                                value={formik.values.firstname}
+                                invalid={Boolean(formik.errors.firstname)} 
+                                valid={formik.touched.firstname} 
+                            />
+                        </FormGroup>
+                        <FormGroup className="m-2">
+                            <Label for="lastname">Přijmení</Label>
+                            <Input 
+                                name="lastname" 
+                                id="lastname" 
+                                placeholder="Novák" 
+                                onChange={formik.handleChange} 
+                                onBlur={formik.handleBlur}
+                                value={formik.values.lastname}
+                                invalid={Boolean(formik.errors.lastname)} 
+                                valid={formik.touched.lastname} 
+                            />
+                        </FormGroup>
+                        <FormGroup className="m-2">
+                            <Label for="email">E-mail</Label>
+                            <Input 
+                                type="email" 
+                                name="email" 
+                                id="email" 
+                                placeholder="jan.novak@gmail.com" 
+                                onChange={formik.handleChange} 
+                                onBlur={formik.handleBlur}
+                                value={formik.values.email} 
+                                invalid={Boolean(formik.errors.email)} 
+                                valid={formik.touched.email}
+                            />
+                        </FormGroup>
+                        <FormGroup className="m-2">
+                            <Label for="username">Přihlašovací jméno</Label>
+                            <Input 
+                                name="username" 
+                                id="username" 
+                                placeholder="JanNovak" 
+                                onChange={formik.handleChange} 
+                                onBlur={formik.handleBlur}
+                                value={formik.values.username} 
+                                invalid={Boolean(formik.errors.username)} 
+                                valid={formik.touched.username}
+                            />
+                        </FormGroup>
+                        <FormGroup className="m-2">
+                            <Label for="password">Heslo</Label>
+                            <Input 
+                                type="password"
+                                name="password" 
+                                id="password" 
+                                placeholder="Heslo" 
+                                onChange={formik.handleChange} 
+                                onBlur={formik.handleBlur}
+                                value={formik.values.password} 
+                                invalid={Boolean(formik.errors.password)} 
+                                valid={formik.touched.password}
+                            />
+                            {formik.errors.password ? <FormFeedback invalid>{formik.errors.password}</FormFeedback> : null}
+                        </FormGroup>
+                        <FormGroup className="m-2">
+                            <Label for="repassword">Heslo</Label>
+                            <Input 
+                                type="password"
+                                name="repassword" 
+                                id="repassword" 
+                                placeholder="Heslo" 
+                                onChange={formik.handleChange} 
+                                onBlur={formik.handleBlur}
+                                value={formik.values.repassword} 
+                                invalid={Boolean(formik.errors.repassword)} 
+                                valid={formik.touched.repassword}
+                            />
+                            {formik.errors.repassword ? <FormFeedback invalid>{formik.errors.repassword}</FormFeedback> : null}
+                        </FormGroup>
+                        <div>
+                            <Button type="submit" className="m-2" color="success">Odeslat</Button>
+                        </div>
+                    </Form>
+                </CardBody>
+                </Card>
+            </FormikProvider>
+        </Container>
+    )
+/*
   return (
     <>
         <Card className="col-4 mx-auto mt-5">
@@ -126,6 +208,22 @@ export default function SignUp() {
                     <FormikProvider value={formik}>
                         <Form onSubmit={formik.handleSubmit}>
                             <Grid container spacing={2}>
+                                <Grid item xs={12} sm={6}>
+                                    <FormGroup className="m-2">
+                                        <Label for="username">Jméno</Label>
+                                        <Input 
+                                            name="username" 
+                                            id="username" 
+                                            placeholder="JanNovak" 
+                                            onChange={formik.handleChange} 
+                                            onBlur={formik.handleBlur}
+                                            value={formik.values.username}
+                                            invalid={Boolean(formik.errors.username)} 
+                                            valid={formik.touched.username} 
+                                        />
+                                        {formik.errors.username ? <FormFeedback invalid>{formik.errors.username}</FormFeedback> : null}
+                                    </FormGroup>
+                                </Grid>
                                 <Grid item xs={12} sm={6}>
                                     <FormGroup className="m-2">
                                         <Label for="firstname">Jméno</Label>
@@ -186,18 +284,24 @@ export default function SignUp() {
                                     id="password"
                                     autoComplete="current-password"
                                 />
+                                {formik.errors.password ? <FormFeedback invalid>{formik.errors.password}</FormFeedback> : null}
+                                </Grid>
+                                <Grid item xs={12}>
+                                <TextField
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    name="repassword"
+                                    label="Heslo"
+                                    type="password"
+                                    id="repassword"
+                                />
+                                {formik.errors.repassword ? <FormFeedback invalid>{formik.errors.repassword}</FormFeedback> : null}
                                 </Grid>
                             </Grid>
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                color="primary"
-                                className={classes.submit}
-                                //onClick={() = register()}
-                            >
-                                Zaregistrovat se
-                            </Button>
+                            <div>
+                                <Button type="submit" className="m-2" color="success">Zaregistrovat se</Button>
+                            </div>
                             <Grid container justify="flex-end">
                                 <Grid item>
                                 <Link href="#" variant="body2">
@@ -219,6 +323,7 @@ export default function SignUp() {
         </Card>
     </>
   );
+  */
 }
 /*
 import React from "react";

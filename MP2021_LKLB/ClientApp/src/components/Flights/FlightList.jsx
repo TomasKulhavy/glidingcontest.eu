@@ -20,12 +20,10 @@ const FlightList = () => {
             .get(`${process.env.REACT_APP_BACKEND_URL}/api/FlightLog/${year}`)
             .then((response) => {
                 setFlights(response.data)
-                console.log(response.data)
             })
             .then(() => {
                 setLoading(false);
-            })
-            
+            })    
     }, [year]);
 
     function renderFlights() {
