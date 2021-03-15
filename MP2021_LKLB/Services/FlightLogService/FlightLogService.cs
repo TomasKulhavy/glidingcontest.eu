@@ -70,7 +70,7 @@ namespace MP2021_LKLB.Services.FlightLogService
             int? year = flightLog.Date.Year;
             string userScoreId = flightLog.UserId;
             ICollection<FlightLog> flightsLog = GetPilotsFlights(id, year);
-            ApplicationUser Users = await _db.Pilots.Where(f => f.Id == userScoreId).FirstOrDefaultAsync();
+            ApplicationUser Users = await _db.Pilots.Where(f => f.UserName == userScoreId).FirstOrDefaultAsync();
 
             ICollection<FlightLog> flights = flightsLog.OrderByDescending(f => f.FlightLogAnalyse.Score).Take(3).ToList();
 
