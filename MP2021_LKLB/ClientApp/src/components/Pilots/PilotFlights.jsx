@@ -13,9 +13,9 @@ const PilotFlights = () => {
     const yearNow = new Date().getFullYear();
     const [flights, setFlights] = useState([]);
     const [pilot, setPilot] = useState([]);
-    const [loggedPilot, setLoggedPilot] = useState("");
     const [flightTime, setFlightTime] = useState([]);
     const [state, dispatch] = useContext(FlightDataContext);
+    const [{accessToken}] = useContext(FlightDataContext);
     const [year, setYear] = useState(yearNow);
     const [loading, setLoading] = useState(false);
     const [done, setDone] = useState(false);
@@ -38,12 +38,20 @@ const PilotFlights = () => {
                 setPilot(response.data);
                 setFlightTime(response.data.timeInSec);
             });
-        axios
-            .get(`${process.env.REACT_APP_BACKEND_URL}/api/User/pilot`)
-            .then((response) => {
-                setLoggedPilot(response.data);
-            });
     }, [year]);
+
+    const parseJwt = (token) => {
+        const base64Url = token.split(".")[1];
+        const base64 = base64Url.replace("-", "+").replace("_", "/");
+        return JSON.parse(window.atob(base64));
+    };
+
+    let user;
+    if(accessToken !== null)
+    {
+        var tokenData = parseJwt(accessToken);
+        user = tokenData.sub;
+    }
 
     function renderYears() {
         const array = [];
@@ -79,7 +87,7 @@ const PilotFlights = () => {
     function renderFlights() {
         moment.locale('cs'); 
 
-        if(state.pilotId === loggedPilot)
+        if(state.pilotId === user)
         {
             const array = flights.map((item, index) => {
                 return (
@@ -104,7 +112,7 @@ const PilotFlights = () => {
             });
             return array;
         }
-        else if(state.pilotId !== loggedPilot)
+        else if(state.pilotId !== user)
         {
             const array = flights.map((item) => {
                 return (

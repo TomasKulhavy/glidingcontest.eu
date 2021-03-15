@@ -8,17 +8,15 @@ import FlightView from "./components/Flights/FlightView";
 import PilotsList from "./components/Pilots/PilotsList";
 import PilotOrder from "./components/Pilots/PilotOrder";
 import PilotFlights from "./components/Pilots/PilotFlights";
-//import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
-//import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
 import Stats from "./components/Stats/StatsOverall";
 import Feedback from "./components/Feedback/Feedback";
 import FeedbackReview from "./components/Feedback/FeedbackReview";
-//import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
 import FlightList from "./components/Flights/FlightList";
-//import NotFound from "./components/Pages/NotFound";
+import NotFound from "./components/Pages/NotFound";
 import { FlightDataProvider } from "./providers/FlightDataContext";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
+import AccessDenied from './components/Pages/AccessDenied';
 
 import './custom.css'
 
@@ -42,6 +40,8 @@ function App() {
               <Route exact path="/feedback/review" component={FeedbackReview} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
+              <Route exact path="/access/denied" component={AccessDenied} />
+              <Route component={NotFound} />
             </Switch>
           </Router>
       </FlightDataProvider>

@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload, faShareSquare } from "@fortawesome/free-solid-svg-icons";
 import { insideCircle } from "geolocation-utils";
 import { FlightDataContext } from "../../providers/FlightDataContext";
+import AccessDenied from '../Pages/AccessDenied';
 
 import './Flight.css'
 
@@ -69,7 +70,7 @@ const UploadFlight = () => {
             sendFile(tisk);
             setError(false);
         };
-    reader.readAsText(e.target.files[0]);
+        reader.readAsText(e.target.files[0]);
     }
     
     function sendFile(data) {
@@ -214,7 +215,6 @@ const UploadFlight = () => {
         }
         result.flightLogAnalyse = scoreFlight;
         const tokenData = parseJwt(accessToken);
-        console.log(tokenData);
         result.userId = tokenData.sub;
     };
     function renderAlert()
@@ -232,39 +232,45 @@ const UploadFlight = () => {
             );
         }
     }
-
-    return (
-        <>
-            <NavMenu />
-            <div className="Flight container h-100"> 
-            {renderAlert()}
-                <div className="row align-items-center h-100">
-                    <div className="col-md-6 .offset-md-3 mx-auto d-flex justify-content-center">
-                        <Card body inverse style={{ backgroundColor: '#333', borderColor: '#333' }}>
-                            <div className="d-flex align-items-start">
-                                <div className="font-weight-bold">
-                                    <small className="text-white-70 d-block font-size-xl mb-1 text-uppercase">Nahraj svůj let</small>
-                                    <span className="font-size-xxl mt-1"></span>
-                                </div>
-                                <div className="ml-auto">
-                                    <div className="text-center">
-                                        <FontAwesomeIcon icon={faUpload} className="font-size-xl" />
+    if (accessToken === null)
+    {
+        return (<AccessDenied />)
+    }
+    else if (accessToken !== null)
+    {
+        return (
+            <>
+                <NavMenu />
+                <div className="Flight container h-100"> 
+                {renderAlert()}
+                    <div className="row align-items-center h-100">
+                        <div className="col-md-6 .offset-md-3 mx-auto d-flex justify-content-center">
+                            <Card body inverse style={{ backgroundColor: '#333', borderColor: '#333' }}>
+                                <div className="d-flex align-items-start">
+                                    <div className="font-weight-bold">
+                                        <small className="text-white-70 d-block font-size-xl mb-1 text-uppercase">Nahraj svůj let</small>
+                                        <span className="font-size-xxl mt-1"></span>
+                                    </div>
+                                    <div className="ml-auto">
+                                        <div className="text-center">
+                                            <FontAwesomeIcon icon={faUpload} className="font-size-xl" />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <Input className="my-2" type="file" accept=".igc" onChange={(e) => showFile(e)} />
-                            <Button className="my-2" disabled={error} onClick={() => sendFile()}>
-                                <FontAwesomeIcon icon={faShareSquare} className="font-size-xl mr-1" />
-                                Odeslat
-                            </Button>
-                        </Card>
+                                <Input className="my-2" type="file" accept=".igc" onChange={(e) => showFile(e)} />
+                                <Button className="my-2" disabled={error} onClick={() => sendFile()}>
+                                    <FontAwesomeIcon icon={faShareSquare} className="font-size-xl mr-1" />
+                                    Odeslat
+                                </Button>
+                            </Card>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <pre className="Output" id='output'>
-            </pre>
-        </>
-    )
+                <pre className="Output" id='output'>
+                </pre>
+            </>
+        )
+    }
 }
 
 export default UploadFlight;

@@ -81,7 +81,7 @@ namespace MP2021_LKLB.Controllers
             var newUser = new ApplicationUser
             {
                 Id = userData.UserName,
-                UserName = userData.Email,
+                UserName = userData.UserName,
                 Email = userData.Email,
                 FirstName = userData.FirstName,
                 LastName = userData.LastName,
@@ -102,7 +102,7 @@ namespace MP2021_LKLB.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserIM userData)
         {
-            var result = await _signInManager.PasswordSignInAsync(userData.Email, userData.Password, false, false);
+            var result = await _signInManager.PasswordSignInAsync(userData.Email, userData.Password, userData.isPersistant, false);
             if (result.Succeeded)
             {
                 var user = await _userManager.FindByNameAsync(userData.Email);

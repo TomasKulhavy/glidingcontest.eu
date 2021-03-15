@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Container, Table } from "reactstrap";
 import NavMenu from "../Layout/NavMenu";
 import axios from "axios";
+import { FlightDataContext } from "../../providers/FlightDataContext";
+import AccessDenied from "../Pages/AccessDenied";
 
 const FeedbackReview = () => {
     const [feedback, setFeedback] = useState([]);
+    const [{accessToken}] = useContext(FlightDataContext);
+    let user;
 
     useEffect(() => {
         axios
@@ -13,6 +17,18 @@ const FeedbackReview = () => {
                 setFeedback(response.data);
             });
     }, []);
+
+    const parseJwt = (token) => {
+        const base64Url = token.split(".")[1];
+        const base64 = base64Url.replace("-", "+").replace("_", "/");
+        return JSON.parse(window.atob(base64));
+    };
+
+    if(accessToken !== null)
+    {
+        let tokenData = parseJwt(accessToken);
+        user = tokenData.sub;
+    }
 
     function renderFeedback() {
         const array = feedback.map((item) => {
@@ -25,25 +41,31 @@ const FeedbackReview = () => {
         });
         return array;
     }
-
-    return (
-        <>
-            <NavMenu />
-            <Container>
-                <Table className="bg-light" striped>
-                    <thead>
-                        <tr>
-                            <th>E-mail</th>
-                            <th>Feedback</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {renderFeedback()}
-                    </tbody>
-                </Table>
-            </Container>
-        </>
-    )
+    if(user !== "TomasLKLB")
+    {
+        return (<AccessDenied />)
+    }
+    else if(user === "TomasLKLB")
+    {
+        return (
+            <>
+                <NavMenu />
+                <Container>
+                    <Table className="bg-dark text-white" striped>
+                        <thead>
+                            <tr>
+                                <th>E-mail</th>
+                                <th>Feedback</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {renderFeedback()}
+                        </tbody>
+                    </Table>
+                </Container>
+            </>
+        )
+    }
 }
 
 export default FeedbackReview;

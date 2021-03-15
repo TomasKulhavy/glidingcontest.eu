@@ -65,7 +65,7 @@ namespace MP2021_LKLB.Controllers
             if (data != null)
             {
                 var returnDataObj = JsonConvert.DeserializeObject<FlightLog>(data);
-                returnDataObj.UserId = userId;
+                userId = returnDataObj.UserId;
                 FlightLog log = await _db.FlightLogs.Where(f => f.Security == returnDataObj.Security).FirstOrDefaultAsync();
                 if (log == null)
                 { 

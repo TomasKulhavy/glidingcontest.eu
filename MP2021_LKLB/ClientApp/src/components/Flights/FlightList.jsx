@@ -12,7 +12,7 @@ const FlightList = () => {
     const [flights, setFlights] = useState([]);
     const [year, setYear] = useState(yearNow);
     const [loading, setLoading] = useState(false);
-    const [state, dispatch] = useContext(FlightDataContext);
+    const [dispatch] = useContext(FlightDataContext);
 
     useEffect(() => {
         setLoading(true);
