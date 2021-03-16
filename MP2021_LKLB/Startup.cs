@@ -81,16 +81,6 @@ namespace MP2021_LKLB
                     };
                 });
 
-            services.ConfigureApplicationCookie(options =>
-            {
-                options.Events.OnRedirectToLogin = context =>
-                {
-                    context.Response.Clear();
-                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                    return Task.CompletedTask;
-                };
-            });
-
             services.AddSwaggerGen(conf =>
             {
                 conf.SwaggerDoc(name: "v1", new OpenApiInfo { Title = "Web API Demo", Version = "v1" });

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { FlightDataContext, SET_ACCESS_TOKEN, ADD_PILOTID } from "../../providers/FlightDataContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload, faSignOutAlt, faUserAlt } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 import './NavMenu.css';
 
 const NavMenu = () => {
@@ -11,16 +12,46 @@ const NavMenu = () => {
   const [{accessToken}, dispatch] = useContext(FlightDataContext);
   const toggle = () => setIsOpen(!isOpen);
 
+  console.log(accessToken);
+
   const parseJwt = (token) => {
     const base64Url = token.split(".")[1];
     const base64 = base64Url.replace("-", "+").replace("_", "/");
     return JSON.parse(window.atob(base64));
   };
 
+  useEffect(() => {
+    axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/Account/getToken`, {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + accessToken
+        }
+    })
+    .then((response) => {
+      console.log(response.data.accessToken);
+      dispatch({ type: SET_ACCESS_TOKEN, payload: response.data.accessToken});
+    })
+    .catch((response) => {
+
+    })
+    //console.log(accesToken);
+    /*
+    if (accessToken !== null) {
+      console.log(accessToken)
+      let tokenData;
+      tokenData = parseJwt(accessToken)
+      let dateNow = Date.now();
+      let exp = tokenData.exp * 1000 - 30000;
+      if (dateNow >= exp) {
+        dispatch({ type: SET_ACCESS_TOKEN, payload: null });
+      }
+    }
+    */
+  }, [dispatch])
+
   function renderUser()
   {
     let tokenData;
-    
     if(accessToken !== null)
     {
       tokenData = parseJwt(accessToken)

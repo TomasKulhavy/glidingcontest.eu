@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using MP2021_LKLB.Data;
 using MP2021_LKLB.Models;
 
 namespace MP2021_LKLB.Controllers
@@ -25,7 +26,6 @@ namespace MP2021_LKLB.Controllers
         private IConfiguration _config;
         private UserManager<ApplicationUser> _userManager;
         private SignInManager<ApplicationUser> _signInManager;
-
         public AccountController(IConfiguration config, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _config = config;
@@ -43,6 +43,19 @@ namespace MP2021_LKLB.Controllers
                 return Ok(c.Value);
             }
             return NotFound();
+        }
+
+        [HttpPost("getToken")]
+        public async Task<IActionResult> GetAccountToken()
+        {
+            var c = User.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault();
+            if (c != null)
+            {
+                var user = await _userManager.FindByNameAsync(c.Value);
+                AuthorizationToken token = GenerateJSONWebToken(user);
+                return Ok(token);
+            }
+            return Unauthorized();
         }
 
         [HttpGet("id")]
@@ -120,7 +133,7 @@ namespace MP2021_LKLB.Controllers
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
-            var expiration = DateTime.Now.AddMinutes(120);
+            var expiration = DateTime.Now.AddMinutes(1);
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],
                 _config["Jwt:Issuer"],
                 claims,

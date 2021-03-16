@@ -1,6 +1,7 @@
 import React, { createContext, useReducer } from "react";
 
 export const SET_ACCESS_TOKEN = "SET_ACCESS_TOKEN";
+export const SET_ACCESS_TOKEN_AFTER_RELOAD = "SET_ACCESS_TOKEN_AFTER_RELOAD";
 export const ADD_FLIGHTID = "ADD_FLIGHTID";
 export const ADD_PILOTID = "ADD_PILOTID";
 export const ADD_ACTIVE_PILOT_ID = "ADD_ACTIVE_PILOT_ID";
@@ -38,6 +39,13 @@ export const flightReducer = (state, action) => {
         case SET_ACCESS_TOKEN: {
             let temp = copyMultidimensionalArray(state);
             temp.accessToken = action.payload;
+            console.log(action.payload)
+            return temp
+        }
+        case SET_ACCESS_TOKEN_AFTER_RELOAD: {
+            let temp = copyMultidimensionalArray(state);
+            temp.accessToken = action.accessToken;
+            console.log(action.accessToken)
             return temp
         }
         default: return state;
