@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router } from "react-router-dom";
 import { Route, Switch } from "react-router";
 import { createBrowserHistory } from "history";
@@ -13,54 +13,15 @@ import Feedback from "./components/Feedback/Feedback";
 import FeedbackReview from "./components/Feedback/FeedbackReview";
 import FlightList from "./components/Flights/FlightList";
 import NotFound from "./components/Pages/NotFound";
-import { FlightDataProvider, FlightDataContext, SET_ACCESS_TOKEN_AFTER_RELOAD } from "./providers/FlightDataContext";
+import { FlightDataProvider } from "./providers/FlightDataContext";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
 import AccessDenied from './components/Pages/AccessDenied';
-import axios from "axios";
 
 import './custom.css'
 
-const parseJwt = (token) => {
-  const base64Url = token.split(".")[1];
-  const base64 = base64Url.replace("-", "+").replace("_", "/");
-  return JSON.parse(window.atob(base64));
-};
-
 function App() {
   const history = createBrowserHistory();
-  /*
-  const { dispatch } = useContext(FlightDataContext);
-  const { accessToken } = useContext(FlightDataContext);
-  useEffect(() => {
-    axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/Account/getToken`, {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + accessToken
-        }
-    })
-    .then((response) => {
-      console.log(response.data.accessToken);
-      dispatch({ type: SET_ACCESS_TOKEN_AFTER_RELOAD, accessToken: response.data.accessToken});
-    })
-    .catch((response) => {
-
-    })
-    //console.log(accesToken);
-    
-    if (accessToken !== null) {
-      console.log(accessToken)
-      let tokenData;
-      tokenData = parseJwt(accessToken)
-      let dateNow = Date.now();
-      let exp = tokenData.exp * 1000 - 30000;
-      if (dateNow >= exp) {
-        dispatch({ type: SET_ACCESS_TOKEN, payload: null });
-      }
-    }
-    
-  }, [dispatch])
-  */
 
   return (
     <div className="App">

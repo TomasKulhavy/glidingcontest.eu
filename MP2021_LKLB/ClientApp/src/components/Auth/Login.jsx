@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import Container from '@material-ui/core/Container';
-import { Card, Button, Form, FormGroup, FormFeedback, Input, Label, CardBody } from "reactstrap";
+import { Card, Button, Form, FormGroup, FormFeedback, Input, Label, CardBody, Alert } from "reactstrap";
 import { Link, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faSignInAlt } from "@fortawesome/free-solid-svg-icons";
@@ -22,6 +22,17 @@ const validate = values => {
 export default function SignIn() {
     const history = useHistory();
     const [{ accessToken }, dispatch] = useContext(FlightDataContext);
+    const [error, setError] = useState(false);
+    const [visible, setVisible] = useState(true);
+    const onDismiss = () => setVisible(false);
+
+    function renderAlert()
+    {
+        if(error)
+        {
+            return (<Alert color="danger" isOpen={visible} toggle={onDismiss} className="my-3">Někde se stala chyba, zkuste to znovu!</Alert>)
+        }
+    }
 
     const formik = useFormik({
         initialValues: {
@@ -31,6 +42,7 @@ export default function SignIn() {
         },
         validate: validate,
         onSubmit: values => {
+            setError(false);
             axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/Account/login`,
                 {
                     email: values.username,
@@ -47,8 +59,8 @@ export default function SignIn() {
                     dispatch({ type: SET_ACCESS_TOKEN, payload: response.data.accessToken });
                     history.push("/");
                 })
-                .catch(error => {
-                    alert("CHYBA");
+                .catch(() => {
+                    setError(true);
                 })
         },
     });
@@ -58,6 +70,7 @@ export default function SignIn() {
                 <FontAwesomeIcon icon={faHome} className="font-size-xl mr-3" />
                 Zpět na domovskou obrazovku
             </Button>
+            {renderAlert()}
             <FormikProvider value={formik}>
                 <Card className="m-2 text-center">
                     <CardBody className="text-center bg-dark text-light">

@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using MP2021_LKLB.Data;
 using MP2021_LKLB.Models;
+using MP2021_LKLB.Services;
 
 namespace MP2021_LKLB.Controllers
 {
@@ -82,6 +83,13 @@ namespace MP2021_LKLB.Controllers
             return Ok(new { Id = user.Id, UserName = user.UserName });
         }
 
+        [HttpPost("logout")]
+        public async Task Logout()
+        {
+            await _signInManager.SignOutAsync();
+        }
+
+
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserRegisterIM userData)
         {
@@ -133,7 +141,7 @@ namespace MP2021_LKLB.Controllers
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
-            var expiration = DateTime.Now.AddMinutes(1);
+            var expiration = DateTime.Now.AddMinutes(15);
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],
                 _config["Jwt:Issuer"],
                 claims,

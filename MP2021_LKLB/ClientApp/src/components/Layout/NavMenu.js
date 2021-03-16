@@ -3,7 +3,7 @@ import { Collapse, Container, Navbar, NavbarBrand, NavItem, NavLink, NavbarToggl
 import { Link } from 'react-router-dom';
 import { FlightDataContext, SET_ACCESS_TOKEN, ADD_PILOTID } from "../../providers/FlightDataContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUpload, faSignOutAlt, faUserAlt } from "@fortawesome/free-solid-svg-icons";
+import { faUpload, faSignOutAlt, faUserAlt, faLongArrowAltUp } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import './NavMenu.css';
 
@@ -22,31 +22,15 @@ const NavMenu = () => {
 
   useEffect(() => {
     axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/Account/getToken`, {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + accessToken
-        }
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + accessToken
+      }
     })
     .then((response) => {
       console.log(response.data.accessToken);
       dispatch({ type: SET_ACCESS_TOKEN, payload: response.data.accessToken});
     })
-    .catch((response) => {
-
-    })
-    //console.log(accesToken);
-    /*
-    if (accessToken !== null) {
-      console.log(accessToken)
-      let tokenData;
-      tokenData = parseJwt(accessToken)
-      let dateNow = Date.now();
-      let exp = tokenData.exp * 1000 - 30000;
-      if (dateNow >= exp) {
-        dispatch({ type: SET_ACCESS_TOKEN, payload: null });
-      }
-    }
-    */
   }, [dispatch])
 
   function renderUser()
@@ -88,6 +72,15 @@ const NavMenu = () => {
       }
     }
   }
+
+  function logout()
+  {
+    axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/Account/logout`)
+    .then(() => {
+      dispatch({ type: SET_ACCESS_TOKEN, payload: null });
+    })
+  }
+
   return (
     <header>
       <Navbar className="navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
@@ -121,7 +114,7 @@ const NavMenu = () => {
                       </NavLink>
                     </NavItem>
                     <NavItem>
-                      <NavLink onClick={e => { dispatch({ type: SET_ACCESS_TOKEN, payload: null }) }}
+                      <NavLink onClick={() => logout() }
                         tag={Link} className="text-light" to="/">
                         <FontAwesomeIcon icon={faSignOutAlt} className="font-size-xl mr-2 mt-1" />
                         Odhlásit se

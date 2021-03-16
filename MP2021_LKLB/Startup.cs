@@ -49,8 +49,7 @@ namespace MP2021_LKLB
                 options.Password.RequiredLength = 8;
                 options.User.RequireUniqueEmail = true;
                 options.SignIn.RequireConfirmedEmail = false;
-            }
-            )
+            })
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
             
@@ -80,6 +79,16 @@ namespace MP2021_LKLB
                         ClockSkew = TimeSpan.FromMinutes(1)
                     };
                 });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Events.OnRedirectToLogin = context =>
+                {
+                    context.Response.Clear();
+                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                    return Task.CompletedTask;
+                };
+            });
 
             services.AddSwaggerGen(conf =>
             {
