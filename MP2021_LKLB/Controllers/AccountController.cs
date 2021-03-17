@@ -46,7 +46,7 @@ namespace MP2021_LKLB.Controllers
             return NotFound();
         }
 
-        [HttpPost("getToken")]
+        [HttpGet("getToken")]
         public async Task<IActionResult> GetAccountToken()
         {
             var c = User.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault();
@@ -83,12 +83,12 @@ namespace MP2021_LKLB.Controllers
             return Ok(new { Id = user.Id, UserName = user.UserName });
         }
 
-        [HttpPost("logout")]
-        public async Task Logout()
+        [HttpDelete("logout")]
+        public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
+            return NoContent();
         }
-
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserRegisterIM userData)
@@ -141,7 +141,7 @@ namespace MP2021_LKLB.Controllers
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
-            var expiration = DateTime.Now.AddMinutes(15);
+            var expiration = DateTime.Now.AddMinutes(60);
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],
                 _config["Jwt:Issuer"],
                 claims,

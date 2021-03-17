@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Collapse, Container, Navbar, NavbarBrand, NavItem, NavLink, NavbarToggler, Nav } from 'reactstrap';
+import { Collapse, Container, Navbar, NavbarBrand, NavItem, NavLink, NavbarToggler, Nav, Alert } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { FlightDataContext, SET_ACCESS_TOKEN, ADD_PILOTID } from "../../providers/FlightDataContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,9 +10,9 @@ import './NavMenu.css';
 const NavMenu = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [{accessToken}, dispatch] = useContext(FlightDataContext);
+  const [visible, setVisible] = useState(false);
+  const onDismiss = () => setVisible(false);
   const toggle = () => setIsOpen(!isOpen);
-
-  console.log(accessToken);
 
   const parseJwt = (token) => {
     const base64Url = token.split(".")[1];
@@ -21,14 +21,13 @@ const NavMenu = () => {
   };
 
   useEffect(() => {
-    axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/Account/getToken`, {
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/Account/getToken`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + accessToken
       }
     })
     .then((response) => {
-      console.log(response.data.accessToken);
       dispatch({ type: SET_ACCESS_TOKEN, payload: response.data.accessToken});
     })
   }, [dispatch])
@@ -75,10 +74,19 @@ const NavMenu = () => {
 
   function logout()
   {
-    axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/Account/logout`)
+    axios.delete(`${process.env.REACT_APP_BACKEND_URL}/api/Account/logout`)
     .then(() => {
       dispatch({ type: SET_ACCESS_TOKEN, payload: null });
+      setVisible(true)
     })
+  }
+
+  function renderAlert()
+  {
+    if(visible)
+    {
+      return (<Alert color="success" isOpen={visible} toggle={onDismiss} className="my-3">Uživatel byl odhlášen!</Alert>)
+    }
   }
 
   return (
@@ -135,6 +143,10 @@ const NavMenu = () => {
           </Collapse>
         </Container>
       </Navbar>
+      <Container>
+      {renderAlert()}
+
+      </Container>
     </header>
   );
 }
