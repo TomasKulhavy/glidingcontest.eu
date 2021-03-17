@@ -3,7 +3,7 @@ import { Collapse, Container, Navbar, NavbarBrand, NavItem, NavLink, NavbarToggl
 import { Link } from 'react-router-dom';
 import { FlightDataContext, SET_ACCESS_TOKEN, ADD_PILOTID } from "../../providers/FlightDataContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUpload, faSignOutAlt, faUserAlt, faLongArrowAltUp } from "@fortawesome/free-solid-svg-icons";
+import { faUpload, faSignOutAlt, faUserAlt } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import './NavMenu.css';
 

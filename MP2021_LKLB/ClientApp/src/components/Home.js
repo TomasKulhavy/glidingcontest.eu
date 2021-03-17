@@ -11,6 +11,7 @@ const Home = () => {
   const [topHours, setTopHours] = useState([]);
   const [topKm, setTopKm] = useState([]);
   const [loading, setLoading] = useState(false);
+  
   useEffect(() => {
     setLoading(true);
     axios
