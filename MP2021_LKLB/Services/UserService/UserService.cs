@@ -51,6 +51,7 @@ namespace MP2021_LKLB.Services.UserService
                .ThenByDescending(f => f.FlightLogAnalyse.Score)
                .Select(f => new FlightAnalyseVM
                {
+                   Id = f.Id,
                    Date = f.Date,
                    Score = f.FlightLogAnalyse.Score,
                    Kilometers = f.FlightLogAnalyse.Kilometers,

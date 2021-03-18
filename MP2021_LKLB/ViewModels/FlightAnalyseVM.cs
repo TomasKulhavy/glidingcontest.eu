@@ -8,6 +8,7 @@ namespace MP2021_LKLB.ViewModels
 {
     public class FlightAnalyseVM
     {
+        public int Id { get; set; }
         public DateTime Date { get; set; }
         public string UserName { get; set; }
         public string GliderType { get; set; }
