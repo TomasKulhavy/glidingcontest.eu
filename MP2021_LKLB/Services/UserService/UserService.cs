@@ -48,6 +48,7 @@ namespace MP2021_LKLB.Services.UserService
                .Where(f => f.UserId.Equals(id))
                .Where(x => x.Date.Year == year)
                .OrderByDescending(f => f.Date)
+               .ThenByDescending(f => f.FlightLogAnalyse.Score)
                .Select(f => new FlightAnalyseVM
                {
                    Date = f.Date,

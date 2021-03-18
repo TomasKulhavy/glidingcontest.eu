@@ -37,6 +37,7 @@ namespace MP2021_LKLB.Services.FlightLogService
             var flights = await _db.FlightLogs
                .Where(x => x.Date.Year == year)
                .OrderByDescending(f => f.Date)
+               .ThenByDescending(f => f.FlightLogAnalyse.Score)
                .Select(f => new FlightAnalyseVM
                {
                    Date = f.Date,
