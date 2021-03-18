@@ -49,7 +49,7 @@ const FlightList = () => {
 
     function renderYears() {
         const array = [];
-        for (let index = 2014; index <= yearNow; index++) {
+        for (let index = 2010; index <= yearNow; index++) {
             array.push(index);
         }
         const rendered = array.map((item) => {

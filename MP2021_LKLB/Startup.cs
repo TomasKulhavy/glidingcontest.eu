@@ -90,11 +90,6 @@ namespace MP2021_LKLB
                 };
             });
 
-            services.AddSwaggerGen(conf =>
-            {
-                conf.SwaggerDoc(name: "v1", new OpenApiInfo { Title = "Web API Demo", Version = "v1" });
-            });
-
             services.AddControllersWithViews();
             services.AddRazorPages();
 
@@ -130,12 +125,6 @@ namespace MP2021_LKLB
             app.UseAuthorization();
 
             app.UseDeveloperExceptionPage();
-            app.UseSwagger();
-
-            app.UseSwaggerUI(conf =>
-            {
-                conf.SwaggerEndpoint(url: "/swagger/v1/swagger.json", name: "Web API Demo");
-            });
 
             app.UseEndpoints(endpoints =>
             {
