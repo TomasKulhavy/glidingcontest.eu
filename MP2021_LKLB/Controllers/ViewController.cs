@@ -50,6 +50,18 @@ namespace MP2021_LKLB.Controllers
             return points;
         }
 
+        [HttpGet("getYears/list")]
+        public async Task<ICollection<int>> GetYearsList()
+        {
+            return await _view.GetYearsList();
+        }
+
+        [HttpGet("getYears/pilots/{id}")]
+        public async Task<ICollection<int>> GetYearsPilot(string id)
+        {
+            return await _view.GetYearsPilot(id);
+        }
+
         // POST api/<ViewController>
         [HttpPost]
         public void Post([FromBody] string value)

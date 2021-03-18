@@ -11,6 +11,7 @@ const FlightList = () => {
     const yearNow = new Date().getFullYear();
     const [flights, setFlights] = useState([]);
     const [year, setYear] = useState(yearNow);
+    const [yearsList, setYearsList] = useState([]);
     const [loading, setLoading] = useState(false);
     const [, dispatch] = useContext(FlightDataContext);
 
@@ -23,7 +24,12 @@ const FlightList = () => {
             })
             .then(() => {
                 setLoading(false);
-            })    
+            })  
+        axios
+            .get(`${process.env.REACT_APP_BACKEND_URL}/api/View/getYears/list`)
+            .then((response) => {
+                setYearsList(response.data)
+            })
     }, [year]);
 
     function renderFlights() {
@@ -48,15 +54,11 @@ const FlightList = () => {
     }
 
     function renderYears() {
-        const array = [];
-        for (let index = 2010; index <= yearNow; index++) {
-            array.push(index);
-        }
-        const rendered = array.map((item) => {
+        const rendered = yearsList.map((item) => {
             return (
                 <Button className="mr-2 mt-1" key={item} color="primary" onClick={e => {setYear(item);}}>{item}</Button>
             );
-          });
+        });
         return rendered;
     }
 

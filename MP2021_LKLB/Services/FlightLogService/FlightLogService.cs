@@ -169,7 +169,7 @@ namespace MP2021_LKLB.Services.FlightLogService
         public async Task<FlightLog> DeleteFlight(int id)
         {
             FlightLog flight = await _db.FlightLogs.Include(f => f.FlightLogAnalyse).Include(f => f.User).Where(fa => fa.Id == id).FirstOrDefaultAsync();
-            ApplicationUser Users = await _db.Pilots.Where(f => f.Id == flight.UserId).FirstOrDefaultAsync();
+            ApplicationUser Users = await _db.Pilots.Where(f => f.UserName == flight.UserId).FirstOrDefaultAsync();
             OverallStats stats = await _db.Stats.FindAsync(1);
 
             if (flight != null)
@@ -190,6 +190,37 @@ namespace MP2021_LKLB.Services.FlightLogService
                 _db.FlightLogs.Remove(flight);
 
                 await _db.SaveChangesAsync();
+            }
+            return flight;
+        }
+
+        public async Task<ICollection<FlightLog>> DeleteFlightWithUser(string id)
+        {
+            ICollection<FlightLog> flight = await _db.FlightLogs.Include(f => f.FlightLogAnalyse).Include(f => f.User).Where(fa => fa.UserId == id).ToListAsync();
+            ApplicationUser Users = await _db.Pilots.Where(f => f.UserName == id).FirstOrDefaultAsync();
+            OverallStats stats = await _db.Stats.FindAsync(1);
+
+            if (flight != null)
+            {
+                foreach (var flightDelete in flight)
+                {
+                    Users.SumKilometers -= flightDelete.FlightLogAnalyse.Kilometers;
+                    long ticks = flightDelete.FlightLogAnalyse.FlightTime.Ticks;
+                    double sec = TimeSpan.FromTicks(ticks).TotalSeconds;
+                    Users.TimeInSec -= sec;
+                    Users.FlightsNo -= 1;
+                    stats.FlightsNo -= 1;
+                    stats.Kilometers -= flightDelete.FlightLogAnalyse.Kilometers;
+                    stats.TimeInSeconds -= sec;
+                    if (flightDelete.FlightLogAnalyse.Topflight == true)
+                    {
+                        Users.TopScore -= flightDelete.FlightLogAnalyse.Score;
+                    }
+
+                    _db.FlightLogs.Remove(flightDelete);
+
+                    await _db.SaveChangesAsync();
+                }
             }
             return flight;
         }

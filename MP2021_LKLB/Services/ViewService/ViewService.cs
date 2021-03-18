@@ -84,5 +84,16 @@ namespace MP2021_LKLB.Services.ViewService
                 return null;
             }
         }
+
+        public async Task<ICollection<int>> GetYearsList()
+        {
+            ICollection<int> years = await _db.FlightLogs.Select(f => f.Date.Year).Distinct().ToListAsync();
+            return years;
+        }
+        public async Task<ICollection<int>> GetYearsPilot(string id)
+        {
+            ICollection<int> years = await _db.FlightLogs.Where(f => f.UserId == id).Select(f => f.Date.Year).Distinct().ToListAsync();
+            return years;
+        }
     }
 }

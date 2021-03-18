@@ -14,5 +14,6 @@ namespace MP2021_LKLB.Services.FlightLogService
         Task GiveTopBool(FlightLog flightLog);
         List<FlightLog> GetPilotsFlights(string id, int? year);
         Task<FlightLog> DeleteFlight(int id);
+        Task<ICollection<FlightLog>> DeleteFlightWithUser(string id);
     }
 }

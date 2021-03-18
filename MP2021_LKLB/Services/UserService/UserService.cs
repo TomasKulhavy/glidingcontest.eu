@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MP2021_LKLB.Data;
 using MP2021_LKLB.Models;
+using MP2021_LKLB.Services.FlightLogService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +13,12 @@ namespace MP2021_LKLB.Services.UserService
     public class UserService : IUserService
     {
         private ApplicationDbContext _db;
+        private IFlightLogService _flight;
 
-        public UserService(ApplicationDbContext db)
+        public UserService(ApplicationDbContext db, IFlightLogService flight)
         {
             _db = db;
+            _flight = flight;
         }
 
         public async Task<ICollection<ApplicationUser>> GetAllUsers()
@@ -34,7 +38,7 @@ namespace MP2021_LKLB.Services.UserService
 
         public async Task<ApplicationUser> GetPilotsStats(string id)
         {
-            return await _db.Pilots.Where(f => f.Id == id).FirstOrDefaultAsync();
+            return await _db.Pilots.Where(f => f.UserName == id).FirstOrDefaultAsync();
         }
 
         public async Task<ICollection<FlightLog>> GetPilotsFlights(string id, int? year)
@@ -44,7 +48,6 @@ namespace MP2021_LKLB.Services.UserService
                 .Where(f => f.Date.Year == year)
                 .OrderByDescending(f => f.Date)
                 .ToListAsync();
-
 
             if (flights != null)
             {
@@ -81,6 +84,13 @@ namespace MP2021_LKLB.Services.UserService
         public async Task<ICollection<ApplicationUser>> GetUsersKilometers()
         {
             return await _db.Pilots.Where(f => f.SumKilometers != null).OrderByDescending(f => f.SumKilometers).Take(5).ToListAsync();
+        }
+
+        public async Task<ApplicationUser> Delete(string id)
+        {
+            ApplicationUser user = await _db.Pilots.Where(f => f.UserName == id).FirstOrDefaultAsync();
+            await _flight.DeleteFlightWithUser(id);
+            return user;
         }
     }
 }

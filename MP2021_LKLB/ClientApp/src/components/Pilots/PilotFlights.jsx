@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Container, Table, Button, Card, CardBody, Col, Row, Alert } from "reactstrap";
+import { Container, Table, Button, Card, CardBody, Col, Row, Alert, CardFooter } from "reactstrap";
+import { createBrowserHistory } from "history";
 import { Link } from "react-router-dom";
 import NavMenu from "../Layout/NavMenu";
 import { FlightDataContext, ADD_FLIGHTID } from "../../providers/FlightDataContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from "axios";
-import { faRulerVertical, faStopwatch, faUser, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faRulerVertical, faStopwatch, faUser, faTimes, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 import moment from 'moment-with-locales-es6';
 import Loading from "../Pages/Loading";
 
@@ -16,11 +17,13 @@ const PilotFlights = () => {
     const [flightTime, setFlightTime] = useState([]);
     const [state, dispatch] = useContext(FlightDataContext);
     const [{accessToken}] = useContext(FlightDataContext);
+    const [yearsList, setYearsList] = useState([]);
     const [year, setYear] = useState(yearNow);
     const [loading, setLoading] = useState(false);
     const [done, setDone] = useState(false);
     const [visible, setVisible] = useState(true);
     const onDismiss = () => setVisible(false);
+    const history = createBrowserHistory();
 
     useEffect(() => {
         setLoading(true);
@@ -38,6 +41,12 @@ const PilotFlights = () => {
                 setPilot(response.data);
                 setFlightTime(response.data.timeInSec);
             });
+        axios
+            .get(`${process.env.REACT_APP_BACKEND_URL}/api/View/getYears/pilots/${state.pilotId}`)
+            .then((response) => {
+                setYearsList(response.data)
+                console.log(response.data)
+            })
     }, [year]);
 
     const parseJwt = (token) => {
@@ -54,15 +63,11 @@ const PilotFlights = () => {
     }
 
     function renderYears() {
-        const array = [];
-        for (let index = 2010; index <= yearNow; index++) {
-            array.push(index);
-        }
-        const rendered = array.map((item) => {
+        const rendered = yearsList.map((item) => {
             return (
                 <Button className="mr-2 mt-1" key={item} color="primary" onClick={e => {setYear(item);}}>{item}</Button>
             );
-          });
+        });
         return rendered;
     }
 
@@ -87,7 +92,7 @@ const PilotFlights = () => {
     function renderFlights() {
         moment.locale('cs'); 
 
-        if(state.pilotId === user)
+        if(state.pilotId === user || user === "TomasLKLB")
         {
             const array = flights.map((item, index) => {
                 return (
@@ -142,7 +147,32 @@ const PilotFlights = () => {
         var hDisplay = h > 0 ? h + ":" : "";
         var mDisplay = m > 9 ? m : "0" + m;
         return hDisplay + mDisplay; 
-      }
+    }
+
+    function renderDeleteUser()
+    {
+        function deleteUser()
+        {
+            setLoading(true)
+            axios
+            .delete(`${process.env.REACT_APP_BACKEND_URL}/api/Account/delete/${state.pilotId}`)
+            .then(() => {
+                setLoading(false);
+                history.push("/pilot/list")
+            })    
+            
+        }
+        if(user === "TomasLKLB")
+        {
+            return(
+                <CardFooter>
+                    <tr>
+                        <small className="font-size-xl mt-1" onClick={() => deleteUser()}><FontAwesomeIcon icon={faMinusCircle} className="font-size-l mr-3" />Odstranit tento profil</small>
+                    </tr>
+                </CardFooter>
+            )
+        }
+    }
 
     function renderPilotCard() {
         return(
@@ -167,6 +197,7 @@ const PilotFlights = () => {
                                 </div>
                             </div>
                         </CardBody>
+                        {renderDeleteUser()}
                     </Card>
                 </Col>    
             </>

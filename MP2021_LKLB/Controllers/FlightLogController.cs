@@ -58,14 +58,12 @@ namespace MP2021_LKLB.Controllers
         {
             string message = "started";
             string data = Data.Payload;
-            string userId;
             if (data != null)
             {
                 var returnDataObj = JsonConvert.DeserializeObject<FlightLog>(data);
-                userId = returnDataObj.UserId;
                 FlightLog log = await _db.FlightLogs.Where(f => f.Security == returnDataObj.Security).FirstOrDefaultAsync();
                 if (log == null)
-                { 
+                {
                     await _stats.SetStats(returnDataObj);
                     await _flightLog.GiveTopBool(returnDataObj);
                     await _db.FlightLogs.AddAsync(returnDataObj);

@@ -9,11 +9,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using MP2021_LKLB.Data;
 using MP2021_LKLB.Models;
 using MP2021_LKLB.Services;
+using MP2021_LKLB.Services.UserService;
 
 namespace MP2021_LKLB.Controllers
 {
@@ -27,11 +29,15 @@ namespace MP2021_LKLB.Controllers
         private IConfiguration _config;
         private UserManager<ApplicationUser> _userManager;
         private SignInManager<ApplicationUser> _signInManager;
-        public AccountController(IConfiguration config, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        private ApplicationDbContext _db;
+        private IUserService _user;
+        public AccountController(IConfiguration config, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IUserService user, ApplicationDbContext db)
         {
             _config = config;
             _userManager = userManager;
             _signInManager = signInManager;
+            _db = db;
+            _user = user;
         }
 
         [HttpGet]
@@ -90,6 +96,16 @@ namespace MP2021_LKLB.Controllers
             return NoContent();
         }
 
+        [HttpDelete("delete/{id}")]
+        [Authorize]
+        public async Task<ActionResult<ApplicationUser>> DeleteUser(string id)
+        {
+            ApplicationUser user = await _db.Pilots.Where(f => f.Id == id).FirstOrDefaultAsync();
+            await _user.Delete(user.UserName);
+            await _userManager.DeleteAsync(user);
+            return NoContent();
+        }
+
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserRegisterIM userData)
         {
@@ -101,6 +117,7 @@ namespace MP2021_LKLB.Controllers
             var hasher = new PasswordHasher<ApplicationUser>();
             var newUser = new ApplicationUser
             {
+                Id = userData.UserName,
                 UserName = userData.UserName,
                 Email = userData.Email,
                 FirstName = userData.FirstName,
