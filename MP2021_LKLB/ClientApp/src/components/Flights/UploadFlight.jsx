@@ -96,7 +96,7 @@ const UploadFlight = () => {
         const storeOfFixes = [];
 
         for (taskT; taskT < result.task.points.length - 2; taskT++) {
-            const radius = result.radiusTP.taskRad[taskT - 1];
+            var radius = result.radiusTP.taskRad[taskT - 1];
             const center = {lat: result.task.points[taskT].latitude, lon: result.task.points[taskT].longitude};
             distT = getDistance(
                 { latitude: result.task.points[taskT].latitude, longitude: result.task.points[taskT].longitude },
@@ -104,6 +104,11 @@ const UploadFlight = () => {
             )
             if (taskT === 1)
             {
+                if(radius === undefined)
+                {
+                    radius = 500
+                }
+
                 for (let index = 1; index < result.fixes.length - result.fixes.length / 2; index++) 
                 {
                     if(insideCircle({ lat: result.fixes[index].latitude, lon: result.fixes[index].longitude }, center, radius) === true)
@@ -118,6 +123,11 @@ const UploadFlight = () => {
             {
                 for (indexOfFix; indexOfFix < result.fixes.length - 1; indexOfFix++) 
                 {
+                    if(radius === undefined)
+                    {
+                        radius = 500
+                    }
+
                     if(insideCircle({ lat: result.fixes[indexOfFix].latitude, lon: result.fixes[indexOfFix].longitude }, center, radius) === true)
                     {
                         storeOfFixes.push(result.fixes[indexOfFix].time);
