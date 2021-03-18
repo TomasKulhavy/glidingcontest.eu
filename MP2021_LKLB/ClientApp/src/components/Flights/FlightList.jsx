@@ -7,6 +7,8 @@ import axios from "axios";
 import moment from 'moment-with-locales-es6';
 import Loading from "../Pages/Loading";
 
+import './Flight.css';
+
 const FlightList = () => {
     const yearNow = new Date().getFullYear();
     const [flights, setFlights] = useState([]);
@@ -21,6 +23,7 @@ const FlightList = () => {
             .get(`${process.env.REACT_APP_BACKEND_URL}/api/FlightLog/${year}`)
             .then((response) => {
                 setFlights(response.data)
+                console.log(response.data)
             })
             .then(() => {
                 setLoading(false);
@@ -38,7 +41,10 @@ const FlightList = () => {
           return (
             <tr key={item.id}>
                 <td>{moment(`${item.date}`).format('L')}</td>
-                <td>{item.userId}</td>
+                <td>{Math.round(item.score)}</td>
+                <td>{item.userName}</td>
+                <td>{Number((item.kilometers).toFixed(1))} km</td>
+                <td>{Number((item.avgSpeed).toFixed(1))} km/h</td>
                 <td>{item.gliderType}</td>
                 <td><Button color="primary" onClick={() =>
                     dispatch({
@@ -84,12 +90,15 @@ const FlightList = () => {
                         <thead>
                             <tr>
                                 <th>Datum</th>
+                                <th>Body</th>
                                 <th>Jméno pilota</th>
+                                <th>Vzdálenost</th>
+                                <th>Rychlost</th>
                                 <th>Typ kluzáku</th>
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody >
                             {renderFlights()}
                         </tbody>
                     </Table>

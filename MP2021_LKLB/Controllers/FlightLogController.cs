@@ -7,6 +7,7 @@ using MP2021_LKLB.Models;
 using MP2021_LKLB.Services;
 using MP2021_LKLB.Services.FlightLogService;
 using MP2021_LKLB.Services.StatisticsService;
+using MP2021_LKLB.ViewModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -38,10 +39,10 @@ namespace MP2021_LKLB.Controllers
         }
 
         // GET api/<FlightLogController>/5
-        [HttpGet("{id}")]
-        public async Task<ICollection<FlightLog>> Get(int id)
+        [HttpGet("{year}")]
+        public async Task<ICollection<FlightAnalyseVM>> Get(int year)
         {
-            var flight = await _flightLog.GetFlightLog(id);
+            var flight = await _flightLog.GetFlightLog(year);
             return flight;
         }
 

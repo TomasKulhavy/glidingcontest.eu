@@ -31,6 +31,7 @@ const PilotFlights = () => {
             .get(`${process.env.REACT_APP_BACKEND_URL}/api/User/pilotFlights/${state.pilotId}/${year}`)
             .then((response) => {
                 setFlights(response.data);
+                console.log(response.data)
             }).
             then(() => {
                 setLoading(false);
@@ -45,7 +46,6 @@ const PilotFlights = () => {
             .get(`${process.env.REACT_APP_BACKEND_URL}/api/View/getYears/pilots/${state.pilotId}`)
             .then((response) => {
                 setYearsList(response.data)
-                console.log(response.data)
             })
     }, [year]);
 
@@ -98,8 +98,10 @@ const PilotFlights = () => {
                 return (
                   <tr key={item.id}>
                         <td>{moment(`${item.date}`).format('L')}</td>
+                        <td>{Math.round(item.score)}</td>
+                        <td>{Number((item.kilometers).toFixed(1))} km</td>
+                        <td>{Number((item.avgSpeed).toFixed(1))} km/h</td>
                         <td>{item.gliderType}</td>
-                        <td>{item.registration}</td>
                         <td><Button color="primary" onClick={() =>
                             dispatch({
                                 type: ADD_FLIGHTID,
@@ -123,8 +125,10 @@ const PilotFlights = () => {
                 return (
                   <tr key={item.id}>
                         <td>{moment(`${item.date}`).format('L')}</td>
+                        <td>{Math.round(item.score)}</td>
+                        <td>{Number((item.kilometers).toFixed(1))} km</td>
+                        <td>{Number((item.avgSpeed).toFixed(1))} km/h</td>
                         <td>{item.gliderType}</td>
-                        <td>{item.registration}</td>
                         <td><Button color="primary" onClick={() =>
                             dispatch({
                                 type: ADD_FLIGHTID,
@@ -240,8 +244,10 @@ const PilotFlights = () => {
                                 <thead>
                                     <tr>
                                         <th>Datum</th>
+                                        <th>Body</th>
+                                        <th>Vzdálenost</th>
+                                        <th>Rychlost</th>
                                         <th>Typ kluzáku</th>
-                                        <th>Registrace</th>
                                         <th></th>
                                         <th></th>
                                     </tr>

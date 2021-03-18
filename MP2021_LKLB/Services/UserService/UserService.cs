@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MP2021_LKLB.Data;
 using MP2021_LKLB.Models;
 using MP2021_LKLB.Services.FlightLogService;
+using MP2021_LKLB.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,13 +42,21 @@ namespace MP2021_LKLB.Services.UserService
             return await _db.Pilots.Where(f => f.UserName == id).FirstOrDefaultAsync();
         }
 
-        public async Task<ICollection<FlightLog>> GetPilotsFlights(string id, int? year)
+        public async Task<ICollection<FlightAnalyseVM>> GetPilotsFlights(string id, int? year)
         {
-            ICollection<FlightLog> flights = await _db.FlightLogs
-                .Where(f => f.UserId.Equals(id))
-                .Where(f => f.Date.Year == year)
-                .OrderByDescending(f => f.Date)
-                .ToListAsync();
+            var flights = await _db.FlightLogs
+               .Where(f => f.UserId.Equals(id))
+               .Where(x => x.Date.Year == year)
+               .OrderByDescending(f => f.Date)
+               .Select(f => new FlightAnalyseVM
+               {
+                   Date = f.Date,
+                   Score = f.FlightLogAnalyse.Score,
+                   Kilometers = f.FlightLogAnalyse.Kilometers,
+                   AvgSpeed = f.FlightLogAnalyse.AvgSpeed,
+                   GliderType = f.GliderType
+               })
+               .ToListAsync();
 
             if (flights != null)
             {

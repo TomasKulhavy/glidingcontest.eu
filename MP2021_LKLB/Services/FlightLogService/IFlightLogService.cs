@@ -1,4 +1,5 @@
 ﻿using MP2021_LKLB.Models;
+using MP2021_LKLB.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace MP2021_LKLB.Services.FlightLogService
     public interface IFlightLogService
     {
         Task<ICollection<FlightLog>> GetAllFlightLogs();
-        Task<ICollection<FlightLog>> GetFlightLog(int id);
+        Task<ICollection<FlightAnalyseVM>> GetFlightLog(int year);
         Task<FlightLog> GetFlightLogDetails(int id);
         Task GiveTopBool(FlightLog flightLog);
         List<FlightLog> GetPilotsFlights(string id, int? year);

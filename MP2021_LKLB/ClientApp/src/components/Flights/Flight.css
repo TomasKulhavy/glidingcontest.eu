@@ -19,3 +19,14 @@
     padding: 0px 4px;
     color: #ffffff;
 }
+
+@media only screen and (max-width: 775px) {
+    .table-responsive 
+    {   
+        width: 100%;
+        overflow-x: auto;   
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+}

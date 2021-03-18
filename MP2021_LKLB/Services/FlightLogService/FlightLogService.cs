@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using MP2021_LKLB.Data;
 using MP2021_LKLB.Models;
 using MP2021_LKLB.Services.StatisticsService;
+using MP2021_LKLB.ViewModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -31,17 +32,25 @@ namespace MP2021_LKLB.Services.FlightLogService
         }
 
         // GET ID
-        public async Task<ICollection<FlightLog>> GetFlightLog(int id)
+        public async Task<ICollection<FlightAnalyseVM>> GetFlightLog(int year)
         {
-            ICollection<FlightLog> flightLog = await _db.FlightLogs
-                .Where(x => x.Date.Year == id)
-                .OrderByDescending(f => f.Date)
-                //.Include(f => f.FlightLogAnalyse)
-                .ToListAsync();
+            var flights = await _db.FlightLogs
+               .Where(x => x.Date.Year == year)
+               .OrderByDescending(f => f.Date)
+               .Select(f => new FlightAnalyseVM
+               {
+                   Date = f.Date,
+                   Score = f.FlightLogAnalyse.Score,
+                   Kilometers = f.FlightLogAnalyse.Kilometers,
+                   AvgSpeed = f.FlightLogAnalyse.AvgSpeed,
+                   GliderType = f.GliderType,
+                   UserName = f.UserId
+               })
+               .ToListAsync();
 
-            if (flightLog != null)
+            if (flights != null)
             {
-                return flightLog;
+                return flights;
             }
             else
             {

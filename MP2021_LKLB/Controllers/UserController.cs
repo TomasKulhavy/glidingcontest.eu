@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MP2021_LKLB.Data;
 using MP2021_LKLB.Models;
 using MP2021_LKLB.Services.UserService;
+using MP2021_LKLB.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,7 +50,7 @@ namespace MP2021_LKLB.Controllers
         }
 
         [HttpGet("pilotFlights/{id}/{year}")]
-        public async Task<ICollection<FlightLog>> GetFlights(string id, int? year)
+        public async Task<ICollection<FlightAnalyseVM>> GetFlights(string id, int? year)
         {
             return await _user.GetPilotsFlights(id, year);
         }
