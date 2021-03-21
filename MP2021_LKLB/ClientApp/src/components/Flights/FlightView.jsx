@@ -121,7 +121,7 @@ const FlightView = () => {
   function renderAnalyse() {   
     return (
       <Card>
-        <CardHeader className="bg-dark font-weight-bold text-white d-block mb-1 text-uppercase"><h5>Informace o letu</h5></CardHeader>
+        <CardHeader className="bg-dark font-weight-bold text-white d-block mb-1 text-uppercase text-center"><h5>Informace o letu</h5></CardHeader>
         <CardBody>
           <Table>
             <tbody>
@@ -232,7 +232,7 @@ const FlightView = () => {
         <Container>
           {renderAnalyse()}
           <Card className="m-2">
-            <CardHeader className="bg-dark font-weight-bold text-white d-block mb-1 text-uppercase"><h5>Trasa letu</h5></CardHeader>
+            <CardHeader className="bg-dark font-weight-bold text-white d-block mb-1 text-center text-uppercase"><h5>Trasa letu</h5></CardHeader>
             <CardBody style={{padding: '0%'}}>
               <MapContainer className="leaflet" center={center} zoom={8} scrollWheelZoom={true}>
                 <TileLayer
