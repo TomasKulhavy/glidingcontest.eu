@@ -1,14 +1,34 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Container, Table, Button, Card, CardBody, Col, Row, Alert, CardFooter } from "reactstrap";
+import { Container, Table, Button, Card, CardBody, Col, Row, Alert, CardFooter, Form, FormFeedback, Input, FormGroup } from "reactstrap";
 import { createBrowserHistory } from "history";
 import { Link } from "react-router-dom";
 import NavMenu from "../Layout/NavMenu";
 import { FlightDataContext, ADD_FLIGHTID } from "../../providers/FlightDataContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from "axios";
-import { faRulerVertical, faStopwatch, faUser, faTimes, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
+import { faRulerVertical, faStopwatch, faUser, faTimes, faMinusCircle, faKey } from "@fortawesome/free-solid-svg-icons";
 import moment from 'moment-with-locales-es6';
 import Loading from "../Pages/Loading";
+import { useFormik, FormikProvider } from 'formik';
+
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
+const validate = values => {
+    const errors = {};
+    if (!values.oldPassword) {
+        errors.oldPassword = "Staré heslo musí být vyplněno";
+    }
+    if (!values.newPassword) {
+        errors.reNewPassword = "Nové heslo musí být vyplněno";
+    }
+    if (values.reNewPassword !== values.newPassword) {
+        errors.reNewPassword = "Nové heslo musí shodovat!";
+    }
+    return errors;
+}
 
 const PilotFlights = () => {
     const yearNow = new Date().getFullYear();
@@ -24,6 +44,47 @@ const PilotFlights = () => {
     const [visible, setVisible] = useState(true);
     const onDismiss = () => setVisible(false);
     const history = createBrowserHistory();
+    const [open, setOpen] = useState(false);
+    const [error, setError] = useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const formik = useFormik({
+        initialValues: {
+            id: '',
+            oldPassword: '',
+            newPassword: '',
+            reNewPassword: ''
+        },
+        validate: validate,
+        onSubmit: values => {
+            console.log(values);
+            axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/Account/changePassword`,
+                {
+                    id: tokenData.sub,
+                    oldPassword: values.oldPassword,
+                    newPassword: values.newPassword,
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + accessToken
+                    }
+                })
+                .then(() => {
+                    handleClose();
+                })
+                .catch(() => {
+                    setError(true);
+                })
+        },
+    });
 
     useEffect(() => {
         setLoading(true);
@@ -31,7 +92,6 @@ const PilotFlights = () => {
             .get(`${process.env.REACT_APP_BACKEND_URL}/api/User/pilotFlights/${state.pilotId}/${year}`)
             .then((response) => {
                 setFlights(response.data);
-                console.log(response.data)
             }).
             then(() => {
                 setLoading(false);
@@ -56,10 +116,12 @@ const PilotFlights = () => {
     };
 
     let user;
+    let userName;
     if(accessToken !== null)
     {
         var tokenData = parseJwt(accessToken);
         user = tokenData.sub;
+        userName = tokenData.given_name;
     }
 
     function renderYears() {
@@ -166,12 +228,22 @@ const PilotFlights = () => {
             })    
             
         }
-        if(user === "TomasLKLB")
+        if(userName === "TomasLKLB")
         {
             return(
                 <CardFooter>
                     <tr>
                         <small className="font-size-xl mt-1" onClick={() => deleteUser()}><FontAwesomeIcon icon={faMinusCircle} className="font-size-l mr-3"/>Odstranit tento profil</small>
+                    </tr>
+                </CardFooter>
+            )
+        }
+        else if(user === state.pilotId)
+        {
+            return(
+                <CardFooter>
+                    <tr>
+                        <small className="font-size-xl mt-1" onClick={handleClickOpen}><FontAwesomeIcon icon={faKey} className="font-size-l mr-3"/>Změna hesla</small>
                     </tr>
                 </CardFooter>
             )
@@ -218,6 +290,16 @@ const PilotFlights = () => {
         }
     }
 
+    function renderPasswordWrong()
+    {
+        if(error)
+        {
+            return (
+                <Alert color="danger" isOpen={visible} toggle={onDismiss}>Někde se stala chyba. Máte správně staré heslo?</Alert>
+            );
+        }
+    }
+
     if (loading) {
         return (
           <>
@@ -259,6 +341,66 @@ const PilotFlights = () => {
                         </div>
                     </Row>
                 </Container>
+                <FormikProvider value={formik}>
+                    <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                    <DialogTitle id="form-dialog-title">Změna hesla</DialogTitle>
+                    {renderPasswordWrong()}
+                    <Form onSubmit={formik.handleSubmit}>
+                        <DialogContent>
+                            <FormGroup className="m-2">
+                                <Input
+                                    type="password"
+                                    name="oldPassword"
+                                    id="oldPassword"
+                                    placeholder="Staré heslo"
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    value={formik.values.oldPassword}
+                                    invalid={Boolean(formik.errors.oldPassword)}
+                                    valid={formik.touched.oldPassword}
+                                />
+                                {formik.errors.oldPassword ? <FormFeedback invalid>{formik.errors.oldPassword}</FormFeedback> : null}
+                            </FormGroup>
+                            <FormGroup className="m-2">
+                                <Input
+                                    type="password"
+                                    name="newPassword"
+                                    id="newPassword"
+                                    placeholder="Nové heslo"
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    value={formik.values.newPassword}
+                                    invalid={Boolean(formik.errors.newPassword)}
+                                    valid={formik.touched.newPassword}
+                                />
+                                {formik.errors.newPassword ? <FormFeedback invalid>{formik.errors.newPassword}</FormFeedback> : null}
+                            </FormGroup>
+                            <FormGroup className="m-2">
+                                <Input
+                                    type="password"
+                                    name="reNewPassword"
+                                    id="reNewPassword"
+                                    placeholder="Opakujte nové heslo"
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    value={formik.values.reNewPassword}
+                                    invalid={Boolean(formik.errors.reNewPassword)}
+                                    valid={formik.touched.reNewPassword}
+                                />
+                                {formik.errors.reNewPassword ? <FormFeedback invalid>{formik.errors.reNewPassword}</FormFeedback> : null}
+                            </FormGroup>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleClose} color="danger">
+                                Zrušit
+                            </Button>
+                            <Button type="submit" color="primary">
+                                Uložit
+                            </Button>
+                        </DialogActions>
+                    </Form>
+                </Dialog>
+                </FormikProvider>
             </>
         )
     }

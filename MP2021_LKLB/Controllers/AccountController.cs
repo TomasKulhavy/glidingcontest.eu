@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using MP2021_LKLB.Data;
+using MP2021_LKLB.InputModels;
 using MP2021_LKLB.Models;
 using MP2021_LKLB.Services;
 using MP2021_LKLB.Services.UserService;
@@ -147,6 +148,22 @@ namespace MP2021_LKLB.Controllers
                 return Ok(token);
             }
             return Unauthorized();
+        }
+
+        [HttpPut("changePassword")]
+        [Authorize]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordIM userData)
+        {
+            var user = await _userManager.Users.Where(u => u.Id == userData.Id).FirstOrDefaultAsync();
+
+            var changePasswordResult = await _userManager.ChangePasswordAsync(user, userData.OldPassword, userData.NewPassword);
+            if (!changePasswordResult.Succeeded)
+            {
+                return BadRequest();
+            }
+
+            await _signInManager.RefreshSignInAsync(user);
+            return Ok();
         }
 
         private AuthorizationToken GenerateJSONWebToken(ApplicationUser user)
