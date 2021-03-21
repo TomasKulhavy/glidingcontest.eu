@@ -100,7 +100,7 @@ const FlightView = () => {
             <b>Datum: </b>{moment(`${flightLog.date}`).format('L')}
           </tr> 
           <tr>
-            <b>Pilot: </b> <Button color="primary" outline onClick={() =>
+            <b>Pilot: </b> <Button color="primary" size="sm" outline onClick={() =>
               dispatch({
                 type: ADD_PILOTID,
                 pilotId: flightLog.userId

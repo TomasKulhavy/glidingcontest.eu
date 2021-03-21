@@ -84,7 +84,7 @@ export default function SignUp() {
         }
     }
     return (
-        <Container>
+        <Container className="text-center">
             {renderAlert()}
             <Button className="btn-dark mt-5 mb-3" tag={Link} to="/">
                 <FontAwesomeIcon icon={faHome} className="font-size-xl mr-3" />

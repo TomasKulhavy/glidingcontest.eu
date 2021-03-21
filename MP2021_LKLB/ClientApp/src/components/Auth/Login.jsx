@@ -66,7 +66,7 @@ export default function SignIn() {
         },
     });
     return (
-        <Container>
+        <Container className="text-center">
             <Button className="btn-dark mt-5 mb-3" tag={Link} to="/">
                 <FontAwesomeIcon icon={faHome} className="font-size-xl mr-3" />
                 Zpět na domovskou obrazovku

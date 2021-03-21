@@ -81,7 +81,7 @@ const FlightList = () => {
                 <NavMenu />
                 <Container>
                     <Table borderless>
-                            <tbody>
+                            <tbody className="text-center">
                                 {renderYears()}
                             </tbody>
                     </Table>

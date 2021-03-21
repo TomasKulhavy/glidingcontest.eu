@@ -236,7 +236,7 @@ const PilotFlights = () => {
                         {renderPilotCard()}
                         <div className="">
                             <Table borderless>
-                                    <tbody className="">
+                                    <tbody className="text-center">
                                         {renderYears()}
                                     </tbody>
                             </Table>

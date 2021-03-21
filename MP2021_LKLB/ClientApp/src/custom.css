@@ -1,6 +1,5 @@
 /* Provide sufficient contrast against white background */
 .App {
-  text-align: center;
   background-image: url(./appbackground.jpg);
   background-repeat: no-repeat;
   background-size: cover;

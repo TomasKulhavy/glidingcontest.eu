@@ -10,8 +10,8 @@ const AccessDenied = () => (
             <Card className="bg-dark">
                 <CardBody>
                     <CardTitle tag="h1" className="text-white">Na tuto stránku se musíte přihlásit nebo nemáte dostatečná práva!</CardTitle>
-                    <Button className="btn-dark mt-5 mb-3" tag={Link} to="/">
-                        <FontAwesomeIcon icon={faHome} className="font-size-xl mr-3" color="danger" />
+                    <Button className="mt-5 mb-3" color="danger" tag={Link} to="/">
+                        <FontAwesomeIcon icon={faHome} className="font-size-xl mr-3" />
                         Zpět na domovskou obrazovku
                     </Button>
                 </CardBody>
