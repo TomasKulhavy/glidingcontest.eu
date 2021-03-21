@@ -27,7 +27,7 @@ const FeedbackReview = () => {
     if(accessToken !== null)
     {
         let tokenData = parseJwt(accessToken);
-        user = tokenData.sub;
+        user = tokenData.given_name;
     }
 
     function renderFeedback() {

@@ -59,7 +59,7 @@ const PilotFlights = () => {
     if(accessToken !== null)
     {
         var tokenData = parseJwt(accessToken);
-        user = tokenData.given_name;
+        user = tokenData.sub;
     }
 
     function renderYears() {
