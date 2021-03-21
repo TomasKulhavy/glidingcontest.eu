@@ -41,6 +41,7 @@ const PilotFlights = () => {
             .then((response) => {
                 setPilot(response.data);
                 setFlightTime(response.data.timeInSec);
+                console.log(response.data)
             });
         axios
             .get(`${process.env.REACT_APP_BACKEND_URL}/api/View/getYears/pilots/${state.pilotId}`)

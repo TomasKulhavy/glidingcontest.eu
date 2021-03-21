@@ -38,6 +38,7 @@ const NavMenu = () => {
     if(accessToken !== null)
     {
       tokenData = parseJwt(accessToken)
+      console.log(tokenData)
       return (
         <NavItem>
           <NavLink tag={Link} className="text-light" onClick={() =>
@@ -46,7 +47,7 @@ const NavMenu = () => {
               pilotId: tokenData.sub
             })} to="/pilot/flights">
             <FontAwesomeIcon icon={faUserAlt} className="font-size-xl mr-2 mt-1" />
-            {tokenData.sub}
+            {tokenData.given_name}
           </NavLink>
         </NavItem>
       )

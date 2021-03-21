@@ -19,217 +19,6 @@ namespace MP2021_LKLB.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.2");
 
-            modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.DeviceFlowCodes", b =>
-                {
-                    b.Property<string>("UserCode")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("ClientId")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Data")
-                        .IsRequired()
-                        .HasMaxLength(50000)
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("DeviceCode")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<DateTime?>("Expiration")
-                        .IsRequired()
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("SessionId")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("SubjectId")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.HasKey("UserCode");
-
-                    b.HasIndex("DeviceCode")
-                        .IsUnique();
-
-                    b.HasIndex("Expiration");
-
-                    b.ToTable("DeviceCodes");
-                });
-
-            modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.PersistedGrant", b =>
-                {
-                    b.Property<string>("Key")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("ClientId")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<DateTime?>("ConsumedTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Data")
-                        .IsRequired()
-                        .HasMaxLength(50000)
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<DateTime?>("Expiration")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("SessionId")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("SubjectId")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Key");
-
-                    b.HasIndex("Expiration");
-
-                    b.HasIndex("SubjectId", "ClientId", "Type");
-
-                    b.HasIndex("SubjectId", "SessionId", "Type");
-
-                    b.ToTable("PersistedGrants");
-                });
-
-            modelBuilder.Entity("MP2021_LKLB.Models.ApplicationUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("FlightsNo")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<float?>("SumKilometers")
-                        .HasColumnType("real");
-
-                    b.Property<double>("TimeInSec")
-                        .HasColumnType("float");
-
-                    b.Property<float?>("TopScore")
-                        .HasColumnType("real");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "TomasLKLB",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "9327e4bb-560b-42b5-87f8-a5d238b44a3a",
-                            Email = "tomas.kulhavy@pslib.cz",
-                            EmailConfirmed = true,
-                            FirstName = "Tomáš",
-                            Gender = 0,
-                            LastName = "Kulhavý",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "TOMAS.KULHAVY@PSLIB.CZ",
-                            NormalizedUserName = "TOMASLKLB",
-                            PasswordHash = "AQAAAAEAACcQAAAAELVA5UM+QxCCmNpflVE7KqLXM5lM9es5+SKDU4IOyMlIQKmP36Zijpi2QWdDrUsnmw==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "",
-                            TimeInSec = 0.0,
-                            TwoFactorEnabled = false,
-                            UserName = "TomasLKLB"
-                        });
-                });
-
             modelBuilder.Entity("MP2021_LKLB.Models.DataRecords", b =>
                 {
                     b.Property<int>("Id")
@@ -594,6 +383,77 @@ namespace MP2021_LKLB.Migrations
                     b.ToTable("AspNetRoleClaims");
                 });
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
@@ -653,18 +513,6 @@ namespace MP2021_LKLB.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "TomasLKLB",
-                            RoleId = "ADMIN"
-                        },
-                        new
-                        {
-                            UserId = "TomasLKLB",
-                            RoleId = "PILOT"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -696,16 +544,66 @@ namespace MP2021_LKLB.Migrations
                         new
                         {
                             Id = "ADMIN",
-                            ConcurrencyStamp = "2efa0128-43bb-4e0b-8f8c-09fe73c02beb",
+                            ConcurrencyStamp = "f64fd06b-e8b4-4ca2-b54c-3193cb7476a7",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "PILOT",
-                            ConcurrencyStamp = "512bfedb-c994-4740-8ee1-3bf8068e4ef5",
+                            ConcurrencyStamp = "aef2abfd-9f90-47ae-ade2-2cbaa77e900a",
                             Name = "Pilot",
                             NormalizedName = "PILOT"
+                        });
+                });
+
+            modelBuilder.Entity("MP2021_LKLB.Models.ApplicationUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("FlightsNo")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float?>("SumKilometers")
+                        .HasColumnType("real");
+
+                    b.Property<double>("TimeInSec")
+                        .HasColumnType("float");
+
+                    b.Property<float?>("TopScore")
+                        .HasColumnType("real");
+
+                    b.HasDiscriminator().HasValue("ApplicationUser");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "dc7d58e5-0154-437a-9c6e-3cf2db72524b",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "65df0060-c546-458d-9b98-9baf1af9f893",
+                            Email = "tomas.kulhavy@pslib.cz",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "TOMAS.KULHAVY@PSLIB.CZ",
+                            NormalizedUserName = "TOMASLKLB",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOY50FP/ijJfwic7iBg+3FgfLOGuXzRaJVnBYvOkVVLmq8vzzVzxflqMspGDsXRRag==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "",
+                            TwoFactorEnabled = false,
+                            UserName = "TomasLKLB",
+                            FirstName = "Tomáš",
+                            Gender = 0,
+                            LastName = "Kulhavý",
+                            TimeInSec = 0.0
                         });
                 });
 
@@ -804,7 +702,7 @@ namespace MP2021_LKLB.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("MP2021_LKLB.Models.ApplicationUser", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -813,7 +711,7 @@ namespace MP2021_LKLB.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("MP2021_LKLB.Models.ApplicationUser", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -828,7 +726,7 @@ namespace MP2021_LKLB.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MP2021_LKLB.Models.ApplicationUser", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -837,16 +735,11 @@ namespace MP2021_LKLB.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("MP2021_LKLB.Models.ApplicationUser", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("MP2021_LKLB.Models.ApplicationUser", b =>
-                {
-                    b.Navigation("Flights");
                 });
 
             modelBuilder.Entity("MP2021_LKLB.Models.DataRecords", b =>
@@ -873,6 +766,11 @@ namespace MP2021_LKLB.Migrations
             modelBuilder.Entity("MP2021_LKLB.Models.FlightTask", b =>
                 {
                     b.Navigation("Points");
+                });
+
+            modelBuilder.Entity("MP2021_LKLB.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("Flights");
                 });
 #pragma warning restore 612, 618
         }

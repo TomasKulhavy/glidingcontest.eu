@@ -46,7 +46,7 @@ namespace MP2021_LKLB.Services.FlightLogService
                    Kilometers = f.FlightLogAnalyse.Kilometers,
                    AvgSpeed = f.FlightLogAnalyse.AvgSpeed,
                    GliderType = f.GliderType,
-                   UserName = f.UserId
+                   UserName = f.User.FullName
                })
                .ToListAsync();
 
@@ -81,7 +81,7 @@ namespace MP2021_LKLB.Services.FlightLogService
             int? year = flightLog.Date.Year;
             string userScoreId = flightLog.UserId;
             ICollection<FlightLog> flightsLog = GetPilotsFlights(id, year);
-            ApplicationUser Users = await _db.Pilots.Where(f => f.UserName == userScoreId).FirstOrDefaultAsync();
+            ApplicationUser Users = await _db.Pilots.Where(f => f.Id == userScoreId).FirstOrDefaultAsync();
 
             ICollection<FlightLog> flights = flightsLog.OrderByDescending(f => f.FlightLogAnalyse.Score).Take(3).ToList();
 
@@ -180,7 +180,7 @@ namespace MP2021_LKLB.Services.FlightLogService
         public async Task<FlightLog> DeleteFlight(int id)
         {
             FlightLog flight = await _db.FlightLogs.Include(f => f.FlightLogAnalyse).Include(f => f.User).Where(fa => fa.Id == id).FirstOrDefaultAsync();
-            ApplicationUser Users = await _db.Pilots.Where(f => f.UserName == flight.UserId).FirstOrDefaultAsync();
+            ApplicationUser Users = await _db.Pilots.Where(f => f.Id == flight.UserId).FirstOrDefaultAsync();
             OverallStats stats = await _db.Stats.FindAsync(1);
 
             if (flight != null)
@@ -208,7 +208,7 @@ namespace MP2021_LKLB.Services.FlightLogService
         public async Task<ICollection<FlightLog>> DeleteFlightWithUser(string id)
         {
             ICollection<FlightLog> flight = await _db.FlightLogs.Include(f => f.FlightLogAnalyse).Include(f => f.User).Where(fa => fa.UserId == id).ToListAsync();
-            ApplicationUser Users = await _db.Pilots.Where(f => f.UserName == id).FirstOrDefaultAsync();
+            ApplicationUser Users = await _db.Pilots.Where(f => f.Id == id).FirstOrDefaultAsync();
             OverallStats stats = await _db.Stats.FindAsync(1);
 
             if (flight != null)

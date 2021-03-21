@@ -1,6 +1,7 @@
 ﻿using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using MP2021_LKLB.Models;
@@ -11,13 +12,13 @@ using System.Threading.Tasks;
 
 namespace MP2021_LKLB.Data
 {
-    public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext
     {
-        public ApplicationDbContext(
-            DbContextOptions options,
-            IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
         {
         }
+
         public DbSet<ApplicationUser> Pilots { get; set; }
         public DbSet<FlightLog> FlightLogs { get; set; }
         public DbSet<DataRecords> DataRecords { get; set; }
@@ -36,7 +37,6 @@ namespace MP2021_LKLB.Data
             builder.Entity<PilotRole>().HasData(new PilotRole { Id = "PILOT", Name = "Pilot", NormalizedName = "PILOT" });
             builder.Entity<ApplicationUser>().HasData(new ApplicationUser
             {
-                Id = "TomasLKLB",
                 FirstName = "Tomáš",
                 LastName = "Kulhavý",
                 Gender = Gender.Muž,
@@ -49,9 +49,6 @@ namespace MP2021_LKLB.Data
                 SecurityStamp = string.Empty,
                 PasswordHash = hasher.HashPassword(null, "Adm1n1234#.")
             });
-
-            builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { RoleId = "ADMIN", UserId = "TomasLKLB" });
-            builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { RoleId = "PILOT", UserId = "TomasLKLB" });
 
             builder.Entity<FlightLog>()
             .Property(e => e.Errors)

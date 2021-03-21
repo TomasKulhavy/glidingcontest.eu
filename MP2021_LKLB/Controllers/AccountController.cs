@@ -101,7 +101,7 @@ namespace MP2021_LKLB.Controllers
         public async Task<ActionResult<ApplicationUser>> DeleteUser(string id)
         {
             ApplicationUser user = await _db.Pilots.Where(f => f.Id == id).FirstOrDefaultAsync();
-            await _user.Delete(user.UserName);
+            await _user.Delete(user.Id);
             await _userManager.DeleteAsync(user);
             return NoContent();
         }
@@ -117,7 +117,6 @@ namespace MP2021_LKLB.Controllers
             var hasher = new PasswordHasher<ApplicationUser>();
             var newUser = new ApplicationUser
             {
-                Id = userData.UserName,
                 UserName = userData.UserName,
                 Email = userData.Email,
                 FirstName = userData.FirstName,
@@ -139,10 +138,11 @@ namespace MP2021_LKLB.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserIM userData)
         {
-            var result = await _signInManager.PasswordSignInAsync(userData.Email, userData.Password, userData.isPersistant, false);
+            var userName = await _userManager.Users.Where(u => u.Email == userData.Email).FirstOrDefaultAsync();
+            var result = await _signInManager.PasswordSignInAsync(userName.UserName, userData.Password, false, false);
             if (result.Succeeded)
             {
-                var user = await _userManager.FindByNameAsync(userData.Email);
+                var user = await _userManager.FindByEmailAsync(userData.Email);
                 AuthorizationToken token = GenerateJSONWebToken(user);
                 return Ok(token);
             }
@@ -154,7 +154,8 @@ namespace MP2021_LKLB.Controllers
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var claims = new[] {
-                new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id),
+                new Claim(JwtRegisteredClaimNames.GivenName, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };

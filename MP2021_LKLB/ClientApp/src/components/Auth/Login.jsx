@@ -10,8 +10,11 @@ import { FlightDataContext, SET_ACCESS_TOKEN } from "../../providers/FlightDataC
 
 const validate = values => {
     const errors = {};
-    if (!values.username) {
-        errors.username = "Uživatelské heslo musí být vyplněno";
+    if (!values.email) {
+        errors.email = "E-mail musí být vyplněn";
+    }
+    else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+        errors.email = "Neplatná e-mailová adresa!";
     }
     if (!values.password) {
         errors.password = "Heslo musí být vyplněno";
@@ -36,18 +39,16 @@ export default function SignIn() {
 
     const formik = useFormik({
         initialValues: {
-            username: '',
+            email: '',
             password: '',
-            isPersistant: false,
         },
         validate: validate,
         onSubmit: values => {
             setError(false);
             axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/Account/login`,
                 {
-                    email: values.username,
+                    email: values.email,
                     password: values.password,
-                    isPersistant: values.isPersistant
                 },
                 {
                     headers: {
@@ -87,17 +88,19 @@ export default function SignIn() {
                         </div>
                         <Form onSubmit={formik.handleSubmit}>
                             <FormGroup className="m-2">
-                                <Label for="username">Přihlašovací jméno</Label>
+                                <Label for="email">E-mailová adresa</Label>
                                 <Input
-                                    name="username"
-                                    id="username"
-                                    placeholder="JanNovak"
+                                    name="email"
+                                    id="email"
+                                    type="email"
+                                    placeholder="jannovak@email.cz"
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
-                                    value={formik.values.username}
-                                    invalid={Boolean(formik.errors.username)}
-                                    valid={formik.touched.username}
+                                    value={formik.values.email}
+                                    invalid={Boolean(formik.errors.email)}
+                                    valid={formik.touched.email}
                                 />
+                                {formik.errors.email ? <FormFeedback invalid>{formik.errors.email}</FormFeedback> : null}
                             </FormGroup>
                             <FormGroup className="m-2">
                                 <Label for="password">Heslo</Label>

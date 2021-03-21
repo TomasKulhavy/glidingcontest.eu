@@ -39,7 +39,7 @@ namespace MP2021_LKLB.Services.UserService
 
         public async Task<ApplicationUser> GetPilotsStats(string id)
         {
-            return await _db.Pilots.Where(f => f.UserName == id).FirstOrDefaultAsync();
+            return await _db.Pilots.Where(f => f.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task<ICollection<FlightAnalyseVM>> GetPilotsFlights(string id, int? year)
@@ -99,7 +99,7 @@ namespace MP2021_LKLB.Services.UserService
 
         public async Task<ApplicationUser> Delete(string id)
         {
-            ApplicationUser user = await _db.Pilots.Where(f => f.UserName == id).FirstOrDefaultAsync();
+            ApplicationUser user = await _db.Pilots.Where(f => f.Id == id).FirstOrDefaultAsync();
             await _flight.DeleteFlightWithUser(id);
             return user;
         }

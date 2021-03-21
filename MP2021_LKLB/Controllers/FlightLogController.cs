@@ -59,9 +59,13 @@ namespace MP2021_LKLB.Controllers
         {
             string message = "started";
             string data = Data.Payload;
+            //string userName;
             if (data != null)
             {
                 var returnDataObj = JsonConvert.DeserializeObject<FlightLog>(data);
+                //userName = returnDataObj.UserId;
+                //ApplicationUser user = await _db.Pilots.Where(f => f.UserName == userName).FirstOrDefaultAsync();
+                //returnDataObj.UserId = user.Id;
                 FlightLog log = await _db.FlightLogs.Where(f => f.Security == returnDataObj.Security).FirstOrDefaultAsync();
                 if (log == null)
                 {
@@ -70,7 +74,7 @@ namespace MP2021_LKLB.Controllers
                     await _db.FlightLogs.AddAsync(returnDataObj);
                     await _db.SaveChangesAsync();
                 }
-                else
+                else if (log != null)
                 {
                     return Conflict();
                 }

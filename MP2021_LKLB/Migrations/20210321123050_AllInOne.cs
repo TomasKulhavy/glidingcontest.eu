@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MP2021_LKLB.Migrations
 {
-    public partial class All : Migration
+    public partial class AllInOne : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,11 +27,12 @@ namespace MP2021_LKLB.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Gender = table.Column<int>(type: "int", nullable: false),
+                    Gender = table.Column<int>(type: "int", nullable: true),
                     TopScore = table.Column<float>(type: "real", nullable: true),
-                    TimeInSec = table.Column<double>(type: "float", nullable: false),
+                    TimeInSec = table.Column<double>(type: "float", nullable: true),
                     FlightsNo = table.Column<int>(type: "int", nullable: true),
                     SumKilometers = table.Column<float>(type: "real", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -55,25 +56,6 @@ namespace MP2021_LKLB.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DeviceCodes",
-                columns: table => new
-                {
-                    UserCode = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    DeviceCode = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    SubjectId = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    SessionId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    ClientId = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Expiration = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Data = table.Column<string>(type: "nvarchar(max)", maxLength: 50000, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DeviceCodes", x => x.UserCode);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Feedbacks",
                 columns: table => new
                 {
@@ -88,26 +70,6 @@ namespace MP2021_LKLB.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Feedbacks", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PersistedGrants",
-                columns: table => new
-                {
-                    Key = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    SubjectId = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    SessionId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    ClientId = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Expiration = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ConsumedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Data = table.Column<string>(type: "nvarchar(max)", maxLength: 50000, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PersistedGrants", x => x.Key);
                 });
 
             migrationBuilder.CreateTable(
@@ -419,27 +381,17 @@ namespace MP2021_LKLB.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName" },
-                values: new object[] { "ADMIN", "2efa0128-43bb-4e0b-8f8c-09fe73c02beb", "PilotRole", "Administrator", "ADMINISTRATOR" });
+                values: new object[] { "ADMIN", "f64fd06b-e8b4-4ca2-b54c-3193cb7476a7", "PilotRole", "Administrator", "ADMINISTRATOR" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName" },
-                values: new object[] { "PILOT", "512bfedb-c994-4740-8ee1-3bf8068e4ef5", "PilotRole", "Pilot", "PILOT" });
+                values: new object[] { "PILOT", "aef2abfd-9f90-47ae-ade2-2cbaa77e900a", "PilotRole", "Pilot", "PILOT" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "FlightsNo", "Gender", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "SumKilometers", "TimeInSec", "TopScore", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "TomasLKLB", 0, "9327e4bb-560b-42b5-87f8-a5d238b44a3a", "tomas.kulhavy@pslib.cz", true, "Tomáš", null, 0, "Kulhavý", false, null, "TOMAS.KULHAVY@PSLIB.CZ", "TOMASLKLB", "AQAAAAEAACcQAAAAELVA5UM+QxCCmNpflVE7KqLXM5lM9es5+SKDU4IOyMlIQKmP36Zijpi2QWdDrUsnmw==", null, false, "", null, 0.0, null, false, "TomasLKLB" });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUserRoles",
-                columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "ADMIN", "TomasLKLB" });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUserRoles",
-                columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "PILOT", "TomasLKLB" });
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "FlightsNo", "Gender", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "SumKilometers", "TimeInSec", "TopScore", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "dc7d58e5-0154-437a-9c6e-3cf2db72524b", 0, "65df0060-c546-458d-9b98-9baf1af9f893", "ApplicationUser", "tomas.kulhavy@pslib.cz", true, "Tomáš", null, 0, "Kulhavý", false, null, "TOMAS.KULHAVY@PSLIB.CZ", "TOMASLKLB", "AQAAAAEAACcQAAAAEOY50FP/ijJfwic7iBg+3FgfLOGuXzRaJVnBYvOkVVLmq8vzzVzxflqMspGDsXRRag==", null, false, "", null, 0.0, null, false, "TomasLKLB" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -486,17 +438,6 @@ namespace MP2021_LKLB.Migrations
                 column: "FlightLogId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DeviceCodes_DeviceCode",
-                table: "DeviceCodes",
-                column: "DeviceCode",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DeviceCodes_Expiration",
-                table: "DeviceCodes",
-                column: "Expiration");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Extensions_DataRecordsId",
                 table: "Extensions",
                 column: "DataRecordsId",
@@ -517,21 +458,6 @@ namespace MP2021_LKLB.Migrations
                 name: "IX_FlightLogs_UserId",
                 table: "FlightLogs",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PersistedGrants_Expiration",
-                table: "PersistedGrants",
-                column: "Expiration");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PersistedGrants_SubjectId_ClientId_Type",
-                table: "PersistedGrants",
-                columns: new[] { "SubjectId", "ClientId", "Type" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PersistedGrants_SubjectId_SessionId_Type",
-                table: "PersistedGrants",
-                columns: new[] { "SubjectId", "SessionId", "Type" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Points_FlightTaskId",
@@ -557,9 +483,6 @@ namespace MP2021_LKLB.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "DeviceCodes");
-
-            migrationBuilder.DropTable(
                 name: "Extensions");
 
             migrationBuilder.DropTable(
@@ -567,9 +490,6 @@ namespace MP2021_LKLB.Migrations
 
             migrationBuilder.DropTable(
                 name: "FlightLogAnalyses");
-
-            migrationBuilder.DropTable(
-                name: "PersistedGrants");
 
             migrationBuilder.DropTable(
                 name: "Points");
