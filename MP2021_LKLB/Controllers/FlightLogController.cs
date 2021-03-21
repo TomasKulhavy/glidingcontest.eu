@@ -47,7 +47,7 @@ namespace MP2021_LKLB.Controllers
         }
 
         [HttpGet("getDetails/{id}")]
-        public async Task<FlightLog> GetDetails(int id)
+        public async Task<FlightViewInfoVM> GetDetails(int id)
         {
             var flight = await _flightLog.GetFlightLogDetails(id);
             return flight;
@@ -59,13 +59,9 @@ namespace MP2021_LKLB.Controllers
         {
             string message = "started";
             string data = Data.Payload;
-            //string userName;
             if (data != null)
             {
                 var returnDataObj = JsonConvert.DeserializeObject<FlightLog>(data);
-                //userName = returnDataObj.UserId;
-                //ApplicationUser user = await _db.Pilots.Where(f => f.UserName == userName).FirstOrDefaultAsync();
-                //returnDataObj.UserId = user.Id;
                 FlightLog log = await _db.FlightLogs.Where(f => f.Security == returnDataObj.Security).FirstOrDefaultAsync();
                 if (log == null)
                 {

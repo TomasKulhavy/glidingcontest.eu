@@ -54,21 +54,6 @@ namespace MP2021_LKLB.Services.ViewService
             }
         }
 
-        public async Task<ICollection<FlightLogAnalyse>> GetFlightLogAnalyse(int id)
-        {
-            ICollection<FlightLogAnalyse> fixes = await _db.FlightLogAnalyses
-                .Where(x => x.FlightLog.Id == id)
-                .ToListAsync();
-
-            if (fixes != null)
-            {
-                return fixes;
-            }
-            else
-            {
-                return null;
-            }
-        }
         public async Task<ICollection<Points>> GetTask(int id)
         {
             ICollection<Points> points = await _db.Points

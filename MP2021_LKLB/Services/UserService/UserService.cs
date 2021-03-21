@@ -80,8 +80,7 @@ namespace MP2021_LKLB.Services.UserService
             }
             else
             {
-                identityUsers = await _db.Pilots.Where(x => x.UserName.Contains(id)).ToListAsync();
-
+                identityUsers = await _db.Pilots.Where(x => x.UserName.Contains(id)).Where(x => x.FullName.Contains(id)).ToListAsync();
             }
             return identityUsers;
         }

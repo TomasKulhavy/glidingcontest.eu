@@ -18,11 +18,6 @@ const FlightView = () => {
   const [fixes, setFixes] = useState([]);
   const [flightLog, setFlightLog] = useState([]);
   const [task, setTask] = useState([]);
-  const [analyse, setAnalyse] = useState([]);
-  const [score, setScore] = useState();
-  const [flightTime, setFlightTime] = useState();
-  const [speed, setSpeed] = useState();
-  const [kilometers, setKilometers] = useState();
   const [fixesToGraph, setFixesToGraph] = useState([]);
   const [state, dispatch] = useContext(FlightDataContext);
   const [loading, setLoading] = useState(false);
@@ -38,6 +33,10 @@ const FlightView = () => {
       })
       .then(() => {
         setLoading(false);
+      })
+      .catch(() => {
+        setError(true)
+        history.push("/pilot/flights")
       });
     axios
       .get(`${process.env.REACT_APP_BACKEND_URL}/api/View/graph/${state.currentFlightId}`)
@@ -49,24 +48,15 @@ const FlightView = () => {
         history.push("/pilot/flights")
       });
     axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/api/FlightLog/getDetails/${state.currentFlightId}`)
-      .then((response) => {
-        setFlightLog(response.data)
-      });
-    axios
       .get(`${process.env.REACT_APP_BACKEND_URL}/api/View/getTask/${state.currentFlightId}`)
       .then((response) => {
         setTask(response.data)
       });
     axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/api/Analyse/${state.currentFlightId}`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/FlightLog/getDetails/${state.currentFlightId}`)
       .then((response) => {
-        setAnalyse(response.data[0]);
-        setScore(Number((response.data[0].score).toFixed(1)));
-        setFlightTime(response.data[0].flightTime.totalSeconds);
-        setKilometers(Number((response.data[0].kilometers).toFixed(1)));
-        setSpeed(Number((response.data[0].avgSpeed).toFixed(2)));
-      });
+        setFlightLog(response.data)
+      })
   }, []);
 
   function renderFixes() {
@@ -76,7 +66,7 @@ const FlightView = () => {
     });
     return array;
   }
-
+  
   function renderTask() {
     const center2 = ([]);
     const array = ([]);
@@ -90,7 +80,7 @@ const FlightView = () => {
   }
 
   function secondsToHms() {
-    var d = Number(flightTime);
+    var d = Number(flightLog.flightTime);
     var h = Math.floor(d / 3600);
     var m = Math.floor(d % 3600 / 60);
     var s = Math.floor(d % 3600 % 60);
@@ -115,7 +105,7 @@ const FlightView = () => {
                 type: ADD_PILOTID,
                 pilotId: flightLog.userId
               })} tag={Link} to="/pilot/flights">
-              {flightLog.userId}</Button>
+              {flightLog.pilotName}</Button>
           </tr> 
           <tr>
             <b>Kluzák: </b>{flightLog.gliderType}
@@ -126,7 +116,7 @@ const FlightView = () => {
         </td>
       </>
     );
-  }
+  }     
 
   function renderAnalyse() {   
     return (
@@ -141,13 +131,13 @@ const FlightView = () => {
                   <b>Čas letu: </b>{secondsToHms()}
                 </tr>
                 <tr>
-                  <b>Body za let: </b>{score}
+                  <b>Body za let: </b>{Math.round(flightLog.score)}
                 </tr>
                 <tr>
-                  <b>Kilometry: </b>{kilometers} KM
+                  <b>Kilometry: </b>{Math.round(flightLog.kilometers)} KM
                 </tr>
                 <tr>
-                  <b>Prům. rychlost: </b>{speed} KM/H
+                  <b>Prům. rychlost: </b>{Number(flightLog.avgSpeed).toFixed(1)} KM/H
                 </tr>
               </td>
             </tbody>

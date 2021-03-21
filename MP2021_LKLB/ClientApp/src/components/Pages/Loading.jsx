@@ -1,12 +1,18 @@
 import React from "react";
 import Loader from "react-loader-spinner";
+import { Row } from "reactstrap";
 import "./style.css";
 
 const Loading = () => {
   return (
-    <div className="loading">
-      <div className="text-center align-middle center">
-        <Loader type="TailSpin" color="#00BFFF" height={40} width={40}/>
+    <div className="loading d-flex justify-content-center align-items-center">
+      <div className="text-center">
+        <Loader type="TailSpin" color="#00BFFF" height={30} width={30}/>
+        <Row>
+          <div>
+            <p className="mb-1 mt-1">Nahrávám...</p>
+          </div>
+        </Row>
       </div>
     </div>
   );

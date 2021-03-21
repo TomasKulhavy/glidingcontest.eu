@@ -41,7 +41,6 @@ const PilotFlights = () => {
             .then((response) => {
                 setPilot(response.data);
                 setFlightTime(response.data.timeInSec);
-                console.log(response.data)
             });
         axios
             .get(`${process.env.REACT_APP_BACKEND_URL}/api/View/getYears/pilots/${state.pilotId}`)
@@ -60,7 +59,7 @@ const PilotFlights = () => {
     if(accessToken !== null)
     {
         var tokenData = parseJwt(accessToken);
-        user = tokenData.sub;
+        user = tokenData.given_name;
     }
 
     function renderYears() {
@@ -111,7 +110,7 @@ const PilotFlights = () => {
                             Zobrazit let</Button></td>
                         <td>
                             <Button color="danger" refresh="true" onClick={() =>
-                                deleteFlight(item.id, index)}>
+                                deleteFlight(item.id, index)} tag={Link} to="/pilot/flights">
                                 <FontAwesomeIcon icon={faTimes} className="font-size-xl" />
                             </Button>
                         </td>
@@ -163,7 +162,7 @@ const PilotFlights = () => {
             .delete(`${process.env.REACT_APP_BACKEND_URL}/api/Account/delete/${state.pilotId}`)
             .then(() => {
                 setLoading(false);
-                history.push("/pilot/list")
+                history.push("/")
             })    
             
         }
@@ -172,7 +171,7 @@ const PilotFlights = () => {
             return(
                 <CardFooter>
                     <tr>
-                        <small className="font-size-xl mt-1" onClick={() => deleteUser()}><FontAwesomeIcon icon={faMinusCircle} className="font-size-l mr-3" />Odstranit tento profil</small>
+                        <small className="font-size-xl mt-1" onClick={() => deleteUser()}><FontAwesomeIcon icon={faMinusCircle} className="font-size-l mr-3"/>Odstranit tento profil</small>
                     </tr>
                 </CardFooter>
             )

@@ -60,11 +60,27 @@ namespace MP2021_LKLB.Services.FlightLogService
             }
         }
 
-        public async Task<FlightLog> GetFlightLogDetails(int id)
+        public async Task<FlightViewInfoVM> GetFlightLogDetails(int id)
         {
-            FlightLog flightLog = await _db.FlightLogs
-                .Where(x => x.Id == id)
-                .FirstOrDefaultAsync();
+            var flightLog = await _db.FlightLogs
+               .Where(x => x.Id == id)
+               .OrderByDescending(f => f.Date)
+               .ThenByDescending(f => f.FlightLogAnalyse.Score)
+               .Include(f => f.FlightLogAnalyse)
+               .Select(f => new FlightViewInfoVM
+               {
+                   PilotName = f.User.FullName,
+                   UserId = f.UserId,
+                   Date = f.Date,
+                   GliderType = f.GliderType,
+                   Registration = f.Registration,
+                   FlightTime = f.FlightLogAnalyse.FlightTime.TotalSeconds,
+                   AvgSpeed = f.FlightLogAnalyse.AvgSpeed,
+                   Kilometers = f.FlightLogAnalyse.Kilometers,
+                   Score = f.FlightLogAnalyse.Score,
+                   TopFlight = f.FlightLogAnalyse.Topflight
+               })
+               .FirstOrDefaultAsync();
 
             if (flightLog != null)
             {

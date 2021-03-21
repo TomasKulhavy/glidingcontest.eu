@@ -38,7 +38,6 @@ const NavMenu = () => {
     if(accessToken !== null)
     {
       tokenData = parseJwt(accessToken)
-      console.log(tokenData)
       return (
         <NavItem>
           <NavLink tag={Link} className="text-light" onClick={() =>
@@ -60,7 +59,7 @@ const NavMenu = () => {
     if(accessToken !== null)
     {
       tokenData = parseJwt(accessToken)
-      if(tokenData.sub === "TomasLKLB")
+      if(tokenData.given_name === "TomasLKLB")
       {
         return (
           <NavItem>
