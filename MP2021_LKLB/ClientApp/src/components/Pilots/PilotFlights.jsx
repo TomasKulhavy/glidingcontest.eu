@@ -64,7 +64,6 @@ const PilotFlights = (props) => {
         },
         validate: validate,
         onSubmit: values => {
-            console.log(values);
             axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/Account/changePassword`,
                 {
                     id: tokenData.sub,
@@ -228,9 +227,6 @@ const PilotFlights = (props) => {
             })    
             
         }
-        console.log(props.match.params.id)
-        console.log(user)
-        console.log(userName)
         
         if(userName === "TomasLKLB" && props.match.params.id === user)
         {
