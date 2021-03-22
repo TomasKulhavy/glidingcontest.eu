@@ -118,7 +118,7 @@ export default function SignIn() {
                                 {formik.errors.password ? <FormFeedback invalid>{formik.errors.password}</FormFeedback> : null}
                             </FormGroup>
                             <div>
-                                <Button type="submit" className="m-2" color="success">Odeslat</Button>
+                                <Button type="submit" className="m-2" color="success">Přihlásit se</Button>
                             </div>
                         </Form>
                     </CardBody>

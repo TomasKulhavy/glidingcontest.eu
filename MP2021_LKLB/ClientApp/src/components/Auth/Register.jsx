@@ -189,7 +189,7 @@ export default function SignUp() {
                                 {formik.errors.repassword ? <FormFeedback invalid>{formik.errors.repassword}</FormFeedback> : null}
                             </FormGroup>
                             <div>
-                                <Button type="submit" className="m-2" color="success">Odeslat</Button>
+                                <Button type="submit" className="m-2" color="success">Zaregistrovat se</Button>
                             </div>
                         </Form>
                     </CardBody>
