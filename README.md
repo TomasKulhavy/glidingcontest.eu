@@ -1,6 +1,5 @@
 # MP2021 databáze letů pro Aeroklub Liberec
-## Spouštění aplikace 
-- edirtdsfvsdvsd 
+## Spouštění aplikace  
  - BACKEND URL je nastavené na https://localhost:44346. Při spuštění aplikace přes IIS Express by mělo vše fungovat.
  - Aplikace bude dostupná na doméně ***https://glidingcontest.eu/***
  - Pro instalaci node modules => **npm install**
