@@ -194,7 +194,7 @@ const PilotFlights = (props) => {
                             dispatch({
                                 type: ADD_FLIGHTID,
                                 currentFlightId: item.id
-                            })} tag={Link} to="/flight/viewer">
+                            })} tag={Link} to={`/flight/viewer/${item.id}`}>
                             Zobrazit let</Button></td>
                         <td></td>
                   </tr> 

@@ -104,7 +104,7 @@ const FlightView = (props) => {
               dispatch({
                 type: ADD_PILOTID,
                 pilotId: flightLog.userId
-              })} tag={Link} to="/pilot/flights">
+              })} tag={Link} to={`/pilot/flights/${flightLog.userId}`}>
               {flightLog.pilotName}</Button>
           </tr> 
           <tr>
