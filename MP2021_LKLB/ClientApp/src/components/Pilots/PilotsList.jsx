@@ -35,7 +35,7 @@ const PilotsList = () => {
                     dispatch({
                         type: ADD_PILOTID,
                         pilotId: item.id
-                    })} tag={Link} to="/pilot/flights">
+                    })} tag={Link} to={`/pilot/flights/${item.id}`}>
                     Lety pilota</Button></td>
             </tr> 
           );

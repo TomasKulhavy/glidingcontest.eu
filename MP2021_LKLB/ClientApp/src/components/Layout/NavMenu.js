@@ -44,7 +44,7 @@ const NavMenu = () => {
             dispatch({
               type: ADD_PILOTID,
               pilotId: tokenData.sub
-            })} to="/pilot/flights">
+            })} to={`/pilot/flights/${tokenData.sub}`}>
             <FontAwesomeIcon icon={faUserAlt} className="font-size-xl mr-2 mt-1" />
             {tokenData.given_name}
           </NavLink>

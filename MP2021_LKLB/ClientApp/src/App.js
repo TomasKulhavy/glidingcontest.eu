@@ -30,11 +30,11 @@ function App() {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/flight/list" component={FlightList} />
-            <Route exact path="/flight/viewer" component={FlightView} />
+            <Route exact path="/flight/viewer/:id" component={FlightView} />
             <Route exact path="/flight/upload" component={UploadFlight} />
             <Route exact path="/pilot/list" component={PilotsList} />
             <Route exact path="/pilot/order" component={PilotOrder} />
-            <Route exact path="/pilot/flights" component={PilotFlights} />
+            <Route exact path="/pilot/flights/:id" component={PilotFlights} />
             <Route exact path="/statistics" component={Stats} />
             <Route exact path="/feedback" component={Feedback} />
             <Route exact path="/feedback/review" component={FeedbackReview} />

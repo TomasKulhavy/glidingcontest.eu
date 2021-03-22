@@ -10,15 +10,20 @@ import Loading from "../Pages/Loading";
 import './Flight.css';
 
 const FlightList = () => {
+    const [yearsList, setYearsList] = useState([]);
     const yearNow = new Date().getFullYear();
     const [flights, setFlights] = useState([]);
     const [year, setYear] = useState(yearNow);
-    const [yearsList, setYearsList] = useState([]);
     const [loading, setLoading] = useState(false);
     const [, dispatch] = useContext(FlightDataContext);
 
     useEffect(() => {
         setLoading(true);
+        axios
+            .get(`${process.env.REACT_APP_BACKEND_URL}/api/View/getYears/list`)
+            .then((response) => {
+                setYearsList(response.data)
+            })
         axios
             .get(`${process.env.REACT_APP_BACKEND_URL}/api/FlightLog/${year}`)
             .then((response) => {
@@ -27,11 +32,6 @@ const FlightList = () => {
             .then(() => {
                 setLoading(false);
             })  
-        axios
-            .get(`${process.env.REACT_APP_BACKEND_URL}/api/View/getYears/list`)
-            .then((response) => {
-                setYearsList(response.data)
-            })
     }, [year]);
 
     function renderFlights() {
@@ -49,7 +49,7 @@ const FlightList = () => {
                     dispatch({
                         type: ADD_FLIGHTID,
                         currentFlightId: item.id
-                    })} tag={Link} to="/flight/viewer">
+                    })} tag={Link} to={`/flight/viewer/${item.id}`}>
                     Zobrazit let</Button>
                 </td>
             </tr> 

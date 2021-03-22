@@ -12,7 +12,7 @@ import Loading from "../Pages/Loading";
 
 import './Flight.css'
 
-const FlightView = () => {
+const FlightView = (props) => {
   var CanvasJSChart = CanvasJSReact.CanvasJSChart;
   const history = useHistory();
   const [fixes, setFixes] = useState([]);
@@ -27,7 +27,7 @@ const FlightView = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/api/View/${state.currentFlightId}`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/View/${props.match.params.id}`)
       .then((response) => {
         setFixes(response.data)
       })
@@ -39,7 +39,7 @@ const FlightView = () => {
         history.push("/pilot/flights")
       });
     axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/api/View/graph/${state.currentFlightId}`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/View/graph/${props.match.params.id}`)
       .then((response) => {
         setFixesToGraph(response.data)
       })
@@ -48,16 +48,16 @@ const FlightView = () => {
         history.push("/pilot/flights")
       });
     axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/api/View/getTask/${state.currentFlightId}`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/View/getTask/${props.match.params.id}`)
       .then((response) => {
         setTask(response.data)
       });
     axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/api/FlightLog/getDetails/${state.currentFlightId}`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/FlightLog/getDetails/${props.match.params.id}`)
       .then((response) => {
         setFlightLog(response.data)
       })
-  }, []);
+  }, [props.match.params.id]);
 
   function renderFixes() {
     const array = ([]);

@@ -30,7 +30,7 @@ const validate = values => {
     return errors;
 }
 
-const PilotFlights = () => {
+const PilotFlights = (props) => {
     const yearNow = new Date().getFullYear();
     const [flights, setFlights] = useState([]);
     const [pilot, setPilot] = useState([]);
@@ -89,7 +89,7 @@ const PilotFlights = () => {
     useEffect(() => {
         setLoading(true);
         axios
-            .get(`${process.env.REACT_APP_BACKEND_URL}/api/User/pilotFlights/${state.pilotId}/${year}`)
+            .get(`${process.env.REACT_APP_BACKEND_URL}/api/User/pilotFlights/${props.match.params.id}/${year}`)
             .then((response) => {
                 setFlights(response.data);
             }).
@@ -97,17 +97,17 @@ const PilotFlights = () => {
                 setLoading(false);
             });
         axios
-            .get(`${process.env.REACT_APP_BACKEND_URL}/api/User/pilotStats/${state.pilotId}`)
+            .get(`${process.env.REACT_APP_BACKEND_URL}/api/User/pilotStats/${props.match.params.id}`)
             .then((response) => {
                 setPilot(response.data);
                 setFlightTime(response.data.timeInSec);
             });
         axios
-            .get(`${process.env.REACT_APP_BACKEND_URL}/api/View/getYears/pilots/${state.pilotId}`)
+            .get(`${process.env.REACT_APP_BACKEND_URL}/api/View/getYears/pilots/${props.match.params.id}`)
             .then((response) => {
                 setYearsList(response.data)
             })
-    }, [year]);
+    }, [year, props.match.params.id]);
 
     const parseJwt = (token) => {
         const base64Url = token.split(".")[1];
@@ -168,7 +168,7 @@ const PilotFlights = () => {
                             dispatch({
                                 type: ADD_FLIGHTID,
                                 currentFlightId: item.id
-                            })} tag={Link} to="/flight/viewer">
+                            })} tag={Link} to={`/flight/viewer/${item.id}`}>
                             Zobrazit let</Button></td>
                         <td>
                             <Button color="danger" refresh="true" onClick={() =>
@@ -228,7 +228,24 @@ const PilotFlights = () => {
             })    
             
         }
-        if(userName === "TomasLKLB")
+        console.log(props.match.params.id)
+        console.log(user)
+        console.log(userName)
+        
+        if(userName === "TomasLKLB" && props.match.params.id === user)
+        {
+            return(
+                <CardFooter>
+                    <tr>
+                        <small className="font-size-xl mt-1" onClick={() => deleteUser()}><FontAwesomeIcon icon={faMinusCircle} className="font-size-l mr-3"/>Odstranit tento profil</small>
+                    </tr>
+                    <tr>
+                        <small className="font-size-xl mt-1" onClick={handleClickOpen}><FontAwesomeIcon icon={faKey} className="font-size-l mr-3"/>Změna hesla</small>
+                    </tr>
+                </CardFooter>
+            )
+        }
+        else if(userName === "TomasLKLB")
         {
             return(
                 <CardFooter>
