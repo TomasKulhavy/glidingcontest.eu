@@ -46,7 +46,7 @@ const StatsOverall = () => {
         }
         return (
             <div className="d-flex justify-content-center">
-                <Chart options={options} series={series} type="pie" width="400" />
+                <Chart options={options} series={series} type="pie" className="pie"/>
             </div>
         );
     }
@@ -66,7 +66,7 @@ const StatsOverall = () => {
         
         return (
             <div className="d-flex justify-content-center">
-                <Chart options={options} series={series} type="pie" width="400" />
+                <Chart options={options} series={series} type="pie" className="pie" />
             </div>
         );
     }
@@ -86,7 +86,7 @@ const StatsOverall = () => {
         
         return (
             <div className="d-flex justify-content-center">
-                <Chart options={options} series={series} type="pie" width="400" />
+                <Chart options={options} series={series} type="pie" className="pie" />
             </div>
         );
     }

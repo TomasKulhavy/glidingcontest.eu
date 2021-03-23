@@ -85,7 +85,7 @@ const FlightList = () => {
                                 {renderYears()}
                             </tbody>
                     </Table>
-                    <Table className="bg-dark text-white" striped>
+                    <Table className="bg-dark text-white table-responsive-sm" striped>
                         <thead>
                             <tr>
                                 <th>Datum</th>

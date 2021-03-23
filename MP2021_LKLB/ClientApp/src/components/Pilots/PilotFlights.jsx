@@ -329,29 +329,27 @@ const PilotFlights = (props) => {
                     {renderAlert()}
                     <Row>
                         {renderPilotCard()}
-                        <div className="">
-                            <Table borderless>
-                                    <tbody className="text-center">
-                                        {renderYears()}
-                                    </tbody>
-                            </Table>
-                            <Table className="bg-dark text-white" striped>
-                                <thead>
-                                    <tr>
-                                        <th>Datum</th>
-                                        <th>Body</th>
-                                        <th>Vzdálenost</th>
-                                        <th>Rychlost</th>
-                                        <th>Typ kluzáku</th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {renderFlights()}
+                        <Table borderless>
+                                <tbody className="text-center">
+                                    {renderYears()}
                                 </tbody>
-                            </Table>
-                        </div>
+                        </Table>
+                        <Table className="bg-dark text-white table-responsive-sm" striped>
+                            <thead>
+                                <tr>
+                                    <th>Datum</th>
+                                    <th>Body</th>
+                                    <th>Vzdálenost</th>
+                                    <th>Rychlost</th>
+                                    <th>Typ kluzáku</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody >
+                                {renderFlights()}
+                            </tbody>
+                        </Table>
                     </Row>
                 </Container>
                 <FormikProvider value={formik}>

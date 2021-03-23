@@ -1,3 +1,7 @@
 .apexcharts-legend-text {
     color: rgb(255, 255, 255) !important;
 }
+
+.pie {
+    width: 400px; 
+}
