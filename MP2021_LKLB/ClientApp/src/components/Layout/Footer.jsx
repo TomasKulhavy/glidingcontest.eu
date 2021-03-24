@@ -34,7 +34,7 @@ const Footer = () => {
               Kontakt
             </h6>
             <p>
-              <FontAwesomeIcon className="mr-3" icon={faSearchLocation} /> GPS: 50°46'06" N, 15°01'30" E
+              <FontAwesomeIcon className="mr-3" icon={faSearchLocation} /> 50°46'06" N 15°01'30" E
             </p>
             <p>
               <FontAwesomeIcon className="mr-3" icon={faHome} /> Aeroklub Liberec

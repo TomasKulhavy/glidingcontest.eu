@@ -9,6 +9,11 @@
   top: 0;
   z-index: -5;
   overflow: auto;
+  font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+}
+
+.navt:hover {
+  transform: scale(1.05);
 }
 
 a {
@@ -17,6 +22,16 @@ a {
 
 code {
   color: #E01A76;
+}
+
+.feedback {
+  background-color: #343a40;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
 }
 
 .btn-primary {

@@ -91,8 +91,8 @@ const PilotFlights = (props) => {
             .get(`${process.env.REACT_APP_BACKEND_URL}/api/User/pilotFlights/${props.match.params.id}/${year}`)
             .then((response) => {
                 setFlights(response.data);
-            }).
-            then(() => {
+            })
+            .then(() => {
                 setLoading(false);
             });
         axios
@@ -354,63 +354,63 @@ const PilotFlights = (props) => {
                 </Container>
                 <FormikProvider value={formik}>
                     <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                    <DialogTitle id="form-dialog-title">Změna hesla</DialogTitle>
-                    {renderPasswordWrong()}
-                    <Form onSubmit={formik.handleSubmit}>
-                        <DialogContent>
-                            <FormGroup className="m-2">
-                                <Input
-                                    type="password"
-                                    name="oldPassword"
-                                    id="oldPassword"
-                                    placeholder="Staré heslo"
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    value={formik.values.oldPassword}
-                                    invalid={Boolean(formik.errors.oldPassword)}
-                                    valid={formik.touched.oldPassword}
-                                />
-                                {formik.errors.oldPassword ? <FormFeedback invalid>{formik.errors.oldPassword}</FormFeedback> : null}
-                            </FormGroup>
-                            <FormGroup className="m-2">
-                                <Input
-                                    type="password"
-                                    name="newPassword"
-                                    id="newPassword"
-                                    placeholder="Nové heslo"
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    value={formik.values.newPassword}
-                                    invalid={Boolean(formik.errors.newPassword)}
-                                    valid={formik.touched.newPassword}
-                                />
-                                {formik.errors.newPassword ? <FormFeedback invalid>{formik.errors.newPassword}</FormFeedback> : null}
-                            </FormGroup>
-                            <FormGroup className="m-2">
-                                <Input
-                                    type="password"
-                                    name="reNewPassword"
-                                    id="reNewPassword"
-                                    placeholder="Opakujte nové heslo"
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    value={formik.values.reNewPassword}
-                                    invalid={Boolean(formik.errors.reNewPassword)}
-                                    valid={formik.touched.reNewPassword}
-                                />
-                                {formik.errors.reNewPassword ? <FormFeedback invalid>{formik.errors.reNewPassword}</FormFeedback> : null}
-                            </FormGroup>
-                        </DialogContent>
-                        <DialogActions>
-                            <Button onClick={handleClose} color="danger">
-                                Zrušit
-                            </Button>
-                            <Button type="submit" color="primary">
-                                Uložit
-                            </Button>
-                        </DialogActions>
-                    </Form>
-                </Dialog>
+                        <DialogTitle id="form-dialog-title">Změna hesla</DialogTitle>
+                            {renderPasswordWrong()}
+                        <Form onSubmit={formik.handleSubmit}>
+                            <DialogContent>
+                                <FormGroup className="m-2">
+                                    <Input
+                                        type="password"
+                                        name="oldPassword"
+                                        id="oldPassword"
+                                        placeholder="Staré heslo"
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values.oldPassword}
+                                        invalid={Boolean(formik.errors.oldPassword)}
+                                        valid={formik.touched.oldPassword}
+                                    />
+                                    {formik.errors.oldPassword ? <FormFeedback invalid>{formik.errors.oldPassword}</FormFeedback> : null}
+                                </FormGroup>
+                                <FormGroup className="m-2">
+                                    <Input
+                                        type="password"
+                                        name="newPassword"
+                                        id="newPassword"
+                                        placeholder="Nové heslo"
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values.newPassword}
+                                        invalid={Boolean(formik.errors.newPassword)}
+                                        valid={formik.touched.newPassword}
+                                    />
+                                    {formik.errors.newPassword ? <FormFeedback invalid>{formik.errors.newPassword}</FormFeedback> : null}
+                                </FormGroup>
+                                <FormGroup className="m-2">
+                                    <Input
+                                        type="password"
+                                        name="reNewPassword"
+                                        id="reNewPassword"
+                                        placeholder="Opakujte nové heslo"
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values.reNewPassword}
+                                        invalid={Boolean(formik.errors.reNewPassword)}
+                                        valid={formik.touched.reNewPassword}
+                                    />
+                                    {formik.errors.reNewPassword ? <FormFeedback invalid>{formik.errors.reNewPassword}</FormFeedback> : null}
+                                </FormGroup>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleClose} color="danger">
+                                    Zrušit
+                                </Button>
+                                <Button type="submit" color="primary">
+                                    Uložit
+                                </Button>
+                            </DialogActions>
+                        </Form>
+                    </Dialog>
                 </FormikProvider>
             </>
         )

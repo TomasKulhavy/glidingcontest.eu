@@ -84,117 +84,119 @@ export default function SignUp() {
         }
     }
     return (
-        <Container className="text-center">
-            {renderAlert()}
-            <Button className="btn-dark mt-5 mb-3" tag={Link} to="/">
-                <FontAwesomeIcon icon={faHome} className="font-size-xl mr-3" />
-                Zpět na domovskou obrazovku
-            </Button>
-            <FormikProvider value={formik}>
-                <Card className="m-2 text-center">
-                    <CardBody className="text-center bg-dark text-light">
-                        <div className="d-flex align-items-start">
-                            <div className="font-weight-bold">
-                                <small className="text-white-70 d-block font-size-xl mb-1 text-uppercase">Registrace</small>
-                                <span className="font-size-xxl mt-1"></span>
-                            </div>
-                            <div className="ml-auto">
-                                <div className="text-center">
-                                    <FontAwesomeIcon icon={faUserPlus} className="font-size-xl" />
+        <div className="feedback">
+            <Container className="text-center">
+                {renderAlert()}
+                <Button className="btn-dark mt-5 mb-3" tag={Link} to="/">
+                    <FontAwesomeIcon icon={faHome} className="font-size-xl mr-3" />
+                    Zpět na domovskou obrazovku
+                </Button>
+                <FormikProvider value={formik}>
+                    <Card className="m-2 text-center border-0">
+                        <CardBody className="text-center bg-dark text-light">
+                            <div className="d-flex align-items-start">
+                                <div className="font-weight-bold">
+                                    <small className="text-white-70 d-block font-size-xl mb-1 text-uppercase">Registrace</small>
+                                    <span className="font-size-xxl mt-1"></span>
+                                </div>
+                                <div className="ml-auto">
+                                    <div className="text-center">
+                                        <FontAwesomeIcon icon={faUserPlus} className="font-size-xl" />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <Form onSubmit={formik.handleSubmit}>
-                            <FormGroup className="m-2">
-                                <Label for="firstname">Jméno</Label>
-                                <Input
-                                    name="firstname"
-                                    id="firstname"
-                                    placeholder="Jan"
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    value={formik.values.firstname}
-                                    invalid={Boolean(formik.errors.firstname)}
-                                    valid={formik.touched.firstname}
-                                />
-                            </FormGroup>
-                            <FormGroup className="m-2">
-                                <Label for="lastname">Přijmení</Label>
-                                <Input
-                                    name="lastname"
-                                    id="lastname"
-                                    placeholder="Novák"
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    value={formik.values.lastname}
-                                    invalid={Boolean(formik.errors.lastname)}
-                                    valid={formik.touched.lastname}
-                                />
-                            </FormGroup>
-                            <FormGroup className="m-2">
-                                <Label for="email">E-mail</Label>
-                                <Input
-                                    type="email"
-                                    name="email"
-                                    id="email"
-                                    placeholder="jan.novak@gmail.com"
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    value={formik.values.email}
-                                    invalid={Boolean(formik.errors.email)}
-                                    valid={formik.touched.email}
-                                />
-                            </FormGroup>
-                            <FormGroup className="m-2">
-                                <Label for="username">Přihlašovací jméno</Label>
-                                <Input
-                                    name="username"
-                                    id="username"
-                                    placeholder="JanNovak"
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    value={formik.values.username}
-                                    invalid={Boolean(formik.errors.username)}
-                                    valid={formik.touched.username}
-                                />
-                            </FormGroup>
-                            <FormGroup className="m-2">
-                                <Label for="password">Heslo</Label>
-                                <Input
-                                    type="password"
-                                    name="password"
-                                    id="password"
-                                    placeholder="Heslo"
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    value={formik.values.password}
-                                    invalid={Boolean(formik.errors.password)}
-                                    valid={formik.touched.password}
-                                />
-                                {formik.errors.password ? <FormFeedback invalid>{formik.errors.password}</FormFeedback> : null}
-                            </FormGroup>
-                            <FormGroup className="m-2">
-                                <Label for="repassword">Opakujte heslo</Label>
-                                <Input
-                                    type="password"
-                                    name="repassword"
-                                    id="repassword"
-                                    placeholder="Heslo"
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    value={formik.values.repassword}
-                                    invalid={Boolean(formik.errors.repassword)}
-                                    valid={formik.touched.repassword}
-                                />
-                                {formik.errors.repassword ? <FormFeedback invalid>{formik.errors.repassword}</FormFeedback> : null}
-                            </FormGroup>
-                            <div>
-                                <Button type="submit" className="m-2" color="success">Zaregistrovat se</Button>
-                            </div>
-                        </Form>
-                    </CardBody>
-                </Card>
-            </FormikProvider>
-        </Container>
+                            <Form onSubmit={formik.handleSubmit}>
+                                <FormGroup className="m-2">
+                                    <Label for="firstname">Jméno</Label>
+                                    <Input
+                                        name="firstname"
+                                        id="firstname"
+                                        placeholder="Jan"
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values.firstname}
+                                        invalid={Boolean(formik.errors.firstname)}
+                                        valid={formik.touched.firstname}
+                                    />
+                                </FormGroup>
+                                <FormGroup className="m-2">
+                                    <Label for="lastname">Přijmení</Label>
+                                    <Input
+                                        name="lastname"
+                                        id="lastname"
+                                        placeholder="Novák"
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values.lastname}
+                                        invalid={Boolean(formik.errors.lastname)}
+                                        valid={formik.touched.lastname}
+                                    />
+                                </FormGroup>
+                                <FormGroup className="m-2">
+                                    <Label for="email">E-mail</Label>
+                                    <Input
+                                        type="email"
+                                        name="email"
+                                        id="email"
+                                        placeholder="jan.novak@gmail.com"
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values.email}
+                                        invalid={Boolean(formik.errors.email)}
+                                        valid={formik.touched.email}
+                                    />
+                                </FormGroup>
+                                <FormGroup className="m-2">
+                                    <Label for="username">Přihlašovací jméno</Label>
+                                    <Input
+                                        name="username"
+                                        id="username"
+                                        placeholder="JanNovak"
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values.username}
+                                        invalid={Boolean(formik.errors.username)}
+                                        valid={formik.touched.username}
+                                    />
+                                </FormGroup>
+                                <FormGroup className="m-2">
+                                    <Label for="password">Heslo</Label>
+                                    <Input
+                                        type="password"
+                                        name="password"
+                                        id="password"
+                                        placeholder="Heslo"
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values.password}
+                                        invalid={Boolean(formik.errors.password)}
+                                        valid={formik.touched.password}
+                                    />
+                                    {formik.errors.password ? <FormFeedback invalid>{formik.errors.password}</FormFeedback> : null}
+                                </FormGroup>
+                                <FormGroup className="m-2">
+                                    <Label for="repassword">Opakujte heslo</Label>
+                                    <Input
+                                        type="password"
+                                        name="repassword"
+                                        id="repassword"
+                                        placeholder="Heslo"
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values.repassword}
+                                        invalid={Boolean(formik.errors.repassword)}
+                                        valid={formik.touched.repassword}
+                                    />
+                                    {formik.errors.repassword ? <FormFeedback invalid>{formik.errors.repassword}</FormFeedback> : null}
+                                </FormGroup>
+                                <div>
+                                    <Button type="submit" className="m-2" color="success">Zaregistrovat se</Button>
+                                </div>
+                            </Form>
+                        </CardBody>
+                    </Card>
+                </FormikProvider>
+            </Container>
+        </div>
     )
 }

@@ -30,7 +30,7 @@ const NavMenu = () => {
     .then((response) => {
       dispatch({ type: SET_ACCESS_TOKEN, payload: response.data.accessToken});
     })
-  }, [dispatch])
+  }, [dispatch, accessToken])
 
   function renderUser()
   {
@@ -40,7 +40,7 @@ const NavMenu = () => {
       tokenData = parseJwt(accessToken)
       return (
         <NavItem>
-          <NavLink tag={Link} className="text-light" onClick={() =>
+          <NavLink tag={Link} className="text-light navt" onClick={() =>
             dispatch({
               type: ADD_PILOTID,
               pilotId: tokenData.sub
@@ -63,7 +63,7 @@ const NavMenu = () => {
       {
         return (
           <NavItem>
-            <NavLink tag={Link} className="text-light" to="/feedback/review">
+            <NavLink tag={Link} className="text-light navt" to="/feedback/review">
               Feedback
             </NavLink>
           </NavItem>
@@ -91,23 +91,23 @@ const NavMenu = () => {
 
   return (
     <header>
-      <Navbar className="navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
+      <Navbar className="navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3 border-0">
         <Container>
           <NavbarBrand tag={Link} className="text-light text-uppercase" to="/">Databáze letů</NavbarBrand>
           <NavbarToggler onClick={toggle} />
           <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={isOpen} navbar>
             <ul className="navbar-nav flex-grow">
               <NavItem>
-                <NavLink tag={Link} className="text-light" to="/flight/list">Lety</NavLink>
+                <NavLink tag={Link} className="text-light navt" to="/flight/list">Lety</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink tag={Link} className="text-light" to="/pilot/order">Pořadí pilotů</NavLink>
+                <NavLink tag={Link} className="text-light navt" to="/pilot/order">Pořadí pilotů</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink tag={Link} className="text-light" to="/pilot/list">Piloti</NavLink>
+                <NavLink tag={Link} className="text-light navt" to="/pilot/list">Piloti</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink tag={Link} className="text-light" to="/statistics">Statistiky</NavLink>
+                <NavLink tag={Link} className="text-light navt" to="/statistics">Statistiky</NavLink>
               </NavItem>
               {renderFeedback()}
               {
@@ -116,14 +116,14 @@ const NavMenu = () => {
                   <Nav navbar>
                     {renderUser()}
                     <NavItem>
-                      <NavLink tag={Link} className="text-light" to="/flight/upload">
+                      <NavLink tag={Link} className="text-light navt" to="/flight/upload">
                         <FontAwesomeIcon icon={faUpload} className="font-size-xl mr-2 mt-1" />
                         Nahrát let
                       </NavLink>
                     </NavItem>
                     <NavItem>
                       <NavLink onClick={() => logout() }
-                        tag={Link} className="text-light" to="/">
+                        tag={Link} className="text-light navt" to="/">
                         <FontAwesomeIcon icon={faSignOutAlt} className="font-size-xl mr-2 mt-1" />
                         Odhlásit se
                       </NavLink>
@@ -132,10 +132,10 @@ const NavMenu = () => {
                   :
                   <Nav navbar>
                     <NavItem>
-                      <NavLink tag={Link} className="text-light" to="/register">Registrovat se</NavLink>
+                      <NavLink tag={Link} className="text-light navt" to="/register">Registrovat se</NavLink>
                     </NavItem>
                     <NavItem>
-                      <NavLink tag={Link} className="text-light" to="/login">Přihlásit se</NavLink>
+                      <NavLink tag={Link} className="text-light navt" to="/login">Přihlásit se</NavLink>
                     </NavItem>
                   </Nav>
               }
@@ -144,8 +144,7 @@ const NavMenu = () => {
         </Container>
       </Navbar>
       <Container>
-      {renderAlert()}
-
+        {renderAlert()}
       </Container>
     </header>
   );

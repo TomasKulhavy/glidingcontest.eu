@@ -66,64 +66,66 @@ export default function SignIn() {
         },
     });
     return (
-        <Container className="text-center">
-            <Button className="btn-dark mt-5 mb-3" tag={Link} to="/">
-                <FontAwesomeIcon icon={faHome} className="font-size-xl mr-3" />
-                Zpět na domovskou obrazovku
-            </Button>
-            {renderAlert()}
-            <FormikProvider value={formik}>
-                <Card className="m-2 text-center">
-                    <CardBody className="text-center bg-dark text-light">
-                        <div className="d-flex align-items-start">
-                            <div className="font-weight-bold">
-                                <small className="text-white-70 d-block font-size-xl mb-1 text-uppercase">Přihlásit se</small>
-                                <span className="font-size-xxl mt-1"></span>
-                            </div>
-                            <div className="ml-auto">
-                                <div className="text-center">
-                                    <FontAwesomeIcon icon={faSignInAlt} className="font-size-xl" />
+        <div class="feedback">
+            <Container className="text-center">
+                <Button className="btn-dark mt-5 mb-3" tag={Link} to="/">
+                    <FontAwesomeIcon icon={faHome} className="font-size-xl mr-3" />
+                    Zpět na domovskou obrazovku
+                </Button>
+                {renderAlert()}
+                <FormikProvider value={formik}>
+                    <Card className="m-2 text-center border-0">
+                        <CardBody className="text-center bg-dark text-light">
+                            <div className="d-flex align-items-start">
+                                <div className="font-weight-bold">
+                                    <small className="text-white-70 d-block font-size-xl mb-1 text-uppercase">Přihlásit se</small>
+                                    <span className="font-size-xxl mt-1"></span>
+                                </div>
+                                <div className="ml-auto">
+                                    <div className="text-center">
+                                        <FontAwesomeIcon icon={faSignInAlt} className="font-size-xl" />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <Form onSubmit={formik.handleSubmit}>
-                            <FormGroup className="m-2">
-                                <Label for="email">E-mailová adresa</Label>
-                                <Input
-                                    name="email"
-                                    id="email"
-                                    type="email"
-                                    placeholder="jannovak@email.cz"
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    value={formik.values.email}
-                                    invalid={Boolean(formik.errors.email)}
-                                    valid={formik.touched.email}
-                                />
-                                {formik.errors.email ? <FormFeedback invalid>{formik.errors.email}</FormFeedback> : null}
-                            </FormGroup>
-                            <FormGroup className="m-2">
-                                <Label for="password">Heslo</Label>
-                                <Input
-                                    type="password"
-                                    name="password"
-                                    id="password"
-                                    placeholder="Heslo"
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    value={formik.values.password}
-                                    invalid={Boolean(formik.errors.password)}
-                                    valid={formik.touched.password}
-                                />
-                                {formik.errors.password ? <FormFeedback invalid>{formik.errors.password}</FormFeedback> : null}
-                            </FormGroup>
-                            <div>
-                                <Button type="submit" className="m-2" color="success">Přihlásit se</Button>
-                            </div>
-                        </Form>
-                    </CardBody>
-                </Card>
-            </FormikProvider>
-        </Container>
+                            <Form onSubmit={formik.handleSubmit}>
+                                <FormGroup className="m-2">
+                                    <Label for="email">E-mailová adresa</Label>
+                                    <Input
+                                        name="email"
+                                        id="email"
+                                        type="email"
+                                        placeholder="jannovak@email.cz"
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values.email}
+                                        invalid={Boolean(formik.errors.email)}
+                                        valid={formik.touched.email}
+                                    />
+                                    {formik.errors.email ? <FormFeedback invalid>{formik.errors.email}</FormFeedback> : null}
+                                </FormGroup>
+                                <FormGroup className="m-2">
+                                    <Label for="password">Heslo</Label>
+                                    <Input
+                                        type="password"
+                                        name="password"
+                                        id="password"
+                                        placeholder="Heslo"
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values.password}
+                                        invalid={Boolean(formik.errors.password)}
+                                        valid={formik.touched.password}
+                                    />
+                                    {formik.errors.password ? <FormFeedback invalid>{formik.errors.password}</FormFeedback> : null}
+                                </FormGroup>
+                                <div>
+                                    <Button type="submit" className="m-2" color="success">Přihlásit se</Button>
+                                </div>
+                            </Form>
+                        </CardBody>
+                    </Card>
+                </FormikProvider>
+            </Container>
+        </div>
     )
 }

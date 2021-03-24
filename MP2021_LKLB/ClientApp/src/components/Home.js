@@ -168,7 +168,7 @@ const Home = () => {
               </div>
             </Row>
             <Row className="bg-dark">
-              <iframe src="https://glideandseek.com/?viewport=50.75235,15.18841,10" allow="geolocation" style={{ width: "100%" }} height={400}></iframe>
+              <iframe title="glideandseek" src="https://glideandseek.com/?viewport=50.75235,15.18841,10" allow="geolocation" style={{ width: "100%" }} height={400}></iframe>
             </Row>
           </div>
         </Layout>

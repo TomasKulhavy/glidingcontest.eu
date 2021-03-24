@@ -2,7 +2,8 @@ import React, { useEffect, useState, useContext } from 'react';
 import axios from "axios";
 import { Container, Table, Card, CardBody, CardHeader, CardFooter, Button } from "reactstrap";
 import NavMenu from "../Layout/NavMenu";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { createBrowserHistory } from "history";
 import { MapContainer, TileLayer, Polyline } from "react-leaflet";
 import CanvasJSReact from '../../assets/canvasjs.react';
 import { FlightDataContext, ADD_PILOTID } from "../../providers/FlightDataContext";
@@ -14,14 +15,14 @@ import './Flight.css'
 
 const FlightView = (props) => {
   var CanvasJSChart = CanvasJSReact.CanvasJSChart;
-  const history = useHistory();
+  const history = createBrowserHistory();
   const [fixes, setFixes] = useState([]);
   const [flightLog, setFlightLog] = useState([]);
   const [task, setTask] = useState([]);
   const [fixesToGraph, setFixesToGraph] = useState([]);
-  const [state, dispatch] = useContext(FlightDataContext);
+  const [, dispatch] = useContext(FlightDataContext);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [, setError] = useState(false);
   let center;
   
   useEffect(() => {
