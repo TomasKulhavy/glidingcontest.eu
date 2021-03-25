@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -31,14 +32,16 @@ namespace MP2021_LKLB.Controllers
         private UserManager<ApplicationUser> _userManager;
         private SignInManager<ApplicationUser> _signInManager;
         private ApplicationDbContext _db;
+        private IEmailSender _emailSender;
         private IUserService _user;
-        public AccountController(IConfiguration config, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IUserService user, ApplicationDbContext db)
+        public AccountController(IConfiguration config, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailSender emailSender, IUserService user, ApplicationDbContext db)
         {
             _config = config;
             _userManager = userManager;
             _signInManager = signInManager;
             _db = db;
             _user = user;
+            _emailSender = emailSender;
         }
 
         [HttpGet]
@@ -128,6 +131,7 @@ namespace MP2021_LKLB.Controllers
             var result = await _userManager.CreateAsync(newUser);
             if (result.Succeeded)
             {
+                await _emailSender.SendEmailAsync(userData.Email, "Vítejte na Glidingcontest.eu!", $"Dobrý den {userData.FirstName} {userData.LastName},\n děkujeme, že jste se zaregistrovali na naší stránce http://glidingcontest.eu/. \n Email: {userData.Email} \n Uživatelské jméno: {userData.UserName} \n\n Glidingcontest.eu");
                 return CreatedAtAction("GetAccount", new { id = newUser.Id }, newUser);
             }
             else

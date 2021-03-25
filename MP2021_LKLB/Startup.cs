@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +17,7 @@ using Microsoft.OpenApi.Models;
 using MP2021_LKLB.Data;
 using MP2021_LKLB.Models;
 using MP2021_LKLB.Services;
+using MP2021_LKLB.Services.EmailService;
 using MP2021_LKLB.Services.FeedbackService;
 using MP2021_LKLB.Services.FlightLogService;
 using MP2021_LKLB.Services.StatisticsService;
@@ -59,6 +61,8 @@ namespace MP2021_LKLB
             services.AddTransient<IViewService, ViewService>();
             services.AddTransient<IFeedbackService, FeedbackService>();
             services.AddTransient<IStatisticsService, StatisticsService>();
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<EmailSender>();
 
             services.AddAuthorization();
 

@@ -1,12 +1,17 @@
 import React, { useContext, useState } from 'react';
 import Container from '@material-ui/core/Container';
-import { Card, Button, Form, FormGroup, FormFeedback, Input, Label, CardBody, Alert } from "reactstrap";
+import { Card, Button, Form, FormGroup, FormFeedback, Input, Label, CardBody, Alert, CardFooter } from "reactstrap";
 import { Link, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faSignInAlt } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { useFormik, FormikProvider } from 'formik';
 import { FlightDataContext, SET_ACCESS_TOKEN } from "../../providers/FlightDataContext";
+
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const validate = values => {
     const errors = {};
@@ -26,8 +31,18 @@ export default function SignIn() {
     const history = useHistory();
     const [{ accessToken }, dispatch] = useContext(FlightDataContext);
     const [error, setError] = useState(false);
+    const [done, setDone] = useState(false);
     const [visible, setVisible] = useState(true);
     const onDismiss = () => setVisible(false);
+    const [open, setOpen] = useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     function renderAlert()
     {
@@ -37,10 +52,19 @@ export default function SignIn() {
         }
     }
 
+    function renderAlertEmail()
+    {
+        if(done)
+        {
+            return (<Alert color="danger" isOpen={visible} toggle={onDismiss} className="my-3">Tato e-mailová adresa není zaregistrovaná!</Alert>)
+        }
+    }
+
     const formik = useFormik({
         initialValues: {
             email: '',
             password: '',
+            emailRe: '',
         },
         validate: validate,
         onSubmit: values => {
@@ -49,6 +73,7 @@ export default function SignIn() {
                 {
                     email: values.email,
                     password: values.password,
+                    emailRe: values.emailRe,
                 },
                 {
                     headers: {
@@ -123,9 +148,45 @@ export default function SignIn() {
                                 </div>
                             </Form>
                         </CardBody>
+                        <CardFooter className="text-center bg-dark text-light">
+                            <Button tag={Link} to="/register" className="mr-2" color="primary">Zaregistrovat se</Button>
+                            <Button onClick={handleClickOpen} className="mr-2" color="warning">Zapomenuté heslo</Button>
+                        </CardFooter>
                     </Card>
                 </FormikProvider>
             </Container>
+            <FormikProvider value={formik}>
+                    <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                        <DialogTitle id="form-dialog-title">Zapomenuté heslo</DialogTitle>
+                        {renderAlertEmail()}
+                        <Form onSubmit={formik.handleSubmit}>
+                            <DialogContent>
+                                <FormGroup className="m-2">
+                                    <Input
+                                        type="email"
+                                        name="emailRe"
+                                        id="emailRe"
+                                        placeholder="E-mailová adresa"
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values.emailRe}
+                                        invalid={Boolean(formik.errors.emailRe)}
+                                        valid={formik.touched.emailRe}
+                                    />
+                                    {formik.errors.email ? <FormFeedback invalid>{formik.errors.email}</FormFeedback> : null}
+                                </FormGroup>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleClose} color="danger">
+                                    Zrušit
+                                </Button>
+                                <Button type="submit" color="primary">
+                                    Restartovat heslo
+                                </Button>
+                            </DialogActions>
+                        </Form>
+                    </Dialog>
+                </FormikProvider>
         </div>
     )
 }

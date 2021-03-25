@@ -147,7 +147,7 @@ export default function SignUp() {
                                     />
                                 </FormGroup>
                                 <FormGroup className="m-2">
-                                    <Label for="username">Přihlašovací jméno</Label>
+                                    <Label for="username">Uživatelské jméno</Label>
                                     <Input
                                         name="username"
                                         id="username"
