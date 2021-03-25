@@ -1,12 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import Container from '@material-ui/core/Container';
-import { Card, Button, Form, FormGroup, FormFeedback, Input, Label, CardBody, Alert, CardFooter } from "reactstrap";
-import { Link, useHistory } from "react-router-dom";
+import { Card, Button, Form, FormGroup, FormFeedback, Input, Label, CardBody, Alert } from "reactstrap";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faSignInAlt } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { useFormik, FormikProvider } from 'formik';
-import { FlightDataContext, SET_ACCESS_TOKEN } from "../../providers/FlightDataContext";
 
 const validate = values => {
     const errors = {};
@@ -16,60 +15,41 @@ const validate = values => {
     else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
         errors.email = "Neplatná e-mailová adresa!";
     }
-    if (!values.password) {
-        errors.password = "Heslo musí být vyplněno";
-    }
     return errors;
 }
 
-export default function SignIn() {
-    const history = useHistory();
-    const [{ accessToken }, dispatch] = useContext(FlightDataContext);
+export default function ForgotPassword() {
     const [error, setError] = useState(false);
     const [done, setDone] = useState(false);
     const [visible, setVisible] = useState(true);
     const onDismiss = () => setVisible(false);
-    const [open, setOpen] = useState(false);
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    function renderAlert()
+    function renderAlertEmail()
     {
-        if(error)
+        if(done)
         {
-            return (<Alert color="danger" isOpen={visible} toggle={onDismiss} className="my-3">Někde se stala chyba, zkuste to znovu!</Alert>)
+            return (<Alert color="success" isOpen={visible} toggle={onDismiss} className="my-3">Na Váš e-mail Vám byl zaslán odkaz na obnovení hesla.</Alert>)
+        }
+        else if(error)
+        {
+            return (<Alert color="danger" isOpen={visible} toggle={onDismiss} className="my-3">Někde se stala chyba! Opravdu jste zadal sprvánou adresu?</Alert>)
         }
     }
 
     const formik = useFormik({
         initialValues: {
             email: '',
-            password: '',
         },
         validate: validate,
         onSubmit: values => {
             setError(false);
-            axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/Account/login`,
+            axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/Account/forgotPassword`,
                 {
                     email: values.email,
-                    password: values.password,
-                    emailRe: values.emailRe,
-                },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: "Bearer " + accessToken
-                    }
+                    password: "",
                 })
                 .then(response => {
-                    dispatch({ type: SET_ACCESS_TOKEN, payload: response.data.accessToken });
-                    history.push("/");
+                    setDone(true);
                 })
                 .catch(() => {
                     setError(true);
@@ -83,13 +63,13 @@ export default function SignIn() {
                     <FontAwesomeIcon icon={faHome} className="font-size-xl mr-3" />
                     Zpět na domovskou obrazovku
                 </Button>
-                {renderAlert()}
+                {renderAlertEmail()}
                 <FormikProvider value={formik}>
                     <Card className="m-2 text-center border-0">
                         <CardBody className="text-center bg-dark text-light">
                             <div className="d-flex align-items-start">
                                 <div className="font-weight-bold">
-                                    <small className="text-white-70 d-block font-size-xl mb-1 text-uppercase">Přihlásit se</small>
+                                    <small className="text-white-70 d-block font-size-xl mb-1 text-uppercase">Zapomenuté heslo</small>
                                     <span className="font-size-xxl mt-1"></span>
                                 </div>
                                 <div className="ml-auto">
@@ -114,30 +94,11 @@ export default function SignIn() {
                                     />
                                     {formik.errors.email ? <FormFeedback invalid>{formik.errors.email}</FormFeedback> : null}
                                 </FormGroup>
-                                <FormGroup className="m-2">
-                                    <Label for="password">Heslo</Label>
-                                    <Input
-                                        type="password"
-                                        name="password"
-                                        id="password"
-                                        placeholder="Heslo"
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                        value={formik.values.password}
-                                        invalid={Boolean(formik.errors.password)}
-                                        valid={formik.touched.password}
-                                    />
-                                    {formik.errors.password ? <FormFeedback invalid>{formik.errors.password}</FormFeedback> : null}
-                                </FormGroup>
                                 <div>
-                                    <Button type="submit" className="m-2" color="success">Přihlásit se</Button>
+                                    <Button type="submit" className="m-2" color="success">Restartovat heslo</Button>
                                 </div>
                             </Form>
                         </CardBody>
-                        <CardFooter className="text-center bg-dark text-light">
-                            <Button tag={Link} to="/register" className="mr-2" color="primary">Zaregistrovat se</Button>
-                            <Button tag={Link} to="/password/forgot" className="mr-2" color="warning">Zapomenuté heslo</Button>
-                        </CardFooter>
                     </Card>
                 </FormikProvider>
             </Container>

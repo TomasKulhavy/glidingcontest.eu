@@ -17,6 +17,8 @@ import { FlightDataProvider } from "./providers/FlightDataContext";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
 import AccessDenied from './components/Pages/AccessDenied';
+import ForgotPassword from "./components/Auth/ForgotPassword";
+import ResetPassword from "./components/Auth/ResetPassword";
 
 import './custom.css'
 
@@ -41,6 +43,8 @@ function App() {
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/access/denied" component={AccessDenied} />
+            <Route exact path="/password/forgot" component={ForgotPassword} />
+            <Route path="/password/reset" component={ResetPassword} />
             <Route component={NotFound} />
           </Switch>
         </Router>

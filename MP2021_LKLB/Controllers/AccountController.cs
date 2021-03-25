@@ -4,12 +4,14 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -154,6 +156,25 @@ namespace MP2021_LKLB.Controllers
             return Unauthorized();
         }
 
+        [HttpPost("forgotPassword")]
+        public async Task<IActionResult> ChangePassword([FromBody] UserIM userData)
+        {
+            
+            var user = await _userManager.Users.Where(u => u.Email == userData.Email).FirstOrDefaultAsync();
+
+            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            string origin = Request.Headers["origin"];
+            var link = $"{origin}/password/reset?token={code}";
+
+            await _emailSender.SendEmailAsync(
+                userData.Email,
+                "Zapomenuté heslo na Glidingcontest.eu",
+                $"Dobrý den {user.FullName}, \n odkaz na obnovení hesla: {link} \n\n Glidingcontest.eu</a>.");
+
+            return Ok();
+        }
+
         [HttpPut("changePassword")]
         [Authorize]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordIM userData)
@@ -168,6 +189,24 @@ namespace MP2021_LKLB.Controllers
 
             await _signInManager.RefreshSignInAsync(user);
             return Ok();
+        }
+
+        [HttpPost("ResetPassword")]
+        public async Task<IActionResult> ResetPassword(ResetPasswordIM resetPassword)
+        {
+            var user = await _userManager.FindByEmailAsync(resetPassword.Email);
+            if (user == null)
+                return BadRequest();
+            resetPassword.Token = resetPassword.Token.Replace(' ', '+');
+            var result = await _userManager.ResetPasswordAsync(user, resetPassword.Token, resetPassword.Password);
+            if (result.Succeeded)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         private AuthorizationToken GenerateJSONWebToken(ApplicationUser user)
