@@ -133,7 +133,7 @@ namespace MP2021_LKLB.Controllers
             var result = await _userManager.CreateAsync(newUser);
             if (result.Succeeded)
             {
-                await _emailSender.SendEmailAsync(userData.Email, "Vítejte na Glidingcontest.eu!", $"Dobrý den {userData.FirstName} {userData.LastName},\n děkujeme, že jste se zaregistrovali na naší stránce http://glidingcontest.eu/. \n Email: {userData.Email} \n Uživatelské jméno: {userData.UserName} \n\n Glidingcontest.eu");
+                await _emailSender.SendEmailAsync(userData.Email, "Vítejte na Glidingcontest.eu!", $"Dobrý den {userData.FirstName} {userData.LastName},\nděkujeme, že jste se zaregistrovali na naší stránce http://glidingcontest.eu/. \nEmail: {userData.Email} \nUživatelské jméno: {userData.UserName} \n\n Glidingcontest.eu");
                 return CreatedAtAction("GetAccount", new { id = newUser.Id }, newUser);
             }
             else
@@ -157,7 +157,7 @@ namespace MP2021_LKLB.Controllers
         }
 
         [HttpPost("forgotPassword")]
-        public async Task<IActionResult> ChangePassword([FromBody] UserIM userData)
+        public async Task<IActionResult> ForgotPassword([FromBody] UserIM userData)
         {
             
             var user = await _userManager.Users.Where(u => u.Email == userData.Email).FirstOrDefaultAsync();
@@ -170,7 +170,7 @@ namespace MP2021_LKLB.Controllers
             await _emailSender.SendEmailAsync(
                 userData.Email,
                 "Zapomenuté heslo na Glidingcontest.eu",
-                $"Dobrý den {user.FullName}, \n odkaz na obnovení hesla: {link} \n\n Glidingcontest.eu</a>.");
+                $"Dobrý den {user.FullName}, \nodkaz na obnovení hesla: {link} \n\n Glidingcontest.eu.");
 
             return Ok();
         }

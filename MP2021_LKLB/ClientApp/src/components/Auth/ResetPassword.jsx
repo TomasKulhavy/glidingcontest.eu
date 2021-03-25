@@ -37,7 +37,6 @@ export default function ResetPassword(props) {
         }
     }
     const url = queryString.parse(props.location.search)
-    console.log(url.token)
 
     const formik = useFormik({
         initialValues: {

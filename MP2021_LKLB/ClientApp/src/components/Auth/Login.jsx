@@ -135,8 +135,8 @@ export default function SignIn() {
                             </Form>
                         </CardBody>
                         <CardFooter className="text-center bg-dark text-light">
-                            <Button tag={Link} to="/register" className="mr-2" color="primary">Zaregistrovat se</Button>
-                            <Button tag={Link} to="/password/forgot" className="mr-2" color="warning">Zapomenuté heslo</Button>
+                            <Button tag={Link} to="/register" className="mr-2 mt-2" color="primary">Zaregistrovat se</Button>
+                            <Button tag={Link} to="/password/forgot" className="mr-2 mt-2" color="warning">Zapomenuté heslo</Button>
                         </CardFooter>
                     </Card>
                 </FormikProvider>

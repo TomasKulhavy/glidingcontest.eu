@@ -266,7 +266,7 @@ const PilotFlights = (props) => {
     function renderPilotCard() {
         return(
             <>
-                <Col lg="3">
+                <Col lg="3" className="p-0">
                     <Card className="card-box bg-dark border-0 text-light mb-5">
                         <CardBody>
                             <div className="d-flex align-items-start">
