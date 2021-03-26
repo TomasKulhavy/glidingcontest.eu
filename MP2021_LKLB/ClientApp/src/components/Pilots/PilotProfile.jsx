@@ -10,6 +10,13 @@ import NavMenu from '../Layout/NavMenu';
 import { FlightDataContext } from "../../providers/FlightDataContext";
 import Loading from '../Pages/Loading';
 import { convertSpeed } from 'geolib';
+import { createBrowserHistory } from "history";
+
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const validate = values => {
     const errors = {};
@@ -33,11 +40,22 @@ export default function PilotProfile(props) {
     const [loading, setLoading] = useState(false);
     const [profile, setProfile] = useState([]);
     const [done, setDone] = useState(false);
+    const history = createBrowserHistory();
 
     const parseJwt = (token) => {
         const base64Url = token.split(".")[1];
         const base64 = base64Url.replace("-", "+").replace("_", "/");
         return JSON.parse(window.atob(base64));
+    };
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
     };
 
     let user;
@@ -53,7 +71,7 @@ export default function PilotProfile(props) {
             .get(`${process.env.REACT_APP_BACKEND_URL}/api/Account/profile/${props.match.params.id}`)
             .then((response) => {
                 setProfile(response.data);
-                console.log(response.data);
+                console.log(response.data)
             })
             .then(() => {
                 setLoading(false);
@@ -152,6 +170,18 @@ export default function PilotProfile(props) {
         },
     });
 
+    function deleteUser()
+    {
+        setLoading(true)
+        axios
+        .delete(`${process.env.REACT_APP_BACKEND_URL}/api/Account/deleteUser/${user}`)
+        .then(() => {
+            setLoading(false);
+            history.push("/");
+            window.location.reload();
+        })   
+    }
+
     if(loading)
     {
         return (
@@ -234,7 +264,7 @@ export default function PilotProfile(props) {
                                                         valid={formikPhone.touched.phoneNumber}
                                                     />
                                                     {formikPhone.errors.phoneNumber ? <FormFeedback invalid>{formikPhone.errors.phoneNumber}</FormFeedback> : null}
-                                                    <Button type="submit" className="m-3" color="success">Uložit</Button>
+                                                    <Button type="submit" disabled className="m-3" color="success">Uložit</Button>
                                                 </>
                                                 }
                                             </Form>
@@ -266,7 +296,7 @@ export default function PilotProfile(props) {
                                                     invalid={Boolean(formikBirth.errors.birthday)}
                                                     valid={formikBirth.touched.birthday}
                                                 />
-                                                <Button type="submit" className="m-3" color="success">Uložit</Button>
+                                                <Button type="submit" disabled className="m-3" color="success">Uložit</Button>
                                             </>
                                             }
                                         </Form>
@@ -276,11 +306,32 @@ export default function PilotProfile(props) {
                             <CardFooter className="bg-dark">
                                     <div>
                                         <Button tag={Link} to="/password/change" className="m-3" color="warning">Změna hesla</Button>
-                                        <Button tag={Link} to="/enter" className="m-3" color="danger">Smazat tento účet</Button>
+                                        <Button onClick={handleClickOpen} className="m-3" color="danger">Smazat tento účet</Button>
                                     </div>
                             </CardFooter>
                         </Card>
                 </Container>
+                <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">{"Potvrďte, že chcete smazat tento účet"}</DialogTitle>
+                    <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Po smazání Vašeho účtu se smažou i veškeré Vaše lety! Opravdu chcete smazat tento účet?
+                    </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                    <Button onClick={handleClose} color="primary">
+                        Zrušit
+                    </Button>
+                    <Button onClick={() => deleteUser()} color="danger" autoFocus>
+                        Potvrdit
+                    </Button>
+                    </DialogActions>
+                </Dialog>
             </div>
         )
     }

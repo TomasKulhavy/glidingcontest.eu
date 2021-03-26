@@ -120,6 +120,17 @@ namespace MP2021_LKLB.Controllers
             return NoContent();
         }
 
+        [HttpDelete("deleteUser/{id}")]
+        [Authorize]
+        public async Task<ActionResult<ApplicationUser>> DeleteUserOur(string id)
+        {
+            ApplicationUser user = await _db.Pilots.Where(f => f.Id == id).FirstOrDefaultAsync();
+            await Logout();
+            await _user.Delete(user.Id);
+            await _userManager.DeleteAsync(user);
+            return NoContent();
+        }
+
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserRegisterIM userData)
         {
@@ -141,7 +152,7 @@ namespace MP2021_LKLB.Controllers
             var result = await _userManager.CreateAsync(newUser);
             if (result.Succeeded)
             {
-                await _emailSender.SendEmailAsync(userData.Email, "Vítejte na Glidingcontest.eu!", $"Dobrý den {userData.FirstName} {userData.LastName},\nděkujeme, že jste se zaregistrovali na naší stránce http://glidingcontest.eu/. \nEmail: {userData.Email} \nUživatelské jméno: {userData.UserName} \n\n Glidingcontest.eu");
+                await _emailSender.SendEmailAsync(userData.Email, "Vítejte na Glidingcontest.eu!", $"Dobrý den {userData.FirstName} {userData.LastName},\nděkujeme, že jste se zaregistrovali na naší stránce http://glidingcontest.eu/. \n\nEmail: {userData.Email} \nUživatelské jméno: {userData.UserName} \n\n Glidingcontest.eu");
                 return CreatedAtAction("GetAccount", new { id = newUser.Id }, newUser);
             }
             else
