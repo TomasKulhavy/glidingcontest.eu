@@ -152,7 +152,7 @@ namespace MP2021_LKLB.Controllers
             var result = await _userManager.CreateAsync(newUser);
             if (result.Succeeded)
             {
-                await _emailSender.SendEmailAsync(userData.Email, "Vítejte na Glidingcontest.eu!", $"Dobrý den {userData.FirstName} {userData.LastName},\nděkujeme, že jste se zaregistrovali na naší stránce http://glidingcontest.eu/. \n\nEmail: {userData.Email} \nUživatelské jméno: {userData.UserName} \n\n Glidingcontest.eu");
+                await _emailSender.SendEmailAsync(userData.Email, "Vítejte na Glidingcontest.eu!", $"Dobrý den {userData.FirstName} {userData.LastName},\nděkujeme, že jste se zaregistrovali na naší stránce https://glidingcontest.eu/. \n\nEmail: {userData.Email} \nUživatelské jméno: {userData.UserName} \n\n Glidingcontest.eu");
                 return CreatedAtAction("GetAccount", new { id = newUser.Id }, newUser);
             }
             else
