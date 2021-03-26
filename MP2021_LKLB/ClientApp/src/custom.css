@@ -32,6 +32,7 @@ code {
   width: 100%;
   position: fixed;
   top: 0;
+  overflow: auto;
 }
 
 .feedback .personal {

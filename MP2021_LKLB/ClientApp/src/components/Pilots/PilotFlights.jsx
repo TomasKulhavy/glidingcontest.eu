@@ -6,7 +6,7 @@ import NavMenu from "../Layout/NavMenu";
 import { FlightDataContext, ADD_FLIGHTID } from "../../providers/FlightDataContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from "axios";
-import { faRulerVertical, faStopwatch, faTimes, faMinusCircle, faUserAlt } from "@fortawesome/free-solid-svg-icons";
+import { faStopwatch, faTimes, faMinusCircle, faUserAlt, faRulerHorizontal } from "@fortawesome/free-solid-svg-icons";
 import moment from 'moment-with-locales-es6';
 import Loading from "../Pages/Loading";
 
@@ -207,7 +207,7 @@ const PilotFlights = (props) => {
                         <CardHeader className="text-center bg-dark text-white">
                                 <h1><FontAwesomeIcon icon={faUserAlt} className="font-size-xxl mr-2" />{pilot.fullName}</h1>
                                 <h5><FontAwesomeIcon icon={faStopwatch} className="mr-2" />{secondsToHms()}</h5>
-                                <h5><FontAwesomeIcon icon={faRulerVertical} className="mr-2" />{Math.round(pilot.sumKilometers)} KM</h5>
+                                <h5><FontAwesomeIcon icon={faRulerHorizontal} className="mr-2" />{Math.round(pilot.sumKilometers)} KM</h5>
                         </CardHeader>
                         {renderDeleteUser()}
                     </Card>
