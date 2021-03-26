@@ -8,7 +8,7 @@ import axios from "axios";
 import './NavMenu.css';
 
 const NavMenu = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [{accessToken}, dispatch] = useContext(FlightDataContext);
   const [visible, setVisible] = useState(false);
   const onDismiss = () => setVisible(false);
