@@ -327,30 +327,28 @@ const PilotFlights = (props) => {
                 <NavMenu />
                 <Container>
                     {renderAlert()}
-                    <Row>
-                        {renderPilotCard()}
-                        <Table borderless>
-                                <tbody className="text-center">
-                                    {renderYears()}
-                                </tbody>
-                        </Table>
-                        <Table className="bg-dark text-white table-responsive-sm" striped>
-                            <thead>
-                                <tr>
-                                    <th>Datum</th>
-                                    <th>Body</th>
-                                    <th>Vzdálenost</th>
-                                    <th>Rychlost</th>
-                                    <th>Typ kluzáku</th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody >
-                                {renderFlights()}
+                    {renderPilotCard()}
+                    <Table borderless>
+                            <tbody className="text-center">
+                                {renderYears()}
                             </tbody>
-                        </Table>
-                    </Row>
+                    </Table>
+                    <Table className="bg-dark text-white table-responsive-sm" striped>
+                        <thead>
+                            <tr>
+                                <th>Datum</th>
+                                <th>Body</th>
+                                <th>Vzdálenost</th>
+                                <th>Rychlost</th>
+                                <th>Typ kluzáku</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody >
+                            {renderFlights()}
+                        </tbody>
+                    </Table>
                 </Container>
                 <FormikProvider value={formik}>
                     <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
