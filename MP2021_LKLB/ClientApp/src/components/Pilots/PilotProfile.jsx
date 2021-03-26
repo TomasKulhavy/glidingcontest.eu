@@ -73,6 +73,10 @@ export default function PilotProfile(props) {
                 setProfile(response.data);
                 console.log(response.data)
             })
+            .catch(() => {
+                history.push("/");
+                window.location.reload();
+            })
             .then(() => {
                 setLoading(false);
             });
