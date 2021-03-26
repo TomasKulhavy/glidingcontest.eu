@@ -19,6 +19,8 @@ import Register from "./components/Auth/Register";
 import AccessDenied from './components/Pages/AccessDenied';
 import ForgotPassword from "./components/Auth/ForgotPassword";
 import ResetPassword from "./components/Auth/ResetPassword";
+import PilotProfile from "./components/Pilots/PilotProfile";
+import ChangePassword from "./components/Auth/ChangePassword";
 
 import './custom.css'
 
@@ -44,7 +46,9 @@ function App() {
             <Route exact path="/register" component={Register} />
             <Route exact path="/access/denied" component={AccessDenied} />
             <Route exact path="/password/forgot" component={ForgotPassword} />
+            <Route exact path="/pilot/profile/:id" component={PilotProfile} />
             <Route path="/password/reset" component={ResetPassword} />
+            <Route path="/password/change" component={ChangePassword} />
             <Route component={NotFound} />
           </Switch>
         </Router>

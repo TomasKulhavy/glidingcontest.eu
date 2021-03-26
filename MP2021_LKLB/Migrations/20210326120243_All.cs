@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MP2021_LKLB.Migrations
 {
-    public partial class AllInOne : Migration
+    public partial class All : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -31,6 +31,7 @@ namespace MP2021_LKLB.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Gender = table.Column<int>(type: "int", nullable: true),
+                    BirthDay = table.Column<DateTime>(type: "datetime2", nullable: true),
                     TopScore = table.Column<float>(type: "real", nullable: true),
                     TimeInSec = table.Column<double>(type: "float", nullable: true),
                     FlightsNo = table.Column<int>(type: "int", nullable: true),
@@ -381,17 +382,17 @@ namespace MP2021_LKLB.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName" },
-                values: new object[] { "ADMIN", "f64fd06b-e8b4-4ca2-b54c-3193cb7476a7", "PilotRole", "Administrator", "ADMINISTRATOR" });
+                values: new object[] { "ADMIN", "c4149fad-f729-4875-ba5a-c09a8124cb5e", "PilotRole", "Administrator", "ADMINISTRATOR" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName" },
-                values: new object[] { "PILOT", "aef2abfd-9f90-47ae-ade2-2cbaa77e900a", "PilotRole", "Pilot", "PILOT" });
+                values: new object[] { "PILOT", "43c5d299-ccaa-447c-9969-4e97fefe7aea", "PilotRole", "Pilot", "PILOT" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "FlightsNo", "Gender", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "SumKilometers", "TimeInSec", "TopScore", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "dc7d58e5-0154-437a-9c6e-3cf2db72524b", 0, "65df0060-c546-458d-9b98-9baf1af9f893", "ApplicationUser", "tomas.kulhavy@pslib.cz", true, "Tomáš", null, 0, "Kulhavý", false, null, "TOMAS.KULHAVY@PSLIB.CZ", "TOMASLKLB", "AQAAAAEAACcQAAAAEOY50FP/ijJfwic7iBg+3FgfLOGuXzRaJVnBYvOkVVLmq8vzzVzxflqMspGDsXRRag==", null, false, "", null, 0.0, null, false, "TomasLKLB" });
+                columns: new[] { "Id", "AccessFailedCount", "BirthDay", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "FlightsNo", "Gender", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "SumKilometers", "TimeInSec", "TopScore", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "806a8d9c-ef5c-4c76-8a16-831594bb2fa4", 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "6a3153aa-b47e-4cd7-aa67-378d0fade8d3", "ApplicationUser", "tomas.kulhavy@pslib.cz", true, "Tomáš", null, 0, "Kulhavý", false, null, "TOMAS.KULHAVY@PSLIB.CZ", "TOMASLKLB", "AQAAAAEAACcQAAAAEOtjvOZ68Df0TYvSVkDFid2S5ZTN0hnXTdYAllORHL97RLPjcunk3H7hoQiGBuW+Jw==", null, false, "", null, 0.0, null, false, "TomasLKLB" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

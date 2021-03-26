@@ -18,5 +18,6 @@ namespace MP2021_LKLB.Services.UserService
         Task<ICollection<FlightAnalyseVM>> GetPilotsFlights(string id, int? year);
         Task<ApplicationUser> GetPilotsStats(string id);
         Task<ApplicationUser> Delete(string id);
+        Task<PilotProfileVM> GetUserProfile(string id);
     }
 }

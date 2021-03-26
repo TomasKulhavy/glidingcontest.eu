@@ -7,7 +7,7 @@ namespace MP2021_LKLB.Models
 {
     public enum Gender
     {
-        Muž,
-        Žena
+        Muž = 0,
+        Žena = 1
     }
 }

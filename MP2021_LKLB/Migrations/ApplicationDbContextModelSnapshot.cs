@@ -544,14 +544,14 @@ namespace MP2021_LKLB.Migrations
                         new
                         {
                             Id = "ADMIN",
-                            ConcurrencyStamp = "f64fd06b-e8b4-4ca2-b54c-3193cb7476a7",
+                            ConcurrencyStamp = "c4149fad-f729-4875-ba5a-c09a8124cb5e",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "PILOT",
-                            ConcurrencyStamp = "aef2abfd-9f90-47ae-ade2-2cbaa77e900a",
+                            ConcurrencyStamp = "43c5d299-ccaa-447c-9969-4e97fefe7aea",
                             Name = "Pilot",
                             NormalizedName = "PILOT"
                         });
@@ -560,6 +560,9 @@ namespace MP2021_LKLB.Migrations
             modelBuilder.Entity("MP2021_LKLB.Models.ApplicationUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<DateTime>("BirthDay")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
@@ -587,19 +590,20 @@ namespace MP2021_LKLB.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "dc7d58e5-0154-437a-9c6e-3cf2db72524b",
+                            Id = "806a8d9c-ef5c-4c76-8a16-831594bb2fa4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "65df0060-c546-458d-9b98-9baf1af9f893",
+                            ConcurrencyStamp = "6a3153aa-b47e-4cd7-aa67-378d0fade8d3",
                             Email = "tomas.kulhavy@pslib.cz",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "TOMAS.KULHAVY@PSLIB.CZ",
                             NormalizedUserName = "TOMASLKLB",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOY50FP/ijJfwic7iBg+3FgfLOGuXzRaJVnBYvOkVVLmq8vzzVzxflqMspGDsXRRag==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOtjvOZ68Df0TYvSVkDFid2S5ZTN0hnXTdYAllORHL97RLPjcunk3H7hoQiGBuW+Jw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
                             UserName = "TomasLKLB",
+                            BirthDay = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstName = "Tomáš",
                             Gender = 0,
                             LastName = "Kulhavý",

@@ -20,6 +20,7 @@ using MP2021_LKLB.InputModels;
 using MP2021_LKLB.Models;
 using MP2021_LKLB.Services;
 using MP2021_LKLB.Services.UserService;
+using MP2021_LKLB.ViewModels;
 
 namespace MP2021_LKLB.Controllers
 {
@@ -56,6 +57,13 @@ namespace MP2021_LKLB.Controllers
                 return Ok(c.Value);
             }
             return NotFound();
+        }
+
+        [HttpGet("profile/{id}")]
+        [Authorize]
+        public async Task<PilotProfileVM> GetPilotProfile(string id)
+        {
+            return await _user.GetUserProfile(id);
         }
 
         [HttpGet("getToken")]
@@ -189,6 +197,55 @@ namespace MP2021_LKLB.Controllers
 
             await _signInManager.RefreshSignInAsync(user);
             return Ok();
+        }
+
+        [HttpPost("changeEmail/{id}/{email}")]
+        [Authorize]
+        public async Task<IActionResult> ChangeEmail(string id, string email)
+        {
+            var user = await _userManager.Users.Where(u => u.Id == id).FirstOrDefaultAsync();
+
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
+            user.Email = email;
+            await _db.SaveChangesAsync();
+            return Ok(new { user = user });
+        }
+
+        [HttpPost("changeBirth/{id}/{date}")]
+        [Authorize]
+        public async Task<IActionResult> ChangeEmail(string id, DateTime birth)
+        {
+            var user = await _userManager.Users.Where(u => u.Id == id).FirstOrDefaultAsync();
+
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
+            user.BirthDay = birth;
+            await _db.SaveChangesAsync();
+            return Ok(new { user = user });
+        }
+
+
+        [HttpPost("changePhone/{id}/{number}")]
+        [Authorize]
+        public async Task<IActionResult> ChangeNumber(string id, string number)
+        {
+            var user = await _userManager.Users.Where(u => u.Id == id).FirstOrDefaultAsync();
+
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
+            user.PhoneNumber = number;
+            await _db.SaveChangesAsync();
+            return Ok(new { user = user });
         }
 
         [HttpPost("ResetPassword")]

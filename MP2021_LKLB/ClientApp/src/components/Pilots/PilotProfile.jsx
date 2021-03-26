@@ -1,0 +1,287 @@
+import React, { useContext, useState, useEffect } from 'react';
+import Container from '@material-ui/core/Container';
+import { Card, Button, Form, FormFeedback, Input, Row, CardBody, Alert, CardHeader, Col, CardFooter } from "reactstrap";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClock, faEdit, faEnvelope, faMobile, faPlane, faRulerHorizontal,faStarOfLife, faUserAlt } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
+import { useFormik, FormikProvider } from 'formik';
+import NavMenu from '../Layout/NavMenu';
+import { FlightDataContext } from "../../providers/FlightDataContext";
+import Loading from '../Pages/Loading';
+import { convertSpeed } from 'geolib';
+
+const validate = values => {
+    const errors = {};
+    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+        errors.email = "Neplatná e-mailová adresa!";
+    }
+    if(values.phoneNumber.lenght > 1)
+    {
+        if (!/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/i.test(values.phoneNumber)) {
+            errors.phoneNumber = "Neplatné telefonní číslo!";
+        }
+    }
+    return errors;
+}
+
+export default function PilotProfile(props) {
+    const [error, setError] = useState(false);
+    const [visible, setVisible] = useState(true);
+    const onDismiss = () => setVisible(false);
+    const [{accessToken}] = useContext(FlightDataContext);
+    const [loading, setLoading] = useState(false);
+    const [profile, setProfile] = useState([]);
+    const [done, setDone] = useState(false);
+
+    const parseJwt = (token) => {
+        const base64Url = token.split(".")[1];
+        const base64 = base64Url.replace("-", "+").replace("_", "/");
+        return JSON.parse(window.atob(base64));
+    };
+
+    let user;
+    if(accessToken !== null)
+    {
+        var tokenData = parseJwt(accessToken);
+        user = tokenData.sub;
+    }
+
+    useEffect(() => {
+        setLoading(true);
+        axios
+            .get(`${process.env.REACT_APP_BACKEND_URL}/api/Account/profile/${props.match.params.id}`)
+            .then((response) => {
+                setProfile(response.data);
+                console.log(response.data);
+            })
+            .then(() => {
+                setLoading(false);
+            });
+    }, [props.match.params.id]);
+
+    function secondsToHms() {
+        var d = Number(profile.flightTime);
+        var h = Math.floor(d / 3600);
+        var m = Math.floor(d % 3600 / 60);
+    
+        var hDisplay = h > 0 ? h + ":" : "";
+        var mDisplay = m > 9 ? m : "0" + m;
+        return hDisplay + mDisplay; 
+    }
+
+    function renderAlertEmail()
+    {
+        if(done)
+        {
+            return (<Alert color="success" isOpen={visible} toggle={onDismiss} className="my-3">Vaše osobní inforamce byly aktualizovány.</Alert>)
+        }
+        else if(error)
+        {
+            return (<Alert color="danger" isOpen={visible} toggle={onDismiss} className="my-3">Někde se stala chyba!</Alert>)
+        }
+    }
+
+    const formikEmail = useFormik({
+        initialValues: {
+            email: '',
+        },
+        validate: validate,
+        onSubmit: values => {
+            axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/Account/changeEmail/${user}/${values.email}`,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + accessToken
+                    }
+                })
+                .then(() => {
+                    setDone(true);
+                    window.location.reload();
+                })
+                .catch(() => {
+                    setError(true);
+                })
+        },
+    });
+
+    const formikBirth = useFormik({
+        initialValues: {
+            birthday: '',
+        },
+        validate: validate,
+        onSubmit: values => {
+            axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/Account/changeBirth/${user}/${values.birthday}`,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + accessToken
+                    }
+                })
+                .then(() => {
+                    setDone(true);
+                    window.location.reload();
+                })
+                .catch(() => {
+                    setError(true);
+                })
+        },
+    });
+
+    const formikPhone = useFormik({
+        initialValues: {
+            phoneNumber: '',
+        },
+        validate: validate,
+        onSubmit: values => {
+            convertSpeed.log(values);
+            axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/Account/changePhone/${user}/${values.phoneNumber}`,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + accessToken
+                    }
+                })
+                .then(() => {
+                    setDone(true);
+                    window.location.reload();
+                })
+                .catch(() => {
+                    setError(true);
+                })
+        },
+    });
+
+    if(loading)
+    {
+        return (
+            <Loading />
+        )
+    }
+    else 
+    {
+        return (
+            <div class="feedback">
+                <NavMenu/>
+                <Container className="text-center">
+                    <Button className="btn-dark mt-5 mb-3" tag={Link} to={`/pilot/flights/${user}`}>
+                        <FontAwesomeIcon icon={faPlane} className="font-size-xl mr-3" />
+                        Zobrazit mé lety
+                    </Button>
+                    {renderAlertEmail()}
+                        <Card className="m-2 text-center border-0">
+                            <CardHeader className="text-center bg-dark text-white">
+                                <h1 className="mb-3"><FontAwesomeIcon icon={faUserAlt} className="font-size-xxl mr-2" />{profile.name}</h1>
+                                <p className="personal">Osobní nálet</p>
+                                <h5><FontAwesomeIcon icon={faClock} className="mr-2" />{secondsToHms()}</h5>
+                                <h5><FontAwesomeIcon icon={faRulerHorizontal} className="mr-2" />{Math.round(profile.kilometers)} KM</h5>
+                            </CardHeader>
+                            <CardBody className="text-center bg-dark text-light">
+                                <p className="personal">Osobní údaje</p>
+                                <Row className="align-items-center mt-2">
+                                    <Col xs="2" sm="2" lg="5" md="5" className="text-right text-white">
+                                        <FontAwesomeIcon
+                                        icon={faEnvelope}
+                                        size="2x"
+                                        ></FontAwesomeIcon>
+                                    </Col>
+                                    <Col xs="10" sm="10" lg="7" md="7" className="text-left">
+                                        <Form onSubmit={formikEmail.handleSubmit}>
+                                            {profile.email 
+                                            ? 
+                                            <h4>{profile.email} <FontAwesomeIcon icon={faEdit} className="ml-2" /></h4>
+                                            :
+                                            <Input
+                                                className="col-4"
+                                                type="email"
+                                                name="email"
+                                                id="email"
+                                                onChange={formikEmail.handleChange}
+                                                onBlur={formikEmail.handleBlur}
+                                                value={formikEmail.values.email}
+                                                invalid={Boolean(formikEmail.errors.email)}
+                                                valid={formikEmail.touched.email}
+                                            />
+                                            }
+                                        </Form>
+                                        {formikEmail.errors.email ? <FormFeedback invalid>{formikEmail.errors.email}</FormFeedback> : null}
+                                    </Col>
+                                </Row>
+                                <Row className="align-items-center mt-2">
+                                    <Col xs="2" sm="2" lg="5" md="5" className="text-right text-white">
+                                        <FontAwesomeIcon
+                                        icon={faMobile}
+                                        size="2x"
+                                        ></FontAwesomeIcon>
+                                    </Col>
+                                    <Col xs="10" sm="10" lg="7" md="7" className="text-left">
+                                        <FormikProvider value={formikPhone}>
+                                            <Form onSubmit={formikPhone.handleSubmit} inline>
+                                                {profile.phoneNumber
+                                                ? 
+                                                <h4>{profile.phoneNumber} <FontAwesomeIcon icon={faEdit} className="ml-2" /></h4> 
+                                                :
+                                                <>
+                                                    <Input
+                                                        className="col-4"
+                                                        type="number"
+                                                        name="phoneNumber"
+                                                        id="phoneNumber"
+                                                        onChange={formikPhone.handleChange}
+                                                        onBlur={formikPhone.handleBlur}
+                                                        value={formikPhone.values.phoneNumber}
+                                                        invalid={Boolean(formikPhone.errors.phoneNumber)}
+                                                        valid={formikPhone.touched.phoneNumber}
+                                                    />
+                                                    {formikPhone.errors.phoneNumber ? <FormFeedback invalid>{formikPhone.errors.phoneNumber}</FormFeedback> : null}
+                                                    <Button type="submit" className="m-3" color="success">Uložit</Button>
+                                                </>
+                                                }
+                                            </Form>
+                                        </FormikProvider>
+                                    </Col>
+                                </Row>
+                                <Row className="align-items-center mt-2">
+                                    <Col xs="2" sm="2" lg="5" md="5" className="text-right text-white">
+                                        <FontAwesomeIcon
+                                        icon={faStarOfLife}
+                                        size="2x"
+                                        ></FontAwesomeIcon>
+                                    </Col>
+                                    <Col xs="10" sm="10" lg="7" md="7" className="text-left">
+                                        <Form onSubmit={formikBirth.handleSubmit} inline>
+                                            {profile.birthDay 
+                                            ? 
+                                            <h4>{profile.birthDay} <FontAwesomeIcon icon={faEdit} className="ml-2" /></h4> 
+                                            :
+                                            <>
+                                                <Input
+                                                    className="col-4"
+                                                    type="date"
+                                                    name="birthday"
+                                                    id="birthday"
+                                                    onChange={formikBirth.handleChange}
+                                                    onBlur={formikBirth.handleBlur}
+                                                    value={formikBirth.values.birthday}
+                                                    invalid={Boolean(formikBirth.errors.birthday)}
+                                                    valid={formikBirth.touched.birthday}
+                                                />
+                                                <Button type="submit" className="m-3" color="success">Uložit</Button>
+                                            </>
+                                            }
+                                        </Form>
+                                    </Col>
+                                </Row>
+                            </CardBody>
+                            <CardFooter className="bg-dark">
+                                    <div>
+                                        <Button tag={Link} to="/password/change" className="m-3" color="warning">Změna hesla</Button>
+                                        <Button tag={Link} to="/enter" className="m-3" color="danger">Smazat tento účet</Button>
+                                    </div>
+                            </CardFooter>
+                        </Card>
+                </Container>
+            </div>
+        )
+    }
+}

@@ -24,6 +24,9 @@ namespace MP2021_LKLB.Models
         //[Required(ErrorMessage = "Pohlaví musí být vyplněno.")]
         public Gender Gender { get; set; }
 
+        [PersonalData]
+        public DateTime BirthDay { get; set; }
+
         [NotMapped]
         [Display(Name = "Jméno")]
         public string FullName

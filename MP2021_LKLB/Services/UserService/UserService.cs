@@ -70,6 +70,30 @@ namespace MP2021_LKLB.Services.UserService
             }
         }
 
+        public async Task<PilotProfileVM> GetUserProfile(string id)
+        {
+            var user = await _db.Pilots
+               .Where(f => f.Id.Equals(id))
+               .Select(f => new PilotProfileVM
+               {
+                   Name = f.FullName,
+                   FlightTime = f.TimeInSec,
+                   Kilometers = f.SumKilometers,
+                   Email = f.Email,
+                   Birth = f.BirthDay,
+                   PhoneNumber = f.PhoneNumber,
+               }).FirstOrDefaultAsync();
+
+            if (user != null)
+            {
+                return user;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public async Task<ICollection<ApplicationUser>> GetUsers(string id)
         {
             ICollection<ApplicationUser> identityUsers = new List<ApplicationUser>();
