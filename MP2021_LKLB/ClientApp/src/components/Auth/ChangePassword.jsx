@@ -63,7 +63,6 @@ export default function ChangePassword() {
         },
         validate: validate,
         onSubmit: values => {
-            console.log(values)
             axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/Account/changePassword`,
                 {
                     id: tokenData.sub,

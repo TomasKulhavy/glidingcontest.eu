@@ -71,7 +71,6 @@ export default function PilotProfile(props) {
             .get(`${process.env.REACT_APP_BACKEND_URL}/api/Account/profile/${props.match.params.id}`)
             .then((response) => {
                 setProfile(response.data);
-                console.log(response.data)
             })
             .catch(() => {
                 history.push("/");
