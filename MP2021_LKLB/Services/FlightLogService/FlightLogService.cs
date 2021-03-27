@@ -78,7 +78,8 @@ namespace MP2021_LKLB.Services.FlightLogService
                    AvgSpeed = f.FlightLogAnalyse.AvgSpeed,
                    Kilometers = f.FlightLogAnalyse.Kilometers,
                    Score = f.FlightLogAnalyse.Score,
-                   TopFlight = f.FlightLogAnalyse.Topflight
+                   TopFlight = f.FlightLogAnalyse.Topflight,
+                   TaskTime = f.FlightLogAnalyse.TaskTime.TotalSeconds,
                })
                .FirstOrDefaultAsync();
 

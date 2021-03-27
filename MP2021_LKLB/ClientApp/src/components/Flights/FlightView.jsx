@@ -80,8 +80,8 @@ const FlightView = (props) => {
     return res;
   }
 
-  function secondsToHms() {
-    var d = Number(flightLog.flightTime);
+  function secondsToHms(time) {
+    var d = Number(time);
     var h = Math.floor(d / 3600);
     var m = Math.floor(d % 3600 / 60);
     var s = Math.floor(d % 3600 % 60);
@@ -129,7 +129,10 @@ const FlightView = (props) => {
               {renderFlights()}
               <td>
                 <tr>
-                  <b>Čas letu: </b>{secondsToHms()}
+                  <b>Čas letu: </b>{secondsToHms(flightLog.flightTime)}
+                </tr>
+                <tr>
+                  <b>Čas na trati: </b>{secondsToHms(flightLog.taskTime)}
                 </tr>
                 <tr>
                   <b>Body za let: </b>{Math.round(flightLog.score)}

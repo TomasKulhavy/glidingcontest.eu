@@ -12,6 +12,7 @@ namespace MP2021_LKLB.ViewModels
         public float? Kilometers { get; set; }
         public float? AvgSpeed { get; set; }
         public double? FlightTime { get; set; }
+        public double? TaskTime { get; set; }
         public bool TopFlight { get; set; }
         public string GliderType { get; set; }
         public string Registration { get; set; }

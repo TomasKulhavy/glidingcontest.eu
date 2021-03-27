@@ -130,7 +130,7 @@ const PilotFlights = (props) => {
                             Zobrazit let</Button></td>
                         <td>
                             <Button color="danger" refresh="true" onClick={() =>
-                                deleteFlight(item.id, index)} tag={Link} to="/pilot/flights">
+                                deleteFlight(item.id, index)} tag={Link} to={`/pilot/flights/${props.match.params.id}`}>
                                 <FontAwesomeIcon icon={faTimes} className="font-size-xl" />
                             </Button>
                         </td>
