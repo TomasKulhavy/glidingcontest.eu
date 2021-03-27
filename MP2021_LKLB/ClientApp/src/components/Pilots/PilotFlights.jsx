@@ -10,20 +10,6 @@ import { faStopwatch, faTimes, faMinusCircle, faUserAlt, faRulerHorizontal } fro
 import moment from 'moment-with-locales-es6';
 import Loading from "../Pages/Loading";
 
-const validate = values => {
-    const errors = {};
-    if (!values.oldPassword) {
-        errors.oldPassword = "Staré heslo musí být vyplněno";
-    }
-    if (!values.newPassword) {
-        errors.reNewPassword = "Nové heslo musí být vyplněno";
-    }
-    if (values.reNewPassword !== values.newPassword) {
-        errors.reNewPassword = "Nové heslo musí shodovat!";
-    }
-    return errors;
-}
-
 const PilotFlights = (props) => {
     const yearNow = new Date().getFullYear();
     const [flights, setFlights] = useState([]);

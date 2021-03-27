@@ -26,18 +26,8 @@ export default function SignIn() {
     const history = useHistory();
     const [{ accessToken }, dispatch] = useContext(FlightDataContext);
     const [error, setError] = useState(false);
-    const [done, setDone] = useState(false);
     const [visible, setVisible] = useState(true);
     const onDismiss = () => setVisible(false);
-    const [open, setOpen] = useState(false);
-
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
 
     function renderAlert()
     {

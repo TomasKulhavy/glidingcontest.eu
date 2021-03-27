@@ -12,6 +12,7 @@ import { FlightDataContext } from "../../providers/FlightDataContext";
 import AccessDenied from '../Pages/AccessDenied';
 
 import './Flight.css'
+import { couldStartTrivia } from 'typescript';
 
 function parseL(str) {
     var RE_L = /^L.*(?=R1)R1(.*?)(\d{2}|\d{1})(.*?)(\d{4}|\d{3}|\d{2})(.*?).*$/;
@@ -150,6 +151,8 @@ const UploadFlight = () => {
             dist = dist - lastDist;
             dist = dist + distLast;
         }
+        let distInM = dist;
+        dist = dist / 1000;
         const storeOfFinish = [{time: result.fixes[result.fixes.length - 1].time}];
         const taskStarted = storeOfStart[storeOfStart.length - 1];
 
@@ -160,6 +163,8 @@ const UploadFlight = () => {
         }
 
         const flight = solver(result, scoring.XContest).next().value;
+        let distanceScore = flight.scoreInfo.distance;
+
         delete result.closestPairs;
         delete result.filtred;
         delete result.ll;
@@ -207,26 +212,34 @@ const UploadFlight = () => {
         var speedTotal;
         if(timeFF !== undefined && timeSF !== undefined)
         {
-            speedTotal = dist / totalTimeInSecTask;
+            speedTotal = distInM / totalTimeInSecTask;
         }
         else if (timeFF === undefined && timeSF === undefined)
         {
-            speedTotal = 0;
             dist = 0;
+            if(dist === 0)
+            {
+                speedTotal = (distanceScore * 1000) / totalTimeInSec
+            }
             timeTask = new Date(0 * 1000).toISOString().substr(11, 8);
-            flight.score = 0;
+        }
+
+        if (dist === 0)
+        {
+            dist = distanceScore;
         }
 
         const scoreFlight = { 
             "score": flight.score,
             "flightTime": time,
             "taskTime": timeTask,
-            "kilometers": dist / 1000,
+            "kilometers": dist,
             "avgSpeed": speedTotal*3.6,
         }
         const tokenData = parseJwt(accessToken);
         result.userId = tokenData.sub;
         result.flightLogAnalyse = scoreFlight;  
+        console.log(result);
     };
     function renderAlert()
     {
