@@ -64,9 +64,11 @@ namespace MP2021_LKLB.Controllers
                 var returnDataObj = JsonConvert.DeserializeObject<FlightLog>(data);
                 FlightLog log = await _db.FlightLogs
                     .Where(f => f.Pilot == returnDataObj.Pilot)
+                    .Where(f => f.Date == returnDataObj.Date)
                     .Where(f => f.LoggerId == returnDataObj.LoggerId)
                     .Where(f => f.NumFlight == returnDataObj.NumFlight)
                     .FirstOrDefaultAsync();
+
                 if (log == null)
                 {
                     await _stats.SetStats(returnDataObj);

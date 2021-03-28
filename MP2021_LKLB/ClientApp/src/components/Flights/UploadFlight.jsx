@@ -228,6 +228,11 @@ const UploadFlight = () => {
         {
             dist = distanceScore;
         }
+        if(flight.score < 100)
+        {
+            flight.score = 0;
+        }
+        
 
         const scoreFlight = { 
             "score": flight.score,
