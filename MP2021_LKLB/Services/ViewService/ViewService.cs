@@ -41,7 +41,7 @@ namespace MP2021_LKLB.Services.ViewService
             var fixes = await _db.Fixes
                .Where(x => x.FlightLogId == id)
                .OrderBy(x => x.Timestamp)
-               .Select(f => new FlightGraphVM { Timestamp = f.Timestamp, GpsAltitude = f.GpsAltitude })
+               .Select(f => new FlightGraphVM { Time = f.Time, GpsAltitude = f.GpsAltitude })
                .ToListAsync();
 
             if (fixes != null)

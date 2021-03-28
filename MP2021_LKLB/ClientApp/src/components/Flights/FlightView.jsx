@@ -189,7 +189,7 @@ const FlightView = (props) => {
 		
 		fixesToGraph.map((item) => {
       dataPoints.push({
-				x: item.time,
+				x: item.time.totalSeconds,
 				y: item.gpsAltitude
 			});
     });

@@ -7,7 +7,7 @@ namespace MP2021_LKLB.Models
 {
     public class FlightGraphVM
     {
-        public long? Timestamp { get; set; }
+        public TimeSpan? Time { get; set; }
         public int? GpsAltitude { get; set; }
     }
 }
