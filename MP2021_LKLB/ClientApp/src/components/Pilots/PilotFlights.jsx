@@ -98,7 +98,7 @@ const PilotFlights = (props) => {
     function renderFlights() {
         moment.locale('cs'); 
 
-        if(state.pilotId === user || user === "TomasLKLB")
+        if(state.pilotId === user || userName === "TomasLKLB")
         {
             const array = flights.map((item, index) => {
                 return (

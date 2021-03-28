@@ -244,7 +244,6 @@ const UploadFlight = () => {
         const tokenData = parseJwt(accessToken);
         result.userId = tokenData.sub;
         result.flightLogAnalyse = scoreFlight;  
-        console.log(result);
     };
     function renderAlert()
     {
