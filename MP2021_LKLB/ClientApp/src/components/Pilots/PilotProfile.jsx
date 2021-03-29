@@ -11,6 +11,7 @@ import { FlightDataContext } from "../../providers/FlightDataContext";
 import Loading from '../Pages/Loading';
 import { convertSpeed } from 'geolib';
 import { createBrowserHistory } from "history";
+import AccessDenied from "../Pages/AccessDenied";
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -191,7 +192,7 @@ export default function PilotProfile(props) {
             <Loading />
         )
     }
-    else 
+    else if(user === props.match.params.id)
     {
         return (
             <div class="feedback">
@@ -336,6 +337,12 @@ export default function PilotProfile(props) {
                     </DialogActions>
                 </Dialog>
             </div>
+        )
+    }
+    else
+    {
+        return (
+            <AccessDenied/>
         )
     }
 }
