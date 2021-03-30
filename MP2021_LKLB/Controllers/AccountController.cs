@@ -211,7 +211,6 @@ namespace MP2021_LKLB.Controllers
         }
 
         [HttpPost("changeEmail/{id}/{email}")]
-        [Authorize]
         public async Task<IActionResult> ChangeEmail(string id, string email)
         {
             var user = await _userManager.Users.Where(u => u.Id == id).FirstOrDefaultAsync();
@@ -227,8 +226,7 @@ namespace MP2021_LKLB.Controllers
         }
 
         [HttpPost("changeBirth/{id}/{date}")]
-        [Authorize]
-        public async Task<IActionResult> ChangeEmail(string id, DateTime birth)
+        public async Task<IActionResult> ChangeBirth(string id, DateTime birth)
         {
             var user = await _userManager.Users.Where(u => u.Id == id).FirstOrDefaultAsync();
 
@@ -244,7 +242,6 @@ namespace MP2021_LKLB.Controllers
 
 
         [HttpPost("changePhone/{id}/{number}")]
-        [Authorize]
         public async Task<IActionResult> ChangeNumber(string id, string number)
         {
             var user = await _userManager.Users.Where(u => u.Id == id).FirstOrDefaultAsync();

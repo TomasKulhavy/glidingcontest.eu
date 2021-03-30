@@ -24,11 +24,8 @@ const validate = values => {
     if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
         errors.email = "Neplatná e-mailová adresa!";
     }
-    if(values.phoneNumber.lenght > 1)
-    {
-        if (!/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/i.test(values.phoneNumber)) {
-            errors.phoneNumber = "Neplatné telefonní číslo!";
-        }
+    if (!/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/i.test(values.phoneNumber)) {
+        errors.phoneNumber = "Neplatné telefonní číslo!";
     }
     return errors;
 }
@@ -42,6 +39,8 @@ export default function PilotProfile(props) {
     const [profile, setProfile] = useState([]);
     const [done, setDone] = useState(false);
     const history = createBrowserHistory();
+    const [mobile, setMobile] = useState(false);
+    const [email, setEmail] = useState(false);
 
     const parseJwt = (token) => {
         const base64Url = token.split(".")[1];
@@ -117,12 +116,12 @@ export default function PilotProfile(props) {
                         Authorization: "Bearer " + accessToken
                     }
                 })
+                .catch(() => {
+                    setError(true);
+                })
                 .then(() => {
                     setDone(true);
                     window.location.reload();
-                })
-                .catch(() => {
-                    setError(true);
                 })
         },
     });
@@ -140,12 +139,12 @@ export default function PilotProfile(props) {
                         Authorization: "Bearer " + accessToken
                     }
                 })
+                .catch(() => {
+                    setError(true);
+                })
                 .then(() => {
                     setDone(true);
                     window.location.reload();
-                })
-                .catch(() => {
-                    setError(true);
                 })
         },
     });
@@ -156,7 +155,7 @@ export default function PilotProfile(props) {
         },
         validate: validate,
         onSubmit: values => {
-            convertSpeed.log(values);
+            console.log(values);
             axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/Account/changePhone/${user}/${values.phoneNumber}`,
                 {
                     headers: {
@@ -164,12 +163,12 @@ export default function PilotProfile(props) {
                         Authorization: "Bearer " + accessToken
                     }
                 })
+                .catch(() => {
+                    setError(true);
+                })
                 .then(() => {
                     setDone(true);
                     window.location.reload();
-                })
-                .catch(() => {
-                    setError(true);
                 })
         },
     });
@@ -220,25 +219,33 @@ export default function PilotProfile(props) {
                                         ></FontAwesomeIcon>
                                     </Col>
                                     <Col xs="10" sm="10" lg="7" md="7" className="text-left">
-                                        <Form onSubmit={formikEmail.handleSubmit}>
-                                            {profile.email 
-                                            ? 
-                                            <h4>{profile.email} <FontAwesomeIcon icon={faEdit} className="ml-2" /></h4>
-                                            :
-                                            <Input
-                                                className="col-4"
-                                                type="email"
-                                                name="email"
-                                                id="email"
-                                                onChange={formikEmail.handleChange}
-                                                onBlur={formikEmail.handleBlur}
-                                                value={formikEmail.values.email}
-                                                invalid={Boolean(formikEmail.errors.email)}
-                                                valid={formikEmail.touched.email}
-                                            />
-                                            }
-                                        </Form>
-                                        {formikEmail.errors.email ? <FormFeedback invalid>{formikEmail.errors.email}</FormFeedback> : null}
+                                        <FormikProvider value={formikEmail}>
+                                            <>
+                                                {email 
+                                                ? (
+                                                    <Form onSubmit={formikEmail.handleSubmit} inline>
+                                                        <Input
+                                                            className="col-4"
+                                                            type="email"
+                                                            name="email"
+                                                            id="email"
+                                                            onChange={formikEmail.handleChange}
+                                                            onBlur={formikEmail.handleBlur}
+                                                            value={formikEmail.values.email}
+                                                            invalid={Boolean(formikEmail.errors.email)}
+                                                            valid={formikEmail.touched.email}
+                                                        />
+                                                        {formikEmail.errors.email ? <FormFeedback invalid>{formikEmail.errors.email}</FormFeedback> : null}
+                                                        <Button type="submit" className="m-3" color="success">Uložit</Button> 
+                                                    </Form>
+                                                    )
+                                                : (
+
+                                                    <h4>{profile.email} <FontAwesomeIcon icon={faEdit} className="ml-2 icons" onClick={() => setEmail(!email)}/></h4> 
+                                                )
+                                                }
+                                            </>
+                                        </FormikProvider>
                                     </Col>
                                 </Row>
                                 <Row className="align-items-center mt-2">
@@ -250,28 +257,30 @@ export default function PilotProfile(props) {
                                     </Col>
                                     <Col xs="10" sm="10" lg="7" md="7" className="text-left">
                                         <FormikProvider value={formikPhone}>
-                                            <Form onSubmit={formikPhone.handleSubmit} inline>
-                                                {profile.phoneNumber
-                                                ? 
-                                                <h4>{profile.phoneNumber} <FontAwesomeIcon icon={faEdit} className="ml-2" /></h4> 
-                                                :
-                                                <>
-                                                    <Input
-                                                        className="col-4"
-                                                        type="number"
-                                                        name="phoneNumber"
-                                                        id="phoneNumber"
-                                                        onChange={formikPhone.handleChange}
-                                                        onBlur={formikPhone.handleBlur}
-                                                        value={formikPhone.values.phoneNumber}
-                                                        invalid={Boolean(formikPhone.errors.phoneNumber)}
-                                                        valid={formikPhone.touched.phoneNumber}
-                                                    />
-                                                    {formikPhone.errors.phoneNumber ? <FormFeedback invalid>{formikPhone.errors.phoneNumber}</FormFeedback> : null}
-                                                    <Button type="submit" disabled className="m-3" color="success">Uložit</Button>
-                                                </>
+                                            <>
+                                                {mobile 
+                                                ? (
+                                                    <Form onSubmit={formikPhone.handleSubmit} inline>
+                                                        <Input
+                                                            className="col-4"
+                                                            type="text"
+                                                            name="phoneNumber"
+                                                            id="phoneNumber"
+                                                            onChange={formikPhone.handleChange}
+                                                            onBlur={formikPhone.handleBlur}
+                                                            value={formikPhone.values.phoneNumber}
+                                                            invalid={Boolean(formikPhone.errors.phoneNumber)}
+                                                            valid={formikPhone.touched.phoneNumber}
+                                                        />
+                                                        {formikPhone.errors.phoneNumber ? <FormFeedback invalid>{formikPhone.errors.phoneNumber}</FormFeedback> : null}
+                                                        <Button type="submit" onClick={formikPhone.handleSubmit} className="m-3" color="success">Uložit</Button> 
+                                                    </Form>
+                                                    )
+                                                : (
+                                                    <h4>{profile.phoneNumber} <FontAwesomeIcon icon={faEdit} className="ml-2" onClick={setMobile(!mobile)}/></h4> 
+                                                )
                                                 }
-                                            </Form>
+                                            </>
                                         </FormikProvider>
                                     </Col>
                                 </Row>
@@ -300,7 +309,7 @@ export default function PilotProfile(props) {
                                                     invalid={Boolean(formikBirth.errors.birthday)}
                                                     valid={formikBirth.touched.birthday}
                                                 />
-                                                <Button type="submit" disabled className="m-3" color="success">Uložit</Button>
+                                                <Button type="submit" className="m-3" color="success">Uložit</Button>
                                             </>
                                             }
                                         </Form>

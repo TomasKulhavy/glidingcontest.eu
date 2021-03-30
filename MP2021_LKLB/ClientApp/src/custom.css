@@ -39,11 +39,18 @@ code {
   color: rgb(189, 189, 189);
   font-size: 1.25rem;
 }
+
 .feedback .icon {
   font-size: 35px;
 }
+
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;
   border-color: #1861ac;
+}
+
+.icons:hover {
+  transform: scale(1.05);
+  color: lightgray;
 }
