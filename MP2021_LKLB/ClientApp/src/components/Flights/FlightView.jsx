@@ -22,6 +22,7 @@ const FlightView = (props) => {
   const [fixesToGraph, setFixesToGraph] = useState([]);
   const [, dispatch] = useContext(FlightDataContext);
   const [loading, setLoading] = useState(false);
+  const [lastFix, setLastFix] = useState();
   const [, setError] = useState(false);
   let center;
   
@@ -43,6 +44,7 @@ const FlightView = (props) => {
       .get(`${process.env.REACT_APP_BACKEND_URL}/api/View/graph/${props.match.params.id}`)
       .then((response) => {
         setFixesToGraph(response.data)
+        setLastFix(response.data[0].timestamp)
       })
       .catch(() => {
         setError(true)
@@ -186,10 +188,10 @@ const FlightView = (props) => {
 		var data = [];
 		var dataSeries = { type: "line" };
 		var dataPoints = [];
-		
+
 		fixesToGraph.map((item) => {
       dataPoints.push({
-				x: item.timestamp,
+				x: (item.timestamp - lastFix) / 1000,
 				y: item.gpsAltitude
 			});
     });
