@@ -9,7 +9,6 @@ import { useFormik, FormikProvider } from 'formik';
 import NavMenu from '../Layout/NavMenu';
 import { FlightDataContext } from "../../providers/FlightDataContext";
 import Loading from '../Pages/Loading';
-import { convertSpeed } from 'geolib';
 import { createBrowserHistory } from "history";
 import AccessDenied from "../Pages/AccessDenied";
 
@@ -155,7 +154,6 @@ export default function PilotProfile(props) {
         },
         validate: validate,
         onSubmit: values => {
-            console.log(values);
             axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/Account/changePhone/${user}/${values.phoneNumber}`,
                 {
                     headers: {

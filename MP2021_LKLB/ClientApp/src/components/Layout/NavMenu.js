@@ -93,7 +93,7 @@ const NavMenu = () => {
     <header>
       <Navbar className="navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3 border-0">
         <Container>
-          <NavbarBrand tag={Link} className="text-light text-uppercase" to="/">Databáze letů</NavbarBrand>
+          <NavbarBrand tag={Link} className="text-light text-uppercase" to="/">Gliding contest</NavbarBrand>
           <NavbarToggler onClick={toggle} />
           <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={isOpen} navbar>
             <ul className="navbar-nav flex-grow">

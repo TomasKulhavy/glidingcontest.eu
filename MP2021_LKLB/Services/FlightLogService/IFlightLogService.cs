@@ -10,7 +10,7 @@ namespace MP2021_LKLB.Services.FlightLogService
     public interface IFlightLogService
     {
         Task<ICollection<FlightLog>> GetAllFlightLogs();
-        Task<ICollection<FlightAnalyseVM>> GetFlightLog(int year);
+        Task<ICollection<FlightAnalyseVM>> GetFlightLog(int year, string sort = null);
         Task<FlightViewInfoVM> GetFlightLogDetails(int id);
         Task GiveTopBool(FlightLog flightLog);
         List<FlightLog> GetPilotsFlights(string id, int? year);

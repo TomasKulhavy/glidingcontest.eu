@@ -12,7 +12,6 @@ import { FlightDataContext } from "../../providers/FlightDataContext";
 import AccessDenied from '../Pages/AccessDenied';
 
 import './Flight.css'
-import { couldStartTrivia } from 'typescript';
 
 function parseL(str) {
     var RE_L = /^L.*(?=R1)R1(.*?)(\d{2}|\d{1})(.*?)(\d{4}|\d{3}|\d{2})(.*?).*$/;

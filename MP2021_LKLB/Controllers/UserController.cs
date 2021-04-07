@@ -50,9 +50,9 @@ namespace MP2021_LKLB.Controllers
         }
 
         [HttpGet("pilotFlights/{id}/{year}")]
-        public async Task<ICollection<FlightAnalyseVM>> GetFlights(string id, int? year)
+        public async Task<ICollection<FlightAnalyseVM>> GetFlights(string id, int? year, string sort = null)
         {
-            return await _user.GetPilotsFlights(id, year);
+            return await _user.GetPilotsFlights(id, year, sort);
         }
 
         [HttpGet("pilotStats/{id}")]

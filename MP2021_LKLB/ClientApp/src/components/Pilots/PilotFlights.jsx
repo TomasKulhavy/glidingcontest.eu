@@ -6,7 +6,7 @@ import NavMenu from "../Layout/NavMenu";
 import { FlightDataContext, ADD_FLIGHTID } from "../../providers/FlightDataContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from "axios";
-import { faStopwatch, faTimes, faMinusCircle, faUserAlt, faRulerHorizontal } from "@fortawesome/free-solid-svg-icons";
+import { faStopwatch, faTimes, faMinusCircle, faUserAlt, faRulerHorizontal, faSort } from "@fortawesome/free-solid-svg-icons";
 import moment from 'moment-with-locales-es6';
 import Loading from "../Pages/Loading";
 
@@ -24,6 +24,7 @@ const PilotFlights = (props) => {
     const [visible, setVisible] = useState(true);
     const onDismiss = () => setVisible(false);
     const history = createBrowserHistory();
+    const [desc, setDesc] = useState(false);
 
     useEffect(() => {
         setLoading(true);
@@ -52,6 +53,20 @@ const PilotFlights = (props) => {
                 setYearsList(response.data)
             })
     }, [year, props.match.params.id]);
+
+    function sendRequest(order)
+    {
+        axios
+            .get(`${process.env.REACT_APP_BACKEND_URL}/api/User/pilotFlights/${props.match.params.id}/${year}?sort=${order}${
+                desc ? `_desc` : `_asc`
+              }`)
+            .then((response) => {
+                setFlights(response.data)
+            })
+            .then(() => {
+                setLoading(false);
+            })
+    }
 
     const parseJwt = (token) => {
         const base64Url = token.split(".")[1];
@@ -236,11 +251,11 @@ const PilotFlights = (props) => {
                     <Table className="bg-dark text-white table-responsive-sm" striped>
                         <thead>
                             <tr>
-                                <th>Datum</th>
-                                <th>Body</th>
-                                <th>Vzdálenost</th>
-                                <th>Rychlost</th>
-                                <th>Typ kluzáku</th>
+                                <th onClick={() => {sendRequest("date");setDesc(!desc);}}>Datum<Button color="transparent" size="sm" ><FontAwesomeIcon icon={faSort} color="white" /></Button></th>
+                                <th onClick={() => {sendRequest("score");setDesc(!desc);}}>Body<Button color="transparent" size="sm" ><FontAwesomeIcon icon={faSort} color="white" /></Button></th>
+                                <th onClick={() => {sendRequest("lenght");setDesc(!desc);}}>Vzdálenost<Button color="transparent" size="sm" ><FontAwesomeIcon icon={faSort} color="white" /></Button></th>
+                                <th onClick={() => {sendRequest("speed");setDesc(!desc);}}>Rychlost<Button color="transparent" size="sm" ><FontAwesomeIcon icon={faSort} color="white" /></Button></th>
+                                <th onClick={() => {sendRequest("type");setDesc(!desc);}}>Typ kluzáku<Button color="transparent" size="sm" ><FontAwesomeIcon icon={faSort} color="white" /></Button></th>
                                 <th></th>
                                 <th></th>
                             </tr>

@@ -40,9 +40,9 @@ namespace MP2021_LKLB.Controllers
 
         // GET api/<FlightLogController>/5
         [HttpGet("{year}")]
-        public async Task<ICollection<FlightAnalyseVM>> Get(int year)
+        public async Task<ICollection<FlightAnalyseVM>> Get(int year, string sort = null)
         {
-            var flight = await _flightLog.GetFlightLog(year);
+            var flight = await _flightLog.GetFlightLog(year, sort);
             return flight;
         }
 

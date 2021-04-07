@@ -3,6 +3,8 @@ import { Container, Table, Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import NavMenu from "../Layout/NavMenu";
 import { FlightDataContext, ADD_FLIGHTID } from "../../providers/FlightDataContext";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSort } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import moment from 'moment-with-locales-es6';
 import Loading from "../Pages/Loading";
@@ -16,6 +18,7 @@ const FlightList = () => {
     const [year, setYear] = useState(yearNow);
     const [loading, setLoading] = useState(false);
     const [, dispatch] = useContext(FlightDataContext);
+    const [desc, setDesc] = useState(false);
 
     useEffect(() => {
         setLoading(true);
@@ -33,6 +36,20 @@ const FlightList = () => {
                 setLoading(false);
             })  
     }, [year]);
+
+    function sendRequest(order)
+    {
+        axios
+            .get(`${process.env.REACT_APP_BACKEND_URL}/api/FlightLog/${year}?sort=${order}${
+                desc ? `_desc` : `_asc`
+              }`)
+            .then((response) => {
+                setFlights(response.data)
+            })
+            .then(() => {
+                setLoading(false);
+            })
+    }
 
     function renderFlights() {
         moment.locale('cs'); 
@@ -88,12 +105,12 @@ const FlightList = () => {
                     <Table className="bg-dark text-white table-responsive-sm" striped>
                         <thead>
                             <tr>
-                                <th>Datum</th>
-                                <th>Body</th>
-                                <th>Jméno pilota</th>
-                                <th>Vzdálenost</th>
-                                <th>Rychlost</th>
-                                <th>Typ kluzáku</th>
+                                <th onClick={() => {sendRequest("date");setDesc(!desc);}}>Datum<Button color="transparent" size="sm" ><FontAwesomeIcon icon={faSort} color="white" /></Button></th>
+                                <th onClick={() => {sendRequest("score");setDesc(!desc);}}>Body<Button color="transparent" size="sm" ><FontAwesomeIcon icon={faSort} color="white" /></Button></th>
+                                <th onClick={() => {sendRequest("name");setDesc(!desc);}}>Jméno pilota<Button color="transparent" size="sm" ><FontAwesomeIcon icon={faSort} color="white" /></Button></th>
+                                <th onClick={() => {sendRequest("lenght");setDesc(!desc);}}>Vzdálenost<Button color="transparent" size="sm" ><FontAwesomeIcon icon={faSort} color="white" /></Button></th>
+                                <th onClick={() => {sendRequest("speed");setDesc(!desc);}}>Rychlost<Button color="transparent" size="sm" ><FontAwesomeIcon icon={faSort} color="white" /></Button></th>
+                                <th onClick={() => {sendRequest("type");setDesc(!desc);}}>Typ kluzáku<Button color="transparent" size="sm" ><FontAwesomeIcon icon={faSort} color="white" /></Button></th>
                                 <th></th>
                             </tr>
                         </thead>
