@@ -25,7 +25,7 @@
  - ASP.NET, počítač, databáze, API, React, IGC záznamy
 ### Autor
  - Tomáš Kulhavý
- 
+
 ## Cíle
  - Cíle popisují vše, co v práci v době jejího odevzdání má být hotovo a odevzdáno.
 
