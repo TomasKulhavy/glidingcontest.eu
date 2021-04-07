@@ -26,9 +26,9 @@ namespace MP2021_LKLB.Controllers
 
         // GET: api/<UserController>
         [HttpGet]
-        public async Task<IEnumerable<ApplicationUser>> Get()
+        public async Task<IEnumerable<ApplicationUser>> Get(string sort = null)
         {
-            return await _user.GetAllUsers();
+            return await _user.GetAllUsers(sort);
         }
 
         [HttpGet("hours")]
@@ -44,9 +44,9 @@ namespace MP2021_LKLB.Controllers
         }
 
         [HttpGet("order")]
-        public async Task<IEnumerable<ApplicationUser>> GetOrder()
+        public async Task<IEnumerable<ApplicationUser>> GetOrder(string sort = null)
         {
-            return await _user.GetPilotOrder();
+            return await _user.GetPilotOrder(sort);
         }
 
         [HttpGet("pilotFlights/{id}/{year}")]
@@ -63,7 +63,7 @@ namespace MP2021_LKLB.Controllers
         
         // GET api/<UserController>/5
         [HttpGet("{id}")]
-        public async Task<ICollection<ApplicationUser>> Get(string id)
+        public async Task<ICollection<ApplicationUser>> GetUser(string id)
         {
             var user = await _user.GetUsers(id);
             return user;

@@ -22,9 +22,18 @@ namespace MP2021_LKLB.Services.UserService
             _flight = flight;
         }
 
-        public async Task<ICollection<ApplicationUser>> GetAllUsers()
+        public async Task<ICollection<ApplicationUser>> GetAllUsers(string sort = null)
         {
-            return await _db.Pilots.OrderBy(f => f.FirstName).ToListAsync();
+            var users = await _db.Pilots.OrderBy(f => f.FirstName).ToListAsync();
+            users = sort switch
+            {
+                "name_desc" => users.OrderByDescending(x => x.LastName).ThenByDescending(x => x.FirstName).ToList(),
+                "name_asc" => users.OrderBy(x => x.LastName).ThenByDescending(x => x.FirstName).ToList(),
+                "username_desc" => users.OrderByDescending(x => x.UserName).ToList(),
+                "username_asc" => users.OrderBy(x => x.UserName).ToList(),
+                _ => users.OrderByDescending(x => x.LastName).ThenByDescending(x => x.FirstName).ToList(),
+            };
+            return users;
         }
 
         public async Task<ICollection<ApplicationUser>> GetUsersHours()
@@ -32,9 +41,22 @@ namespace MP2021_LKLB.Services.UserService
             return await _db.Pilots.Where(f => f.TimeInSec > 0).OrderByDescending(f => f.TimeInSec).Take(5).ToListAsync();
         }
 
-        public async Task<ICollection<ApplicationUser>> GetPilotOrder()
+        public async Task<ICollection<ApplicationUser>> GetPilotOrder(string sort = null)
         {
-            return await _db.Pilots.OrderByDescending(f => f.TopScore).ThenBy(f => f.FirstName).ToListAsync();
+            var pilots = await _db.Pilots.OrderByDescending(f => f.TopScore).ThenBy(f => f.LastName).ToListAsync();
+            pilots = sort switch
+            {
+                "name_desc" => pilots.OrderByDescending(x => x.LastName).ToList(),
+                "name_asc" => pilots.OrderBy(x => x.LastName).ToList(),
+                "score_desc" => pilots.OrderByDescending(x => x.TopScore).ThenByDescending(x => x.LastName).ToList(),
+                "score_asc" => pilots.OrderBy(x => x.TopScore).ThenByDescending(x => x.LastName).ToList(),
+                "hours_desc" => pilots.OrderByDescending(x => x.TimeInSec).ThenByDescending(x => x.LastName).ToList(),
+                "hours_asc" => pilots.OrderBy(x => x.TimeInSec).ThenByDescending(x => x.LastName).ToList(),
+                "kilometers_desc" => pilots.OrderByDescending(x => x.SumKilometers).ThenByDescending(x => x.LastName).ToList(),
+                "kilometers_asc" => pilots.OrderBy(x => x.SumKilometers).ThenByDescending(x => x.LastName).ToList(),
+                _ => pilots.OrderByDescending(x => x.TopScore).ThenByDescending(x => x.LastName).ToList(),
+            };
+            return pilots;
         }
 
         public async Task<ApplicationUser> GetPilotsStats(string id)

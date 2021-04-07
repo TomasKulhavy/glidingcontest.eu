@@ -9,12 +9,12 @@ namespace MP2021_LKLB.Services.UserService
 {
     public interface IUserService
     {
-        Task<ICollection<ApplicationUser>> GetAllUsers();
+        Task<ICollection<ApplicationUser>> GetAllUsers(string sort = null);
         Task<ICollection<ApplicationUser>> GetUsersHours();
         Task<ICollection<ApplicationUser>> GetUsersKilometers();
         Task<ICollection<ApplicationUser>> GetUsers(string id);
         Task<ICollection<ApplicationUser>> GetPilotTops();
-        Task<ICollection<ApplicationUser>> GetPilotOrder();
+        Task<ICollection<ApplicationUser>> GetPilotOrder(string sort = null);
         Task<ICollection<FlightAnalyseVM>> GetPilotsFlights(string id, int? year, string sort = null);
         Task<ApplicationUser> GetPilotsStats(string id);
         Task<ApplicationUser> Delete(string id);

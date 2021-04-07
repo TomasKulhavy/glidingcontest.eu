@@ -5,11 +5,14 @@ import NavMenu from "../Layout/NavMenu";
 import axios from "axios";
 import { FlightDataContext, ADD_PILOTID } from "../../providers/FlightDataContext";
 import Loading from "../Pages/Loading";
+import { faSort } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const PilotsList = () => {
     const [pilots, setPilots] = useState([]);
     const [, dispatch] = useContext(FlightDataContext);
     const [loading, setLoading] = useState(false);
+    const [desc, setDesc] = useState(false);
 
     useEffect(() => {
         setLoading(true);
@@ -22,6 +25,20 @@ const PilotsList = () => {
                 setLoading(false);
             });
     }, []);
+
+    function sendRequest(order)
+    {
+        axios
+            .get(`${process.env.REACT_APP_BACKEND_URL}/api/User?sort=${order}${
+                desc ? `_desc` : `_asc`
+              }`)
+            .then((response) => {
+                setPilots(response.data)
+            })
+            .then(() => {
+                setLoading(false);
+            })
+    }
 
     function renderUsers() {
         const array = pilots.map((item) => {
@@ -58,8 +75,8 @@ const PilotsList = () => {
                     <Table className="bg-dark text-white" striped>
                         <thead>
                             <tr>
-                                <th>Jméno</th>
-                                <th>Uživatelské jméno</th>
+                                <th onClick={() => {sendRequest("name");setDesc(!desc);}}>Jméno<Button color="transparent" size="sm" ><FontAwesomeIcon icon={faSort} color="white" /></Button></th>
+                                <th onClick={() => {sendRequest("username");setDesc(!desc);}}>Uživatelské jméno<Button color="transparent" size="sm" ><FontAwesomeIcon icon={faSort} color="white" /></Button></th>
                                 <th></th>
                             </tr>
                         </thead>
