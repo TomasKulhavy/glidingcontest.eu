@@ -4,7 +4,7 @@ import { Container, Table, Card, CardBody, CardHeader, CardFooter, Button } from
 import NavMenu from "../Layout/NavMenu";
 import { Link } from "react-router-dom";
 import { createBrowserHistory } from "history";
-import { MapContainer, TileLayer, Polyline } from "react-leaflet";
+import { MapContainer, TileLayer, Polyline, Circle, LayerGroup, Marker, Tooltip } from "react-leaflet";
 import CanvasJSReact from '../../assets/canvasjs.react';
 import { FlightDataContext, ADD_PILOTID } from "../../providers/FlightDataContext";
 //import Chart from 'react-apexcharts';
@@ -211,6 +211,48 @@ const FlightView = (props) => {
 		);
   }
 
+  const redOptions = { color: 'red' }
+
+  function renderCircle()
+  {
+    var array = renderTask();
+    const circle = array.map((item) => {
+      var centerR = item;
+      return (
+        <Circle center={centerR} pathOptions={redOptions} radius={500} />
+      )
+    })
+    return circle;
+  }
+  
+  function renderLL()
+  {
+    var takeOffM = [];
+    var landingM = [];
+    var takeoff = (fixes[0])
+    var landing = (fixes[fixes.length - 1])
+    if(takeoff != null)
+    {
+      takeOffM.push(takeoff.latitude, takeoff.longitude)
+      console.log(takeOffM)
+    }
+    if(landing != null)
+    {
+      landingM.push(landing.latitude, landing.longitude)
+      console.log(landingM)
+    }
+    return(
+      <>
+        <Marker position={takeOffM}>
+          <Tooltip>Vzlet</Tooltip>
+        </Marker>
+        <Marker position={landingM}>
+          <Tooltip>Přistání</Tooltip>
+        </Marker>
+      </>
+    )
+  }
+
   const flightLine = [
     renderFixes()
   ]
@@ -221,6 +263,19 @@ const FlightView = (props) => {
 
   const blueOptions = { color: 'blue' }
   const limeOptions = { color: 'lime' }
+
+  /*
+    <TileLayer
+      attribution='&copy; <a href="https://www.openaip.net/">openAIP Data</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-NC-SA</a>)'
+      url='http://{s}.tile.maps.openaip.net/geowebcache/service/tms/1.0.0/openaip_basemap@EPSG%3A900913@png/{z}/{x}/{y}.{ext}'
+      ext="png"
+      minZoom={4}
+      maxZoom={14}
+      tms={true}
+      detectRetina={true}
+      subdomains={12}
+    />
+  */const position = [51.505, -0.09]
 
   if (loading) {
     return (
@@ -238,15 +293,19 @@ const FlightView = (props) => {
         <Container>
           {renderAnalyse()}
           <Card className="mt-2">
-            <CardHeader className="bg-dark font-weight-bold text-white d-block mb-1 text-center text-uppercase"><h5>Trasa letu</h5></CardHeader>
+            <CardHeader className="bg-dark font-weight-bold text-white d-block mb-1 text-center text-uppercase"><h5>Trasa letu a výškový profil</h5></CardHeader>
             <CardBody style={{padding: '0%'}}>
               <MapContainer className="leaflet" center={center} zoom={8} scrollWheelZoom={true}>
                 <TileLayer
-                  attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  attribution='&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+                  url="https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png"
                 />
-                <Polyline pathOptions={blueOptions} positions={flightLine} />
+                {renderLL()}
+                <LayerGroup>
+                  {renderCircle()}
+                </LayerGroup>
                 <Polyline pathOptions={limeOptions} positions={taskLine} />
+                <Polyline pathOptions={blueOptions} positions={flightLine} />
               </MapContainer>
             </CardBody>
             <CardFooter>{renderGraph()}</CardFooter>
