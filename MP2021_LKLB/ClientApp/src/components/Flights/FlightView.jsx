@@ -10,7 +10,12 @@ import { FlightDataContext, ADD_PILOTID } from "../../providers/FlightDataContex
 //import Chart from 'react-apexcharts';
 import moment from 'moment-with-locales-es6';
 import Loading from "../Pages/Loading";
+import L from 'leaflet';
 
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+
+import 'leaflet/dist/leaflet.css';
 import './Flight.css'
 
 const FlightView = (props) => {
@@ -229,7 +234,7 @@ const FlightView = (props) => {
     const circle = array.map((item, index) => {
       var rad = radian[index];
       var centerR = item;
-      
+
       if(rad === undefined)
       {
         rad = 500;
@@ -256,6 +261,11 @@ const FlightView = (props) => {
     {
       landingM.push(landing.latitude, landing.longitude)
     }
+    let DefaultIcon = L.icon({
+      iconUrl: icon,
+      shadowUrl: iconShadow
+    });
+    L.Marker.prototype.options.icon = DefaultIcon;
     return(
       <>
         <Marker position={takeOffM}>
