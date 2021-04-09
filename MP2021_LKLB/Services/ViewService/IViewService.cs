@@ -1,4 +1,5 @@
 ﻿using MP2021_LKLB.Models;
+using MP2021_LKLB.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,6 @@ namespace MP2021_LKLB.Services.ViewService
         Task<ICollection<Points>> GetTask(int id);
         Task<ICollection<int>> GetYearsList();
         Task<ICollection<int>> GetYearsPilot(string id);
+        Task<ICollection<RadiusOfTPVM>> GetRadius(int id);
     }
 }

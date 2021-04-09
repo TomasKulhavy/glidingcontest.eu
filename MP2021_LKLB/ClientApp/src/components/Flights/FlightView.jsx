@@ -18,12 +18,14 @@ const FlightView = (props) => {
   const history = createBrowserHistory();
   const [fixes, setFixes] = useState([]);
   const [flightLog, setFlightLog] = useState([]);
+  const [rad, setRad] = useState([]);
   const [task, setTask] = useState([]);
   const [fixesToGraph, setFixesToGraph] = useState([]);
   const [, dispatch] = useContext(FlightDataContext);
   const [loading, setLoading] = useState(false);
   const [lastFix, setLastFix] = useState();
   const [, setError] = useState(false);
+  var radian = ([]);
   let center;
   
   useEffect(() => {
@@ -38,7 +40,12 @@ const FlightView = (props) => {
       })
       .catch(() => {
         setError(true)
-        history.push("/pilot/flights")
+        history.push(`/flight/list`)
+      });
+    axios
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/View/getRadius/${props.match.params.id}`)
+      .then((response) => {
+        setRad(response.data)
       });
     axios
       .get(`${process.env.REACT_APP_BACKEND_URL}/api/View/graph/${props.match.params.id}`)
@@ -48,7 +55,7 @@ const FlightView = (props) => {
       })
       .catch(() => {
         setError(true)
-        history.push("/pilot/flights")
+        history.push(`/flight/list`)
       });
     axios
       .get(`${process.env.REACT_APP_BACKEND_URL}/api/View/getTask/${props.match.params.id}`)
@@ -60,7 +67,11 @@ const FlightView = (props) => {
       .then((response) => {
         setFlightLog(response.data)
       })
-  }, [props.match.params.id]);
+  }, []);
+
+  rad.map((item) => {
+    radian.push(item.radius)
+  })
 
   function renderFixes() {
     const array = ([]);
@@ -77,9 +88,8 @@ const FlightView = (props) => {
       center2.push([Number((item.latitude).toFixed(1)), Number((item.longitude).toFixed(1))])
       array.push([item.latitude, item.longitude]);
     });
-    const res = [...array.slice(1, array.length - 1)];
     center = center2[1];
-    return res;
+    return array;
   }
 
   function secondsToHms(time) {
@@ -216,11 +226,18 @@ const FlightView = (props) => {
   function renderCircle()
   {
     var array = renderTask();
-    const circle = array.map((item) => {
+    const circle = array.map((item, index) => {
+      var rad = radian[index];
       var centerR = item;
+      
+      if(rad === undefined)
+      {
+        rad = 500;
+      }
+
       return (
-        <Circle center={centerR} pathOptions={redOptions} radius={500} />
-      )
+        <Circle center={centerR} pathOptions={redOptions} radius={rad} />
+      )     
     })
     return circle;
   }
@@ -234,12 +251,10 @@ const FlightView = (props) => {
     if(takeoff != null)
     {
       takeOffM.push(takeoff.latitude, takeoff.longitude)
-      console.log(takeOffM)
     }
     if(landing != null)
     {
       landingM.push(landing.latitude, landing.longitude)
-      console.log(landingM)
     }
     return(
       <>

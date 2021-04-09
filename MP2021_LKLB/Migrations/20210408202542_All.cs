@@ -325,6 +325,23 @@ namespace MP2021_LKLB.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "RadiusTPs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RadiusTPs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RadiusTPs_FlightLogs_Id",
+                        column: x => x.Id,
+                        principalTable: "FlightLogs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Extensions",
                 columns: table => new
                 {
@@ -379,20 +396,41 @@ namespace MP2021_LKLB.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName" },
-                values: new object[] { "ADMIN", "c4149fad-f729-4875-ba5a-c09a8124cb5e", "PilotRole", "Administrator", "ADMINISTRATOR" });
+            migrationBuilder.CreateTable(
+                name: "TaskRads",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Radius = table.Column<int>(type: "int", nullable: true),
+                    RadiusTPId = table.Column<int>(type: "int", nullable: false),
+                    No = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TaskRads", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TaskRads_RadiusTPs_RadiusTPId",
+                        column: x => x.RadiusTPId,
+                        principalTable: "RadiusTPs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName" },
-                values: new object[] { "PILOT", "43c5d299-ccaa-447c-9969-4e97fefe7aea", "PilotRole", "Pilot", "PILOT" });
+                values: new object[] { "ADMIN", "7c4a9d31-301b-4e3f-9678-416f8e935c8d", "PilotRole", "Administrator", "ADMINISTRATOR" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName" },
+                values: new object[] { "PILOT", "df43138d-45f6-485a-bc84-4b8ba32e731e", "PilotRole", "Pilot", "PILOT" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "BirthDay", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "FlightsNo", "Gender", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "SumKilometers", "TimeInSec", "TopScore", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "806a8d9c-ef5c-4c76-8a16-831594bb2fa4", 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "6a3153aa-b47e-4cd7-aa67-378d0fade8d3", "ApplicationUser", "tomas.kulhavy@pslib.cz", true, "Tomáš", null, 0, "Kulhavý", false, null, "TOMAS.KULHAVY@PSLIB.CZ", "TOMASLKLB", "AQAAAAEAACcQAAAAEOtjvOZ68Df0TYvSVkDFid2S5ZTN0hnXTdYAllORHL97RLPjcunk3H7hoQiGBuW+Jw==", null, false, "", null, 0.0, null, false, "TomasLKLB" });
+                values: new object[] { "60472ec7-34ec-4f40-ada2-a292e95f5203", 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "89c6de8d-46aa-4613-a90f-5078c7680e97", "ApplicationUser", "tomas.kulhavy@pslib.cz", true, "Tomáš", null, 0, "Kulhavý", false, null, "TOMAS.KULHAVY@PSLIB.CZ", "TOMASLKLB", "AQAAAAEAACcQAAAAEBjXDmXzYkwSg3R1PwbHPU3kDxyG4Y5l2JUsV+bWjqghtMzzeJkVFd1wTqRDqaKgFA==", null, false, "", null, 0.0, null, false, "TomasLKLB" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -464,6 +502,11 @@ namespace MP2021_LKLB.Migrations
                 name: "IX_Points_FlightTaskId",
                 table: "Points",
                 column: "FlightTaskId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TaskRads_RadiusTPId",
+                table: "TaskRads",
+                column: "RadiusTPId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -499,6 +542,9 @@ namespace MP2021_LKLB.Migrations
                 name: "Stats");
 
             migrationBuilder.DropTable(
+                name: "TaskRads");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -509,6 +555,9 @@ namespace MP2021_LKLB.Migrations
 
             migrationBuilder.DropTable(
                 name: "FlightTasks");
+
+            migrationBuilder.DropTable(
+                name: "RadiusTPs");
 
             migrationBuilder.DropTable(
                 name: "FlightLogs");

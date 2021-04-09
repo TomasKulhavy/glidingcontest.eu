@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MP2021_LKLB.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210326120243_All")]
+    [Migration("20210408202542_All")]
     partial class All
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -328,6 +328,39 @@ namespace MP2021_LKLB.Migrations
                     b.ToTable("Points");
                 });
 
+            modelBuilder.Entity("MP2021_LKLB.Models.RadiusTP", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RadiusTPs");
+                });
+
+            modelBuilder.Entity("MP2021_LKLB.Models.TaskRad", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int?>("No")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Radius")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RadiusTPId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RadiusTPId");
+
+                    b.ToTable("TaskRads");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -546,14 +579,14 @@ namespace MP2021_LKLB.Migrations
                         new
                         {
                             Id = "ADMIN",
-                            ConcurrencyStamp = "c4149fad-f729-4875-ba5a-c09a8124cb5e",
+                            ConcurrencyStamp = "7c4a9d31-301b-4e3f-9678-416f8e935c8d",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "PILOT",
-                            ConcurrencyStamp = "43c5d299-ccaa-447c-9969-4e97fefe7aea",
+                            ConcurrencyStamp = "df43138d-45f6-485a-bc84-4b8ba32e731e",
                             Name = "Pilot",
                             NormalizedName = "PILOT"
                         });
@@ -592,15 +625,15 @@ namespace MP2021_LKLB.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "806a8d9c-ef5c-4c76-8a16-831594bb2fa4",
+                            Id = "60472ec7-34ec-4f40-ada2-a292e95f5203",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6a3153aa-b47e-4cd7-aa67-378d0fade8d3",
+                            ConcurrencyStamp = "89c6de8d-46aa-4613-a90f-5078c7680e97",
                             Email = "tomas.kulhavy@pslib.cz",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "TOMAS.KULHAVY@PSLIB.CZ",
                             NormalizedUserName = "TOMASLKLB",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOtjvOZ68Df0TYvSVkDFid2S5ZTN0hnXTdYAllORHL97RLPjcunk3H7hoQiGBuW+Jw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBjXDmXzYkwSg3R1PwbHPU3kDxyG4Y5l2JUsV+bWjqghtMzzeJkVFd1wTqRDqaKgFA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -697,6 +730,28 @@ namespace MP2021_LKLB.Migrations
                     b.Navigation("FlightTask");
                 });
 
+            modelBuilder.Entity("MP2021_LKLB.Models.RadiusTP", b =>
+                {
+                    b.HasOne("MP2021_LKLB.Models.FlightLog", "FlightLog")
+                        .WithOne("RadiusTP")
+                        .HasForeignKey("MP2021_LKLB.Models.RadiusTP", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FlightLog");
+                });
+
+            modelBuilder.Entity("MP2021_LKLB.Models.TaskRad", b =>
+                {
+                    b.HasOne("MP2021_LKLB.Models.RadiusTP", "RadiusTP")
+                        .WithMany("TaskRad")
+                        .HasForeignKey("RadiusTPId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("RadiusTP");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -766,12 +821,19 @@ namespace MP2021_LKLB.Migrations
 
                     b.Navigation("FlightLogAnalyse");
 
+                    b.Navigation("RadiusTP");
+
                     b.Navigation("Task");
                 });
 
             modelBuilder.Entity("MP2021_LKLB.Models.FlightTask", b =>
                 {
                     b.Navigation("Points");
+                });
+
+            modelBuilder.Entity("MP2021_LKLB.Models.RadiusTP", b =>
+                {
+                    b.Navigation("TaskRad");
                 });
 
             modelBuilder.Entity("MP2021_LKLB.Models.ApplicationUser", b =>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MP2021_LKLB.Data;
 using MP2021_LKLB.Models;
+using MP2021_LKLB.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,10 +55,30 @@ namespace MP2021_LKLB.Services.ViewService
             }
         }
 
+        public async Task<ICollection<RadiusOfTPVM>> GetRadius(int id)
+        {
+            var radius = await _db.TaskRads
+               .Where(x => x.RadiusTP.FlightLog.Id == id)
+               .OrderBy(x => x.No)
+               .Select(f => new RadiusOfTPVM { Radius = f.Radius, Sort = f.No })
+               .ToListAsync();
+
+            if (radius != null)
+            {
+                return radius;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public async Task<ICollection<Points>> GetTask(int id)
         {
             ICollection<Points> points = await _db.Points
                 .Where(x => x.FlightTask.FlightLog.Id == id)
+                .Where(x => x.Latitude != 0)
+                .Where(x => x.Longitude != 0)
                 .ToListAsync();
 
             if (points != null)

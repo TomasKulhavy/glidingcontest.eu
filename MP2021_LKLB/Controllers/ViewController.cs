@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MP2021_LKLB.Models;
 using MP2021_LKLB.Services.ViewService;
+using MP2021_LKLB.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,6 +49,13 @@ namespace MP2021_LKLB.Controllers
         {
             var points = await _view.GetTask(id);
             return points;
+        }
+
+        [HttpGet("getRadius/{id}")]
+        public async Task<ICollection<RadiusOfTPVM>> GetRadius(int id)
+        {
+            var radius = await _view.GetRadius(id);
+            return radius;
         }
 
         [HttpGet("getYears/list")]

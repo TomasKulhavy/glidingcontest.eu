@@ -37,6 +37,7 @@ namespace MP2021_LKLB.Models
         [Display(Name = "Datum")]
         [Column(TypeName = "date")]
         public DateTime Date { get; set; }
+        public RadiusTP RadiusTP { get; set; }
 
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }

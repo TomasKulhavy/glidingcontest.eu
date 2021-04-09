@@ -14,7 +14,7 @@ import AccessDenied from '../Pages/AccessDenied';
 import './Flight.css'
 
 function parseL(str) {
-    var RE_L = /^L.*(?=R1)R1(.*?)(\d{2}|\d{1})(.*?)(\d{4}|\d{3}|\d{2})(.*?).*$/;
+    var RE_L = /^L((?!SEEYOU).).*(?=R1)R1(.*?)(\d{2}|\d{0})(\d{3}|\d{2}|\d{1})((?!R).?)(\d{4}|\d{3}|\d{2})(.*?).*$/;
     var radiusArray = [];
 
     function processLine (line) {
@@ -35,7 +35,7 @@ function parseL(str) {
     });
     var radiusDone = [];
     for (let index = 0; index < filtered.length; index++) {
-        radiusDone.push(filtered[index][2] + filtered[index][4])
+        radiusDone.push({"radius": filtered[index][4] + filtered[index][6], "no": index})
     }
     return radiusDone;
 }
@@ -96,7 +96,7 @@ const UploadFlight = () => {
         const storeOfFixes = [];
 
         for (taskT; taskT < result.task.points.length - 2; taskT++) {
-            var radius = result.radiusTP.taskRad[taskT - 1];
+            var radius = result.radiusTP.taskRad[taskT - 1].radius;
             const center = {lat: result.task.points[taskT].latitude, lon: result.task.points[taskT].longitude};
             distT = getDistance(
                 { latitude: result.task.points[taskT].latitude, longitude: result.task.points[taskT].longitude },

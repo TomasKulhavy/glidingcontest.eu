@@ -20,6 +20,8 @@ namespace MP2021_LKLB.Data
         }
 
         public DbSet<ApplicationUser> Pilots { get; set; }
+        public DbSet<RadiusTP> RadiusTPs { get; set; }
+        public DbSet<TaskRad> TaskRads { get; set; }
         public DbSet<FlightLog> FlightLogs { get; set; }
         public DbSet<DataRecords> DataRecords { get; set; }
         public DbSet<Fixes> Fixes { get; set; }
@@ -72,6 +74,18 @@ namespace MP2021_LKLB.Data
                 .HasOne(f => f.FlightLog)
                 .WithMany(f => f.Fixes)
                 .HasForeignKey(ff => ff.FlightLogId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<FlightLog>()
+                .HasOne(f => f.RadiusTP)
+                .WithOne(f => f.FlightLog)
+                .HasForeignKey<RadiusTP>(t => t.Id)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<TaskRad>()
+                .HasOne(f => f.RadiusTP)
+                .WithMany(f => f.TaskRad)
+                .HasForeignKey(ff => ff.RadiusTPId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<FlightLog>()
