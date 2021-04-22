@@ -55,6 +55,7 @@ namespace MP2021_LKLB.Controllers
 
         // POST api/<FlightLogController>
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<FlightLog>> Post([FromBody] InputModel Data)
         {
             string message = "started";
@@ -87,6 +88,7 @@ namespace MP2021_LKLB.Controllers
 
         // DELETE api/<FlightLogController>/5
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult<FlightLog>> Delete(int id)
         {
             return await _flightLog.DeleteFlight(id);

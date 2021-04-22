@@ -234,12 +234,12 @@ export default function PilotProfile(props) {
                                                             valid={formikEmail.touched.email}
                                                         />
                                                         {formikEmail.errors.email ? <FormFeedback invalid>{formikEmail.errors.email}</FormFeedback> : null}
-                                                        <Button type="submit" className="m-3" color="success">Uložit</Button> 
+                                                        <Button type="submit" className="m-3" color="success" disabled>Uložit</Button> 
                                                     </Form>
                                                     )
                                                 : (
 
-                                                    <h4>{profile.email} <FontAwesomeIcon icon={faEdit} className="ml-2 icons" onClick={() => setEmail(!email)}/></h4> 
+                                                    <h4>{profile.email} <FontAwesomeIcon icon={faEdit} className="ml-2 icons" onClick={() => setEmail(!email)} disabled/></h4> 
                                                 )
                                                 }
                                             </>
@@ -271,7 +271,7 @@ export default function PilotProfile(props) {
                                                             valid={formikPhone.touched.phoneNumber}
                                                         />
                                                         {formikPhone.errors.phoneNumber ? <FormFeedback invalid>{formikPhone.errors.phoneNumber}</FormFeedback> : null}
-                                                        <Button type="submit" onClick={formikPhone.handleSubmit} className="m-3" color="success">Uložit</Button> 
+                                                        <Button type="submit" onClick={formikPhone.handleSubmit} className="m-3" color="success" disabled>Uložit</Button> 
                                                     </Form>
                                                     )
                                                 : (
@@ -307,7 +307,7 @@ export default function PilotProfile(props) {
                                                     invalid={Boolean(formikBirth.errors.birthday)}
                                                     valid={formikBirth.touched.birthday}
                                                 />
-                                                <Button type="submit" className="m-3" color="success">Uložit</Button>
+                                                <Button type="submit" className="m-3" color="success" disabled>Uložit</Button>
                                             </>
                                             }
                                         </Form>
